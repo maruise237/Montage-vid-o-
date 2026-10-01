@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Valex L'infographiste — Motion design</title>
+<style>
+@font-face{font-family:P;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2)}
+@font-face{font-family:P;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2)}
+@font-face{font-family:P;font-weight:800;src:url(fonts/poppins-latin-800-normal.woff2)}
+@font-face{font-family:P;font-weight:900;src:url(fonts/poppins-latin-900-normal.woff2)}
+:root{--p1:#2a0650;--p2:#5b0f9a;--mag:#d90fd0;--gr:#2fb344;--wh:#fff}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#12002a;font-family:P,sans-serif;color:#fff}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;
+  background:radial-gradient(900px 900px at 50% 30%,#6a14b8 0%,#3a0870 45%,#14002e 100%)}
+.abs{position:absolute;will-change:transform,opacity;transform-origin:50% 50%}
+.c{left:0;width:1080px;text-align:center}
+.big{font-weight:900;line-height:.95;letter-spacing:-2px;text-transform:uppercase}
+.mag{color:var(--mag)} .gr{color:var(--gr)}
+.card{border-radius:36px;overflow:hidden;background:#fff;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 6px rgba(255,255,255,.9)}
+.card img{width:100%;height:100%;object-fit:cover;display:block}
+.pill{display:inline-block;padding:18px 44px;border-radius:999px;font-weight:800;font-size:44px}
+.glass{border:3px solid rgba(255,255,255,.55);border-radius:28px;background:rgba(255,255,255,.08);backdrop-filter:blur(6px)}
+.grain{position:absolute;inset:0;opacity:.08;mix-blend-mode:overlay;
+  background-image:repeating-radial-gradient(circle at 17% 32%,#fff 0 1px,transparent 1px 3px)}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+const W=1080,H=1920,stage=document.getElementById('stage');
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const E={
+  lin:x=>x,
+  out:x=>1-Math.pow(1-x,3),
+  expo:x=>x>=1?1:1-Math.pow(2,-10*x),
+  inOut:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,
+  back:x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)},
+  elastic:x=>x===0?0:x===1?1:Math.pow(2,-10*x)*Math.sin((x*10-.75)*(2*Math.PI)/3)+1,
+  in:x=>x*x*x
+};
+const els=[]; // {el,anims,base}
+let PARENT=stage;
+function mk(html,cls='',style='',parent=PARENT){
+  const d=document.createElement('div');d.className='abs '+cls;d.style.cssText=style;d.innerHTML=html;parent.appendChild(d);
+  const o={el:d,anims:[],def:{x:0,y:0,s:1,sx:1,sy:1,r:0,o:0,b:0}};els.push(o);return o;
+}
+// A(obj,t0,dur,{prop:[from,to]},ease)
+function A(o,t0,dur,props,ease='out'){o.anims.push({t0,dur,props,ease});return o}
+function show(o,t0,t1,fromY=60,dur=.45){ // fade/slide in, optional out
+  A(o,t0,dur,{o:[0,1],y:[fromY,0]},'out'); if(t1)A(o,t1,.25,{o:[1,0]},'lin'); return o}
+function render(t){
+  for(const o of els){
+    const st={...o.def},set={};
+    for(const a of o.anims){
+      for(const k in a.props){
+        const [f,to]=a.props[k];
+        if(t>=a.t0){const p=clamp((t-a.t0)/a.dur);st[k]=f+(to-f)*E[a.ease](p);set[k]=1}
+        else if(!set[k]){st[k]=f;set[k]=1}
+      }
+    }
+    const e=o.el;
+    e.style.opacity=clamp(st.o);
+    e.style.visibility=st.o<=0.001?'hidden':'visible';
+    e.style.transform=`translate(${st.x}px,${st.y}px) rotate(${st.r}deg) scale(${st.s*st.sx},${st.s*st.sy})`;
+    e.style.filter=st.b>0.1?`blur(${st.b}px)`:'none';
+    if(o.tick)o.tick(t,e);
+  }
+}
+window.render=render;
+
+/* ---------- Background: moving glow blobs + grid lines ---------- */
+const bg=mk('','', `inset:0;left:0;top:0;width:${W}px;height:${H}px`);bg.def.o=1;
+bg.el.style.background='transparent';
+for(let i=0;i<5;i++){
+  const b=mk('','',`left:${[-200,600,100,700,300][i]}px;top:${[200,500,1100,1500,-100][i]}px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,${i%2?'rgba(217,15,208,.55)':'rgba(120,40,220,.6)'},transparent 70%)`);
+  b.def.o=1;
+  b.tick=(t,e)=>{e.style.transform=`translate(${Math.sin(t*.6+i*1.7)*120}px,${Math.cos(t*.5+i)*140}px) scale(${1+.15*Math.sin(t+i)})`};
+}
+const grain=mk('','', `inset:0;width:${W}px;height:${H}px`);grain.def.o=1;grain.el.innerHTML='<div class="grain"></div>';
+
+/* Persistent beat-pulse ring */
+const ring=mk('','',`left:${W/2-450}px;top:${H/2-450}px;width:900px;height:900px;border-radius:50%;border:4px solid rgba(255,255,255,.14)`);
+ring.def.o=1;ring.tick=(t,e)=>{const ph=(t%0.5)/0.5;e.style.transform=`scale(${.8+ph*.5})`;e.style.opacity=.5*(1-ph)};
+
+/* Conteneur « zone de sécurité » Reels/TikTok : contenu entre x≈119–961 et y≈290–1616 */
+const safe=document.createElement('div');
+safe.style.cssText=`position:absolute;left:0;top:0;width:${W}px;height:${H}px;transform-origin:0 0;transform:translate(119px,212px) scale(.78)`;
+stage.appendChild(safe);PARENT=safe;
+const toStage=o=>{stage.appendChild(o.el);return o};
+/* ---------- Helper: word-by-word kinetic text ---------- */
+function words(txt,t0,{top,size=120,cls='big',gap=.12,color='',out=null,stagger=null,from='up'}={}){
+  const arr=txt.split(' ');
+  // measure via a hidden flex line, build centered line of word spans
+  const line=mk('', 'c', `top:${top}px;font-size:${size}px;display:flex;justify-content:center;gap:${size*.28}px;flex-wrap:nowrap;white-space:nowrap;padding:0 20px`);
+  line.def.o=1;
+  arr.forEach((w,i)=>{
+    const s=document.createElement('span');s.className=cls+' '+color;s.style.display='inline-block';s.textContent=w;line.el.appendChild(s);
+    const so={el:s,anims:[],def:{x:0,y:0,s:1,sx:1,sy:1,r:0,o:0,b:0}};els.push(so);
+    A(so,t0+i*gap,.5,{o:[0,1],y:[from==='up'?90:-90,0],s:[.6,1],b:[14,0]},'back');
+    if(out)A(so,out+i*.03,.25,{o:[1,0],y:[0,-40]},'lin');
+  });
+  return line;
+}
+
+/* =========================================================
+   SCENE 1 (0–4s) HOOK : Valex slam + portrait
+   ========================================================= */
+const portrait=mk('<img src="assets/portrait_clean.jpg" style="width:100%;height:100%;object-fit:cover;object-position:50% 12%;mix-blend-mode:multiply">','',
+  `left:90px;top:360px;width:900px;height:1000px;border-radius:60px;overflow:hidden;background:linear-gradient(160deg,#e9d3ff,#fff)`);
+portrait.el.style.boxShadow='0 40px 100px rgba(0,0,0,.6),0 0 0 8px rgba(217,15,208,.9)';
+A(portrait,0,.8,{o:[.75,1],y:[120,0],s:[.9,1],r:[-6,-2]},'back');
+A(portrait,3.5,.4,{o:[1,0],y:[0,-200],s:[1,.8]},'in');
+
+const valex=mk('VALEX','big','left:0;width:1080px;text-align:center;top:1280px;font-size:290px;text-shadow:0 12px 0 #8a0aa0,0 30px 60px rgba(0,0,0,.5)');
+A(valex,.35,.55,{o:[0,1],s:[3,1],b:[20,0]},'expo');
+A(valex,3.5,.35,{o:[1,0],s:[1,.6]},'in');
+const tag=mk('<span class="pill" style="background:#fff;color:#4a0a8a">L’INFOGRAPHISTE</span>','c','top:1590px');
+A(tag,.9,.5,{o:[0,1],y:[60,0],s:[.7,1]},'back');A(tag,3.5,.3,{o:[1,0]},'lin');
+const wave=mk('Douala · Cameroun','c','top:1720px;font-size:40px;font-weight:600;letter-spacing:8px;opacity:.9');
+A(wave,1.3,.5,{o:[0,1],y:[30,0]},'out');A(wave,3.5,.3,{o:[1,0]},'lin');
+const hk=words('Des visuels qui vendent ?',-.25,{top:150,size:84,gap:.1,out:3.5,color:''});
+const flash=toStage(mk('','',`left:0;top:0;width:${W}px;height:${H}px;background:#fff`));
+A(flash,.35,.01,{o:[0,.9]},'lin');A(flash,.36,.35,{o:[.9,0]},'out');
+
+/* =========================================================
+   SCENE 2 (4–8s) Promise
+   ========================================================= */
+const s2a=words('Des visuels',4.05,{top:470,size:150,out:7.5});
+const s2b=words('professionnels',4.35,{top:650,size:104,color:'mag',out:7.5});
+const s2c=mk('pour attirer plus de clients','c','top:860px;font-size:62px;font-weight:600');
+A(s2c,5.0,.5,{o:[0,1],y:[40,0]},'out');A(s2c,7.5,.25,{o:[1,0]},'lin');
+// 24H badge
+const b24=mk('<div style="font-size:48px;font-weight:600;letter-spacing:4px">LIVRAISON EN</div><div class="big" style="font-size:260px;color:#fff;text-shadow:0 0 60px rgba(217,15,208,.9)">-24H</div><div class="pill" style="background:var(--gr);color:#fff;font-size:46px;margin-top:10px">CHRONO</div>','c glass','left:150px;width:780px;top:1020px;padding:40px 0 50px');
+A(b24,5.6,.7,{o:[0,1],s:[.2,1],r:[-25,0]},'elastic');A(b24,7.5,.3,{o:[1,0],s:[1,.7]},'in');
+// pulsing clock icon-ish ring behind 24H
+const spark=mk('⚡','', `left:90px;top:1000px;font-size:150px`);
+A(spark,6.1,.5,{o:[0,1],s:[0,1],r:[-40,10]},'back');A(spark,7.5,.25,{o:[1,0]},'lin');
+
+/* =========================================================
+   SCENE 3 (8–20s) Services: 4 × 3s
+   ========================================================= */
+function service(t0,title,sub,color,imgs){
+  const t1=t0+3;
+  const num=mk(title.n,'big','left:0;width:1080px;text-align:center;top:100px;font-size:90px;color:#d90fd0;letter-spacing:10px');
+  show(num,t0,t1,-30,.4);
+  const h=mk(title.t,'big mag c',`top:200px;font-size:${title.fs||150}px;color:#fff;text-shadow:0 0 50px ${color}`);
+  A(h,t0,.55,{o:[0,1],x:[-300,0],b:[18,0]},'expo');A(h,t1-.05,.25,{o:[1,0],x:[0,200]},'in');
+  const s=mk(sub,'c',`top:${title.sy||390}px;font-size:48px;font-weight:600;color:#f3d6ff`);
+  show(s,t0+.35,t1-.05,30);
+  const layouts=imgs.length===1?[[140,520,800,1000,-2]]:
+    imgs.length===2?[[60,520,480,680,-5],[470,800,540,540,4]]:
+    [[60,520,470,470,-6],[550,560,470,470,5],[250,1030,580,580,-1]];
+  imgs.forEach((im,i)=>{
+    const [x,y,w,hh,r]=layouts[i];
+    const c=mk(`<img src="assets/${im}" style="object-position:${imgs.length===1?'50% 50%':'50% 50%'}">`,'card',`left:${x}px;top:${y}px;width:${w}px;height:${hh}px`);
+    A(c,t0+.25+i*.22,.7,{o:[0,1],y:[500,0],r:[r*4,r],s:[.7,1]},'back');
+    A(c,t1-.05,.25,{o:[1,0],y:[0,-300],s:[1,.8]},'in');
+    c.tick=(t,e)=>{ if(t>t0&&t<t1){const k=(t-t0)/3;e.firstChild.style.transform=`scale(${1.04+.1*k})`}};
+    c.el.firstChild.style.transition='none';
+  });
+}
+service(8,{n:'01',t:'LOGO'},'Une identité qui marque les esprits','#d90fd0',['ebene_board.jpg','elvirado.jpg','dreamland.jpg']);
+service(11,{n:'02',t:'FLYER<br>AFFICHE',fs:120,sy:420},'Des affiches qui captent le regard','#2fb344',['perfectwash.jpg','laptop_crop.jpg']);
+service(14,{n:'03',t:'DÉPLIANT<br>BROCHURE',fs:110,sy:400},'Vos supports de communication','#ffb300',['istic_brochure.jpg']);
+service(17,{n:'04',t:'IDENTITÉ<br>VISUELLE',fs:110,sy:400},'Logo · couleurs · mockups · papeterie','#2fb344',['greenharvest.jpg','azatimi.jpg']);
+
+/* =========================================================
+   SCENE 4 (20–24s) Entreprises & Entrepreneurs — wall of work
+   ========================================================= */
+const wallImgs=['braza_board.jpg','ebene_board.jpg','azatimi.jpg','greenharvest.jpg','newhorizon.jpg','dreamland.jpg'];
+const cols=[[0,-1],[1,1],[2,-1]];
+wallImgs.forEach((im,i)=>{
+  const col=i%3,row=Math.floor(i/3);
+  const x=30+col*340,y=140+row*340+(col===1?60:0);
+  const c=mk(`<img src="assets/${im}">`,'card',`left:${x}px;top:${y}px;width:320px;height:320px;border-radius:28px`);
+  A(c,20+i*.08,.55,{o:[0,1],y:[(row?1:-1)*400,0],s:[.5,1]},'back');
+  A(c,23.55,.3,{o:[1,0],s:[1,.7]},'in');
+});
+const w1=words('les Entreprises',20.3,{top:880,size:112,out:23.5});
+const w2=mk('&','big mag c','top:1020px;font-size:150px;text-shadow:0 0 40px #d90fd0');
+A(w2,20.8,.5,{o:[0,1],s:[3,1],r:[-90,0]},'back');A(w2,23.55,.25,{o:[1,0]},'lin');
+const w3=words('les Entrepreneurs',21.0,{top:1190,size:100,color:'mag',out:23.5});
+const chrono=mk('<span class="pill" style="background:var(--gr)">CONCEVOIR VOS VISUELS EN MOINS DE 24H CHRONO</span>','c','top:1490px;left:60px;width:960px;font-size:36px;line-height:1.3');
+chrono.el.firstChild.style.fontSize='40px';chrono.el.firstChild.style.padding='26px 36px';chrono.el.firstChild.style.borderRadius='28px';
+A(chrono,22.0,.6,{o:[0,1],y:[100,0],s:[.8,1]},'back');A(chrono,23.55,.25,{o:[1,0]},'lin');
+
+/* =========================================================
+   SCENE 5 (24–30s) Formation Cash Design + Guide
+   ========================================================= */
+const f0=mk('NOUVEAU','pill','left:340px;top:130px;background:var(--mag);color:#fff;font-size:36px;padding:12px 36px;letter-spacing:6px');
+A(f0,24.05,.4,{o:[0,1],s:[0,1]},'back');A(f0,26.9,.3,{o:[1,0]},'lin');
+const f1=mk('Formation<br><span class="gr">CASH DESIGN</span>','big c','top:210px;font-size:112px;line-height:1.02');
+A(f1,24.15,.6,{o:[0,1],y:[-80,0],b:[14,0]},'expo');A(f1,26.9,.3,{o:[1,0]},'lin');
+const f2=mk('<img src="assets/formation_box.jpg">','card','left:90px;top:520px;width:900px;height:630px');
+A(f2,24.4,.8,{o:[0,1],x:[-1100,0],r:[-15,-2]},'back');A(f2,26.9,.35,{o:[1,0],x:[0,-1100]},'in');
+const f3=mk('<span class="pill" style="background:#fff;color:#4a0a8a;font-size:50px">Photoshop &amp; Illustrator · 100% pratique</span>','c','top:1210px;font-size:50px');
+f3.el.firstChild.style.fontSize='42px';
+A(f3,25.0,.5,{o:[0,1],y:[40,0]},'out');A(f3,26.9,.3,{o:[1,0]},'lin');
+const price=mk('49 900<small style="font-size:60px"> F</small>','big','left:200px;top:1330px;width:680px;padding:30px 0;text-align:center;font-size:160px;background:radial-gradient(circle at 30% 20%,#ff2d4d,#c4001d);border-radius:40px;box-shadow:0 0 0 8px #fff,0 30px 70px rgba(0,0,0,.5)');
+A(price,25.6,.7,{o:[0,1],s:[.1,1],r:[40,-3]},'elastic');A(price,26.9,.3,{o:[1,0],s:[1,.6]},'in');
+const lines=mk('+20h de vidéos · Groupe WhatsApp · Live chaque mercredi','c','top:1620px;left:60px;width:960px;font-size:40px;font-weight:600;line-height:1.3');
+A(lines,26.0,.5,{o:[0,1],y:[40,0]},'out');A(lines,26.9,.3,{o:[1,0]},'lin');
+// guide
+const g0=mk('Le guide<br>pour débutants','big c','top:185px;font-size:76px;line-height:.95;color:#fff');
+A(g0,27.0,.5,{o:[0,1],y:[-60,0]},'expo');A(g0,29.55,.3,{o:[1,0]},'lin');
+const g1=mk('<img src="assets/guide.jpg">','card','left:110px;top:360px;width:860px;height:860px');
+A(g1,27.0,.8,{o:[0,1],x:[1100,0],r:[15,2]},'back');A(g1,29.55,.3,{o:[1,0],x:[0,1100]},'in');
+const g2=mk('+100 000 F / mois','big c mag','top:1290px;font-size:104px;color:#fff;text-shadow:0 0 40px #d90fd0');
+A(g2,27.5,.6,{o:[0,1],s:[.4,1]},'back');A(g2,29.55,.3,{o:[1,0]},'lin');
+const g3=mk('3 500 F','big','left:290px;top:1470px;width:500px;padding:26px 0;text-align:center;font-size:110px;background:radial-gradient(circle at 30% 20%,#ff2d4d,#c4001d);border-radius:999px;box-shadow:0 0 0 7px #fff');
+A(g3,28.0,.7,{o:[0,1],s:[.1,1],r:[-40,3]},'elastic');A(g3,29.55,.3,{o:[1,0]},'lin');
+const g4=mk('<span class="pill" style="background:var(--gr);font-size:38px">Disponible en version numérique</span>','c','top:1700px');
+A(g4,28.5,.5,{o:[0,1],y:[40,0]},'out');A(g4,29.55,.3,{o:[1,0]},'lin');
+
+/* =========================================================
+   SCENE 6 (30–36s) CTA
+   ========================================================= */
+const cta0=mk('<img src="assets/portrait_clean.jpg" style="width:100%;height:100%;object-fit:cover;object-position:50% 10%;mix-blend-mode:multiply">','','left:300px;top:130px;width:480px;height:480px;border-radius:50%;overflow:hidden;background:linear-gradient(160deg,#e9d3ff,#fff);box-shadow:0 0 0 10px var(--mag),0 0 80px rgba(217,15,208,.8)');
+A(cta0,30.05,.7,{o:[0,1],s:[0,1],r:[-120,0]},'back');
+cta0.tick=(t,e)=>{if(t>30.8)e.style.transform=`scale(${1+.03*Math.sin((t-30.8)*12.56)})`};
+const cta1=words('Prends-moi',30.3,{top:700,size:136,out:null});
+const cta2=mk('pour ton prochain visuel','c','top:880px;font-size:58px;font-weight:600');
+A(cta2,31.0,.5,{o:[0,1],y:[40,0]},'out');
+const btn=mk('<span style="display:inline-block;padding:34px 70px;border-radius:999px;background:var(--gr);font-weight:900;font-size:68px;box-shadow:0 0 0 8px rgba(255,255,255,.95),0 20px 60px rgba(47,179,68,.8)">📲 CONTACTE-MOI</span>','c','top:1010px');
+A(btn,31.3,.7,{o:[0,1],s:[.2,1]},'elastic');
+btn.tick=(t,e)=>{if(t>32){const k=1+.06*Math.abs(Math.sin((t-32)*Math.PI*2));e.style.transform=`scale(${k})`}};
+const ph=mk('+237 6 72 36 74 52','big c','top:1210px;font-size:104px;letter-spacing:0;text-transform:none;text-shadow:0 0 50px #d90fd0');
+A(ph,32.0,.6,{o:[0,1],y:[80,0],b:[10,0]},'expo');
+const ph2=mk('+237 6 98 74 69 47','c','top:1350px;font-size:62px;font-weight:600;color:#f3d6ff');
+A(ph2,32.4,.5,{o:[0,1],y:[40,0]},'out');
+const loc=mk('📍 Douala · Cameroun','c','top:1470px;font-size:52px;font-weight:600');
+A(loc,32.7,.5,{o:[0,1],y:[40,0]},'out');
+const sig=mk('VALEX <span class="mag">L’INFOGRAPHISTE</span>','big c','top:1640px;font-size:66px;letter-spacing:2px');
+A(sig,33.2,.6,{o:[0,1],s:[1.6,1],b:[12,0]},'expo');
+const sig2=mk('Livraison en -24H chrono','c','top:1740px;font-size:44px;font-weight:600;color:#f3d6ff');
+A(sig2,33.6,.5,{o:[0,1],y:[30,0]},'out');
+// final fade
+const fade=toStage(mk('','',`left:0;top:0;width:${W}px;height:${H}px;background:#12002a`));
+A(fade,35.5,.5,{o:[0,1]},'lin');
+
+/* ---------- Touche perso ---------- */
+// Bandeau défilant de mots-clés (haut), visible hors hook/CTA final
+const mq=toStage(mk('','',`left:0;top:215px;width:${W}px;height:56px;overflow:hidden;background:rgba(0,0,0,.35);`));
+mq.def.o=0;A(mq,3.6,.3,{o:[0,1]},'lin');A(mq,30,.3,{o:[1,0]},'lin');
+const mqi=document.createElement('div');
+mqi.style.cssText='position:absolute;white-space:nowrap;font-weight:800;font-size:28px;line-height:56px;letter-spacing:4px;color:#fff';
+mqi.innerHTML=('<span class="mag">★</span> LOGO &nbsp; <span class="mag">★</span> FLYER &nbsp; <span class="mag">★</span> AFFICHE &nbsp; <span class="mag">★</span> BROCHURE &nbsp; <span class="mag">★</span> IDENTITÉ VISUELLE &nbsp; ').repeat(4);
+mq.el.appendChild(mqi);
+mq.tick=(t)=>{mqi.style.transform=`translateX(${-(t*180)%1500}px)`};
+// Barre de progression (bas) façon timeline
+const pb=toStage(mk('','',`left:0;top:${H-14}px;width:${W}px;height:14px;background:rgba(255,255,255,.15)`));pb.def.o=1;
+const pbf=document.createElement('div');pbf.style.cssText='height:100%;background:linear-gradient(90deg,#d90fd0,#2fb344)';pb.el.appendChild(pbf);
+pb.tick=(t)=>{pbf.style.width=(t/36*100)+'%'};
+// Curseur « stylo » qui trace un soulignement sous « professionnels » et sous 3 500 F
+function underline(t0,x,y,w,color){
+  const u=mk('','',`left:${x}px;top:${y}px;width:${w}px;height:12px;border-radius:6px;background:${color};transform-origin:0 50%`);
+  A(u,t0,.5,{o:[0,1],sx:[0,1]},'out');return u;
+}
+const u1=underline(5.0,240,780,600,'#2fb344');A(u1,7.5,.2,{o:[1,0]},'lin');
+const pen=mk('✒️','',`left:780px;top:740px;font-size:70px`);
+A(pen,5.0,.5,{o:[0,1],x:[-540,0],r:[-20,-20]},'out');A(pen,7.5,.2,{o:[1,0]},'lin');
+// Tampon ✓ validé
+const ok=mk('✓ LIVRÉ','pill','left:640px;top:960px;background:#fff;color:#2fb344;font-size:40px;padding:12px 30px;box-shadow:0 10px 30px rgba(0,0,0,.4)');
+A(ok,6.6,.5,{o:[0,1],s:[3,1],r:[-30,-10]},'back');A(ok,7.5,.2,{o:[1,0]},'lin');
+// Tampon final
+const st=mk('🇨🇲 Fait à Douala<br>Qualité pro garantie','c','left:770px;width:290px;top:250px;font-size:28px;font-weight:800;line-height:1.2;border:3px dashed #fff;border-radius:20px;padding:14px 8px;background:rgba(0,0,0,.25)');
+A(st,34,.5,{o:[0,1],s:[3,1],r:[-40,12]},'back');
+// Étincelles aléatoires aux changements de scène
+[4,8,11,14,17,20,24,27,30].forEach((tt,i)=>{
+  for(let k=0;k<6;k++){
+    const sp=mk('✦','',`left:${540}px;top:${960}px;font-size:${40+k*8}px;color:${k%2?'#d90fd0':'#fff'}`);
+    const a=(k/6)*Math.PI*2+i;toStage(sp);A(sp,0,.01,{o:[0,0]},'lin');A(sp,tt,.7,{o:[1,0],x:[0,Math.cos(a)*(380+k*40)],y:[0,Math.sin(a)*(380+k*40)],r:[0,180],s:[1.2,.2]},'out');
+  }
+});
+
+window.DURATION=36;
+render(0);
+</script>
+</body>
+</html>
