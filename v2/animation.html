@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Valex L'infographiste — pub 9:16</title>
+<style>
+@font-face{font-family:P;font-weight:500;src:url(../fonts/poppins-latin-500-normal.woff2)}
+@font-face{font-family:P;font-weight:600;src:url(../fonts/poppins-latin-600-normal.woff2)}
+@font-face{font-family:P;font-weight:800;src:url(../fonts/poppins-latin-800-normal.woff2)}
+@font-face{font-family:P;font-weight:900;src:url(../fonts/poppins-latin-900-normal.woff2)}
+:root{--mag:#e11fd6;--gr:#2fc14a;--jaune:#ffc93c}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0d0020;font-family:P,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#140030}
+.abs{position:absolute;will-change:transform,opacity;transform-origin:50% 50%}
+.c{left:0;width:1080px;text-align:center}
+.big{font-weight:900;line-height:.94;letter-spacing:-2px;text-transform:uppercase}
+.mag{color:var(--mag)}.gr{color:var(--gr)}.jaune{color:var(--jaune)}
+.card{border-radius:30px;overflow:hidden;background:#fff;box-shadow:0 26px 70px rgba(0,0,0,.65),0 0 0 5px rgba(255,255,255,.92)}
+.card>img{width:100%;height:100%;object-fit:cover;display:block;will-change:transform}
+.pill{display:inline-block;padding:16px 40px;border-radius:999px;font-weight:800}
+.ol{-webkit-text-stroke:3px rgba(0,0,0,.4);paint-order:stroke fill}
+.fit{display:inline-block}
+</style></head>
+<body><div id="stage"></div>
+<script>
+const W=1080,H=1920,stage=document.getElementById('stage');
+const MOTS=[["Entrepreneurs,", 0.42, 1.4], ["entreprises,", 1.66, 2.32], ["donnez", 2.74, 3.04], ["plus", 3.1, 3.26], ["de", 3.32, 3.46], ["force", 3.52, 3.72], ["à", 3.76, 3.8], ["votre", 3.84, 4.0], ["image", 4.06, 4.4], ["avec", 4.48, 4.7], ["Valex,", 4.88, 5.26], ["l'infographiste.", 5.52, 6.32], ["Identité", 6.92, 7.4], ["visuelle,", 7.46, 7.9], ["création", 8.18, 8.7], ["de", 8.74, 8.82], ["logos,", 8.88, 9.22], ["flyers,", 9.6, 10.18], ["affiches,", 10.44, 10.84], ["dépliants", 11.1, 11.64], ["et", 11.68, 11.78], ["brochures.", 11.82, 12.38], ["Des", 12.8, 12.9], ["visuels", 12.96, 13.38], ["professionnels", 13.42, 14.1], ["pensés", 14.38, 14.74], ["pour", 14.78, 14.9], ["faire", 14.94, 15.14], ["remarquer", 15.2, 15.64], ["votre", 15.68, 15.82], ["activité.", 15.86, 16.34], ["Besoin", 17.1, 17.38], ["de", 17.42, 17.48], ["maîtriser", 17.52, 17.88], ["la", 17.94, 18.02], ["création", 18.06, 18.46], ["graphique", 18.5, 18.84], ["?", 18.86, 18.86], ["Valex", 19.46, 19.86], ["propose", 19.9, 20.22], ["aussi", 20.26, 20.46], ["des", 20.5, 20.6], ["formations", 20.66, 21.1], ["en", 21.12, 21.2], ["graphisme", 21.24, 21.7], ["pour", 21.98, 22.08], ["vous", 22.12, 22.26], ["aider", 22.3, 22.54], ["à", 22.6, 22.64], ["développer", 22.82, 23.26], ["vos", 23.28, 23.4], ["compétences.", 23.42, 23.96], ["Pour", 24.62, 24.72], ["une", 24.76, 24.86], ["communication", 24.92, 25.5], ["claire,", 25.7, 26.06], ["créative", 26.32, 26.92], ["et", 26.96, 27.06], ["soignée,", 27.14, 27.48], ["faites", 27.9, 28.1], ["confiance", 28.14, 28.56], ["à", 28.62, 28.7], ["Valex.", 28.76, 29.16], ["Vos", 29.56, 29.8], ["idées", 29.88, 30.22], ["prennent", 30.26, 30.6], ["forme.", 30.68, 31.0], ["Contactez", 31.6, 32.1], ["dès", 32.12, 32.22], ["maintenant", 32.26, 32.74], ["le", 32.8, 32.94], ["+237", 33.12, 33.96], ["6", 34.52, 34.54], ["72", 35.02, 35.42], ["36", 35.8, 36.2], ["74", 36.66, 37.14], ["52.", 37.58, 37.8]];
+const LARG=902;                 /* largeur maxi d'un texte */
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const E={lin:x=>x,out:x=>1-Math.pow(1-x,3),expo:x=>x>=1?1:1-Math.pow(2,-11*x),
+ in:x=>x*x*x,inOut:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,
+ back:x=>{const c=1.9;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)},
+ elas:x=>x<=0?0:x>=1?1:Math.pow(2,-10*x)*Math.sin((x*10-.75)*(2*Math.PI)/3)+1};
+const els=[];
+function mk(html,cls='',style=''){const d=document.createElement('div');d.className='abs '+cls;d.style.cssText=style;d.innerHTML=html;stage.appendChild(d);
+ const o={el:d,anims:[],def:{x:0,y:0,s:1,r:0,o:0,b:0}};els.push(o);return o}
+function A(o,t0,dur,props,ease='out'){o.anims.push({t0,dur,props,ease});return o}
+function show(o,t0,t1,dy=60,d=.4){A(o,t0,d,{o:[0,1],y:[dy,0]},'out');if(t1)A(o,t1,.2,{o:[1,0],y:[0,-40]},'in');return o}
+function render(t){
+ for(const o of els){
+  const st={...o.def},set={};
+  for(const a of o.anims)for(const k in a.props){
+   const [f,to]=a.props[k];
+   if(t>=a.t0){st[k]=f+(to-f)*E[a.ease](clamp((t-a.t0)/a.dur));set[k]=1}
+   else if(!set[k]){st[k]=f;set[k]=1}
+  }
+  const e=o.el,op=clamp(st.o);
+  e.style.opacity=op;e.style.visibility=op<=.002?'hidden':'visible';
+  e.style.transform=`translate3d(${st.x}px,${st.y}px,0) rotate(${st.r+(o.def.r0||0)}deg) scale(${st.s})`;
+  e.style.filter=st.b>.15?`blur(${st.b}px)`:'none';
+  if(o.tick)o.tick(t,e);
+ }
+}
+/* aucun texte ne doit dépasser : on réduit la taille jusqu'à ce qu'il tienne */
+function ajusterTous(){
+ for(const sp of stage.querySelectorAll('.fit')){
+  const par=sp.parentElement;
+  let taille=parseFloat(getComputedStyle(par).fontSize);
+  for(let i=0;i<24;i++){
+   const l=sp.offsetWidth;   /* largeur de mise en page : insensible aux transformations */
+   if(l<=LARG||taille<24)break;
+   taille=Math.max(24,taille*Math.min(.97,LARG/l));
+   par.style.fontSize=taille+'px';
+  }
+ }
+}
+window.render=render;
+
+/* ================= FOND ================= */
+const fond=mk('','',`left:0;top:0;width:${W}px;height:${H}px;background:radial-gradient(1100px 1100px at 50% 35%,#7d1fd6 0%,#45097f 48%,#180037 100%)`);fond.def.o=1;
+for(let i=0;i<6;i++){
+ const col=i%2?'rgba(225,31,214,.5)':'rgba(120,45,235,.55)';
+ const b=mk('','',`left:${[-240,560,60,700,260,-140][i]}px;top:${[180,420,1060,1480,-160,900][i]}px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,${col},transparent 70%)`);
+ b.def.o=1;b.tick=(t,e)=>{e.style.transform=`translate3d(${Math.sin(t*.55+i*1.7)*130}px,${Math.cos(t*.45+i)*150}px,0) scale(${1+.18*Math.sin(t*.8+i)})`};
+}
+const FORMES=[[120,520,150,'cercle',14],[900,760,110,'croix',16],[180,1180,120,'carre',12],
+ [930,1320,140,'cercle',18],[80,900,90,'triangle',15],[980,500,96,'carre',13],
+ [540,1560,120,'croix',17],[300,1640,100,'cercle',12],[760,1620,86,'triangle',16]];
+FORMES.forEach(([x,y,d,type,v],i)=>{
+ let inner='';
+ if(type==='cercle') inner=`<div style="width:100%;height:100%;border:6px solid rgba(255,255,255,.16);border-radius:50%"></div>`;
+ else if(type==='carre') inner=`<div style="width:100%;height:100%;border:6px solid rgba(255,255,255,.14);border-radius:18px"></div>`;
+ else if(type==='croix') inner=`<div style="position:relative;width:100%;height:100%"><div style="position:absolute;left:46%;top:0;width:8%;height:100%;background:rgba(255,255,255,.15)"></div><div style="position:absolute;top:46%;left:0;height:8%;width:100%;background:rgba(255,255,255,.15)"></div></div>`;
+ else inner=`<div style="width:0;height:0;border-left:${d/2}px solid transparent;border-right:${d/2}px solid transparent;border-bottom:${d*0.86}px solid rgba(255,255,255,.13)"></div>`;
+ const o=mk(inner,'',`left:${x-d/2}px;top:${y-d/2}px;width:${d}px;height:${d}px`);
+ o.def.o=1;
+ o.tick=(t,e)=>{e.style.transform=`translate3d(${Math.sin(t*.42+i*1.3)*34}px,${Math.cos(t*.33+i*.9)*42}px,0) rotate(${(t*v*0.7+i*40)%360}deg)`};
+});
+const grain=mk('','',`left:0;top:0;width:${W}px;height:${H}px;opacity:.07;mix-blend-mode:overlay;background-image:repeating-radial-gradient(circle at 17% 32%,#fff 0 1px,transparent 1px 3px)`);grain.def.o=1;
+const onde=mk('','',`left:${W/2-470}px;top:${H/2-470}px;width:940px;height:940px;border-radius:50%;border:4px solid rgba(255,255,255,.13)`);
+onde.def.o=1;onde.tick=(t,e)=>{const p=(t%.5)/.5;e.style.transform=`scale(${.72+p*.6})`;e.style.opacity=.4*(1-p)};
+
+/* ================= OUTILS DE SCÈNE ================= */
+function carte(src,x,y,w,h,{r=0,rad=30,pos='50% 50%',fit='cover'}={}){
+ const o=mk(`<img src="../assets/${src}" style="object-fit:${fit};object-position:${pos}">`,'card',
+  `left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:${rad}px`);
+ o.def.r0=r;return o;
+}
+/* entrée/sortie d'un groupe de cartes + respiration sur l'image interne */
+function animCartes(cartes,t0,t1){
+ cartes.forEach((o,i)=>{
+  A(o,t0+.04+i*.07,.5,{o:[0,1],y:[170,0],s:[.62,1]},'back');
+  A(o,t1,.18,{o:[1,0],s:[1,.82],y:[0,-70]},'in');
+  const img=o.el.firstElementChild;
+  o.tick=(t)=>{const k=clamp((t-t0)/2.2);
+   img.style.transform=`scale(${1.03+.09*k}) translate3d(0,${Math.sin((t-t0)*1.9+i)*6}px,0)`};
+ });
+}
+function titre(html,t0,t1,{top=340,size=92,cls='',lh=.98}={}){
+ const o=mk(`<span class="fit">${html}</span>`,'big c '+cls,`top:${top}px;font-size:${size}px;line-height:${lh};text-shadow:0 10px 40px rgba(0,0,0,.5)`);
+ A(o,t0,.4,{o:[0,1],y:[55,0],s:[.85,1],b:[10,0]},'back');
+ if(t1)A(o,t1,.2,{o:[1,0],y:[0,-45],s:[1,.92]},'in');
+ return o;
+}
+function slam(txt,t0,t1,{top=500,size=150,cls=''}={}){
+ const o=mk(`<span class="fit">${txt}</span>`,'big c ol '+cls,`top:${top}px;font-size:${size}px`);
+ A(o,t0,.28,{o:[0,1],s:[2.4,1],b:[22,0]},'expo');
+ A(o,t0+.28,.6,{s:[1,1.035]},'out');
+ if(t1)A(o,t1,.18,{o:[1,0],s:[1.035,.9]},'in');
+ return o;
+}
+function pastille(html,t0,t1,{top=330,bg='#fff',col='#1a0a3a',size=40}={}){
+ const o=mk(`<span class="pill" style="background:${bg};color:${col};font-size:${size}px"><span class="fit">${html}</span></span>`,'c',`top:${top}px`);
+ A(o,t0,.4,{o:[0,1],y:[45,0],s:[.8,1]},'back');if(t1)A(o,t1,.2,{o:[1,0]},'in');return o;
+}
+
+/* ===== S1 0.00–2.68 ACCROCHE : l'image 1 est pleine et déjà en mouvement ===== */
+function bande(y,vitesse,liste){
+ const o=mk('','',`left:-80px;top:${y}px;width:1240px;height:300px;overflow:hidden`);o.def.o=1;
+ const row=document.createElement('div');row.style.cssText='position:absolute;display:flex;gap:24px;height:300px';
+ liste.concat(liste).forEach(s=>{const i=document.createElement('img');i.src='../assets/'+s;
+  i.style.cssText='width:300px;height:300px;object-fit:cover;border-radius:24px;box-shadow:0 14px 36px rgba(0,0,0,.55),0 0 0 4px rgba(255,255,255,.9)';row.appendChild(i)});
+ o.el.appendChild(row);
+ const L=liste.length*324;
+ o.tick=(t)=>{const d=vitesse>0?-((t*vitesse)%L):-(L-((t*-vitesse)%L));row.style.transform=`translate3d(${d}px,0,0)`};
+ A(o,2.42,.24,{o:[1,0]},'lin');return o;
+}
+bande(470,520,['braza_board.jpg','greenharvest.jpg','perfectwash.jpg','azatimi.jpg','dreamland.jpg','ebene_board.jpg']);
+bande(790,-460,['istic_brochure.jpg','elvirado.jpg','valex_poster.jpg','newhorizon.jpg','ebene_paper.jpg','laptop_crop.jpg']);
+bande(1110,580,['guide.jpg','formation_box.jpg','cash_logo.jpg','valex_poster.jpg','greenharvest.jpg','dreamland.jpg']);
+const voile=mk('','',`left:0;top:1020px;width:${W}px;height:400px;background:linear-gradient(transparent,rgba(12,0,32,.86) 34%,rgba(12,0,32,.93))`);
+A(voile,0.30,.22,{o:[0,1]},'out');A(voile,2.42,.22,{o:[1,0]},'lin');
+const s1badge=mk('<span class="pill" style="background:var(--mag);font-size:40px;letter-spacing:4px"><span class="fit">VOTRE IMAGE VOUS VEND</span></span>','c','top:340px');
+s1badge.def.o=1;
+s1badge.tick=(t,e)=>{if(t<2.42)e.style.transform=`translate3d(0,${Math.max(0,50-t*260)}px,0) scale(${Math.min(1,.6+t*2.4)}) rotate(${Math.sin(t*5.5)*1.4}deg)`};
+A(s1badge,2.42,.2,{o:[1,0]},'lin');
+slam('ENTREPRENEURS',0.42,2.42,{top:1140,size:108});
+slam('ENTREPRISES',1.66,2.42,{top:1270,size:140,cls:'jaune'});
+const eclair=mk('','',`left:0;top:0;width:${W}px;height:${H}px;background:#fff`);
+A(eclair,1.66,.02,{o:[0,.42]},'lin');A(eclair,1.68,.2,{o:[.42,0]},'out');
+
+/* ===== S2 2.68–6.60 PROMESSE + VALEX ===== */
+titre('Donnez plus de force',2.74,6.58,{top:340,size:84});
+slam('À VOTRE IMAGE',3.52,6.58,{top:440,size:118,cls:'jaune'});
+const halo=mk('','',`left:280px;top:600px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(225,31,214,.8),transparent 68%)`);
+A(halo,4.3,.6,{o:[0,1],s:[.5,1]},'out');A(halo,6.58,.2,{o:[1,0]},'lin');
+halo.tick=(t,e)=>{if(t>4.3&&t<6.7)e.style.transform=`scale(${1+.055*Math.sin(t*5)})`};
+const port=mk('<img src="../assets/portrait_cut.png" style="width:100%;height:100%;object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 26px 55px rgba(0,0,0,.65))">','',
+ `left:250px;top:560px;width:580px;height:580px`);
+A(port,2.80,.7,{o:[0,1],y:[230,0],s:[.8,1]},'back');A(port,6.58,.2,{o:[1,0],y:[0,-110]},'in');
+slam('VALEX',4.88,6.58,{top:1150,size:185});
+pastille('L’INFOGRAPHISTE',5.52,6.58,{top:1330,size:42});
+
+/* ===== S3 6.60–12.66 SERVICES EN RAFALE ===== */
+function service(mot,t0,t1,cartes,{size=118,cls=''}={}){
+ const h=mk(`<span class="fit">${mot}</span>`,'big c ol '+cls,`top:340px;font-size:${size}px;line-height:.95`);
+ A(h,t0,.24,{o:[0,1],s:[1.7,1],b:[14,0]},'expo');A(h,t1,.15,{o:[1,0],s:[1,.88]},'in');
+ animCartes(cartes,t0,t1);
+}
+const T=[6.92,8.88,9.60,10.44,11.10,11.82,12.66];
+service('IDENTITÉ<br>VISUELLE',T[0],T[1]-.06,
+ [carte('greenharvest.jpg',105,560,440,440,{r:-5}),carte('azatimi.jpg',540,720,430,430,{r:5}),carte('braza_board.jpg',245,1000,520,400,{r:-2})],{size:112});
+service('LOGOS',T[1],T[2]-.06,
+ [carte('elvirado.jpg',120,540,400,400,{r:-6,rad:36}),carte('dreamland.jpg',560,560,400,400,{r:5,rad:36}),carte('newhorizon.jpg',300,990,480,400,{r:-2,rad:36})],{size:165});
+service('FLYERS',T[2],T[3]-.06,
+ [carte('perfectwash.jpg',265,500,550,780,{r:-3,pos:'50% 18%'})],{size:175});
+service('AFFICHES',T[3],T[4]-.06,
+ [carte('laptop_crop.jpg',120,520,450,610,{r:-5}),carte('valex_poster.jpg',520,700,450,600,{r:5})],{size:160});
+service('DÉPLIANTS',T[4],T[5]-.06,
+ [carte('istic_brochure.jpg',115,540,620,470,{r:-4}),carte('ebene_paper.jpg',400,990,560,420,{r:4})],{size:155});
+service('BROCHURES',T[5],T[6],
+ [carte('ebene_board.jpg',130,540,520,520,{r:-5}),carte('braza_board.jpg',430,1000,510,410,{r:4})],{size:150});
+
+/* ===== S4 12.66–16.86 PREUVE : le mur de réalisations ===== */
+titre('Des visuels',12.80,16.86,{top:340,size:84});
+slam('PROFESSIONNELS',13.42,16.86,{top:440,size:112,cls:'gr'});
+
+['braza_board.jpg','greenharvest.jpg','azatimi.jpg','ebene_board.jpg','dreamland.jpg','perfectwash.jpg','elvirado.jpg','istic_brochure.jpg','newhorizon.jpg']
+.forEach((im,i)=>{
+ const c=i%3,r=Math.floor(i/3);
+ const o=carte(im,160+c*256,580+r*256,236,236,{rad:22});
+ A(o,12.88+i*.05,.42,{o:[0,1],s:[.3,1],r:[-14,0]},'back');
+ A(o,16.86,.2,{o:[1,0],s:[1,.75]},'in');
+ const img=o.el.firstElementChild;
+ o.tick=(t)=>{img.style.transform=`scale(${1.03+.06*clamp((t-12.9)/4)})`};
+});
+
+
+/* ===== S5 16.86–24.34 FORMATION ET GUIDE ===== */
+titre('Besoin de maîtriser<br>la création graphique&nbsp;?',17.10,19.26,{top:560,size:82,lh:1.12});
+slam('?',18.50,19.26,{top:860,size:280,cls:'jaune'});
+pastille('FORMATION',19.46,24.30,{top:330,bg:'var(--gr)',col:'#fff',size:38});
+titre('CASH DESIGN',19.90,24.30,{top:410,size:118,cls:'jaune'});
+const boxF=carte('formation_box.jpg',110,560,860,600,{r:-2});
+A(boxF,19.90,.6,{o:[0,1],x:[-900,0]},'back');A(boxF,22.02,.28,{o:[1,0],x:[0,-900]},'in');
+boxF.def.r0=-2;
+pastille('Photoshop &amp; Illustrator · 100% pratique',20.30,22.02,{top:1200,size:36});
+const prix1=mk('<span class="fit">49&nbsp;900<span style="font-size:52px"> F</span></span>','big',
+ `left:300px;top:1280px;width:480px;padding:22px 0;text-align:center;font-size:116px;background:radial-gradient(circle at 30% 20%,#ff2d4d,#b80019);border-radius:36px;box-shadow:0 0 0 7px #fff,0 24px 60px rgba(0,0,0,.5)`);
+A(prix1,20.66,.6,{o:[0,1],s:[.1,1],r:[24,-3]},'elas');A(prix1,22.02,.25,{o:[1,0],s:[1,.7]},'in');
+const guide=carte('guide.jpg',175,550,730,730,{r:2});
+A(guide,22.12,.6,{o:[0,1],x:[900,0]},'back');A(guide,24.30,.25,{o:[1,0],x:[0,900]},'in');
+guide.def.r0=2;
+slam('+100 000 F / MOIS',22.82,24.30,{top:1310,size:84,cls:'gr'});
+const prix2=mk('<span class="fit">3&nbsp;500<span style="font-size:38px"> F</span></span>','big',
+ `left:390px;top:1150px;width:300px;padding:14px 0;text-align:center;font-size:80px;background:radial-gradient(circle at 30% 20%,#ff2d4d,#b80019);border-radius:999px;box-shadow:0 0 0 6px #fff`);
+A(prix2,23.42,.55,{o:[0,1],s:[.1,1],r:[-24,4]},'elas');A(prix2,24.30,.25,{o:[1,0],s:[1,.7]},'in');
+
+/* ===== S6 24.34–29.46 CONFIANCE ===== */
+titre('Une communication',24.62,27.80,{top:340,size:84});
+[['CLAIRE',25.70],['CRÉATIVE',26.32],['SOIGNÉE',27.14]].forEach(([m,tt],i)=>{
+ const o=mk(`<span class="fit"><span style="display:inline-block;padding:12px 44px;border-radius:999px;border:4px solid var(--gr);background:rgba(47,193,74,.18)"><span style="color:var(--gr)">✓</span> ${m}</span></span>`,
+  'big c',`top:${440+i*132}px;font-size:76px`);
+ A(o,tt,.4,{o:[0,1],x:[i%2?400:-400,0],s:[.82,1]},'back');A(o,27.80,.2,{o:[1,0],s:[1,.9]},'in');
+});
+const halo2=mk('','',`left:285px;top:880px;width:510px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(225,31,214,.75),transparent 68%)`);
+A(halo2,27.80,.45,{o:[.25,1],s:[.85,1]},'out');A(halo2,29.38,.2,{o:[1,0]},'lin');halo2.def.o=0;
+const port2=mk('<img src="../assets/portrait_cut.png" style="width:100%;height:100%;object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 20px 48px rgba(0,0,0,.65))">','',
+ `left:255px;top:810px;width:570px;height:575px`);
+A(port2,24.70,.6,{o:[0,1],y:[180,0],s:[.82,1]},'back');A(port2,29.38,.2,{o:[1,0]},'lin');
+slam('FAITES CONFIANCE',28.14,29.38,{top:420,size:108});
+
+/* ===== S7 29.46–31.50 SIGNATURE ===== */
+slam('VOS IDÉES',29.56,31.42,{top:560,size:148});
+slam('PRENNENT FORME',30.26,31.42,{top:720,size:122,cls:'jaune'});
+const forme=mk('','',`left:330px;top:890px;width:420px;height:420px;border:10px solid var(--gr);background:rgba(47,193,74,.14)`);
+A(forme,29.70,.7,{o:[0,1],s:[.2,1]},'elas');A(forme,31.42,.2,{o:[1,0]},'lin');
+forme.tick=(t,e)=>{const k=clamp((t-30.30)/.75);e.style.borderRadius=(50-42*E.inOut(k))+'%'};
+const sigle=mk('<span class="fit">VD</span>','big',`left:330px;top:890px;width:420px;height:420px;font-size:160px;display:flex;align-items:center;justify-content:center;letter-spacing:6px`);
+A(sigle,30.68,.45,{o:[0,1],s:[.4,1]},'back');A(sigle,31.42,.2,{o:[1,0]},'lin');
+
+/* ===== S8 31.50–39.00 APPEL À L'ACTION ===== */
+const port3=mk('<img src="../assets/portrait_cut.png" style="width:100%;height:100%;object-fit:cover;object-position:50% 2%;transform:scale(1.3)">','',
+ `left:400px;top:330px;width:280px;height:280px;border-radius:50%;overflow:hidden;background:linear-gradient(160deg,#efdcff,#fff);box-shadow:0 0 0 7px var(--mag),0 0 60px rgba(225,31,214,.85)`);
+A(port3,31.60,.6,{o:[0,1],s:[0,1],r:[-90,0]},'back');
+port3.tick=(t,e)=>{if(t>32.2)e.style.transform=`scale(${1+.028*Math.sin((t-32.2)*9)})`};
+slam('CONTACTEZ-MOI',31.60,null,{top:660,size:128});
+pastille('Valex · Douala, Cameroun',32.26,null,{top:810,size:38});
+const numBox=mk('','',`left:70px;top:900px;width:940px;height:185px;border-radius:38px;background:rgba(0,0,0,.4);border:4px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;gap:16px;font-weight:900;font-size:98px`);
+A(numBox,32.26,.45,{o:[0,1],s:[.82,1]},'back');
+{const blocs=[['+237',33.12],['6',34.52],['72',35.02],['36',35.80],['74',36.66],['52',37.58]];
+ const spans=blocs.map(([txt])=>{const s=document.createElement('span');s.textContent=txt;s.style.display='inline-block';numBox.el.appendChild(s);return s});
+ numBox.tick=(t)=>{blocs.forEach(([txt,tb],i)=>{const k=clamp((t-tb)/.26),s=spans[i];
+  s.style.opacity=k;s.style.transform=`translate3d(0,${(1-E.back(k))*36}px,0) scale(${.55+.45*E.back(k)})`;
+  s.style.color=(t>=tb&&t<tb+.42)?'#ffc93c':'#fff'});};}
+const btn=mk('<span style="display:inline-block;padding:28px 60px;border-radius:999px;background:var(--gr);font-weight:900;font-size:58px;box-shadow:0 0 0 7px rgba(255,255,255,.95),0 18px 55px rgba(47,193,74,.75)"><span class="fit">💬 WHATSAPP DIRECT</span></span>','c','top:1140px');
+A(btn,32.80,.65,{o:[0,1],s:[.25,1]},'elas');
+btn.tick=(t,e)=>{if(t>33.5)e.style.transform=`scale(${1+.045*Math.abs(Math.sin((t-34)*3.1))})`};
+const livr=mk('<span class="fit"><b>Livraison en moins de 24H</b> · Devis gratuit</span>','c','top:1300px;font-size:42px;font-weight:600;color:#f6dbff');
+A(livr,33.60,.45,{o:[0,1],y:[36,0]},'out');
+const sign=mk('<span class="fit">VALEX <span class="jaune">L’INFOGRAPHISTE</span></span>','big c','top:1380px;font-size:56px;letter-spacing:0');
+A(sign,34.10,.5,{o:[0,1],s:[1.45,1],b:[9,0]},'expo');
+
+/* ===== HABILLAGE ===== */
+const bandeau=mk('','',`left:0;top:250px;width:${W}px;height:50px;overflow:hidden;background:rgba(0,0,0,.34)`);
+A(bandeau,2.68,.3,{o:[0,1]},'lin');A(bandeau,31.40,.3,{o:[1,0]},'lin');
+{const r=document.createElement('div');r.style.cssText='position:absolute;white-space:nowrap;font-weight:800;font-size:25px;line-height:50px;letter-spacing:5px';
+ r.innerHTML=('<span class="mag">◆</span> LOGO &nbsp; <span class="jaune">◆</span> FLYER &nbsp; <span class="gr">◆</span> AFFICHE &nbsp; <span class="mag">◆</span> BROCHURE &nbsp; <span class="jaune">◆</span> IDENTITÉ VISUELLE &nbsp; <span class="gr">◆</span> FORMATION &nbsp; ').repeat(5);
+ bandeau.el.appendChild(r);let LM=1737;
+ document.fonts.ready.then(()=>{LM=r.scrollWidth/5});
+ bandeau.tick=(t)=>{r.style.transform=`translate3d(${-((t*150)%LM)}px,0,0)`};}
+const barre=mk('<div style="height:100%;background:linear-gradient(90deg,#e11fd6,#ffc93c,#2fc14a)"></div>','',`left:0;top:${H-12}px;width:${W}px;height:12px;background:rgba(255,255,255,.16)`);
+barre.def.o=1;barre.tick=(t,e)=>{e.firstChild.style.width=clamp(t/39)*100+'%'};
+
+/* ===== SOUS-TITRES INCRUSTÉS, DANS LA ZONE SÛRE ===== */
+const groupes=(()=>{
+ const g=[];let cur=[];
+ for(const w of MOTS){
+  cur.push(w);
+  const txt=cur.map(x=>x[0]).join(' ');
+  const ponct=/[.?!]$/.test(w[0])||(/,$/.test(w[0])&&cur.length>=2);
+  if(cur.length>=5||txt.length>=26||(ponct&&cur.length>=2)){g.push(cur);cur=[]}
+ }
+ if(cur.length){if(cur.length===1&&g.length)g[g.length-1]=g[g.length-1].concat(cur);else g.push(cur)}
+ return g.map(c=>({mots:c,t0:c[0][1],t1:c[c.length-1][2]}));
+})();
+const sst=mk('','',`left:70px;top:1420px;width:940px;height:170px;display:flex;align-items:center;justify-content:center`);
+sst.def.o=1;A(sst,33.0,.25,{o:[1,0]},'lin');   /* coupés quand le numéro s'affiche */
+sst.tick=(t,e)=>{
+ if(t>=33.3){e.innerHTML='';return}
+ let g=null;
+ for(let i=0;i<groupes.length;i++){
+  const a=groupes[i],s=groupes[i+1];
+  const fin=s?Math.min(a.t1+.5,s.t0):a.t1+.6;
+  if(t>=a.t0-.1&&t<fin){g=a;break}
+ }
+ if(!g){e.innerHTML='';return}
+ const txt=g.mots.map(x=>x[0]).join(' ');
+ const taille=txt.length>24?44:txt.length>17?50:56;
+ const html=g.mots.map(([m,a,b])=>{
+  const vu=t>=a-.03, actif=t>=a&&t<b+.12;
+  return `<span style="display:inline-block;margin:0 9px;color:${actif?'#ffc93c':vu?'#fff':'rgba(255,255,255,.38)'}">${m}</span>`;
+ }).join('');
+ e.innerHTML=`<div style="font-weight:800;font-size:${taille}px;line-height:1.16;text-align:center;padding:16px 28px;border-radius:22px;background:rgba(10,0,28,.66);-webkit-text-stroke:2px rgba(0,0,0,.55);paint-order:stroke fill;text-shadow:0 4px 16px rgba(0,0,0,.75)">${html}</div>`;
+};
+
+
+
+/* secousse de caméra sur les mots qui claquent, flash sur les coupes */
+const SECOUSSES=[0.42,1.66,3.52,4.88,6.92,8.88,9.60,10.44,11.10,11.82,12.80,13.42,17.10,18.50,19.90,20.66,22.82,23.42,28.14,29.56,30.26,31.60];
+const COUPES=[6.92,12.80,17.10,19.90,24.62,29.56,31.60];
+const flash=mk('','',`left:0;top:0;width:${W}px;height:${H}px;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.85) 50%,transparent 65%);background-size:300% 100%`);
+flash.def.o=1;
+flash.tick=(t,e)=>{
+ let o=0,p=0;
+ for(const c of COUPES){const d=t-c;if(d>=-.04&&d<.16){o=Math.max(o,Math.sin(clamp((d+.04)/.20)*Math.PI)*.30);p=clamp((d+.04)/.20)}}
+ e.style.opacity=o;e.style.backgroundPosition=(100-p*200)+'% 0';
+};
+function camera(t){
+ let x=0,y=0;
+ for(const c of SECOUSSES){const d=t-c;if(d>=0&&d<.3){const k=Math.exp(-d*16);x+=Math.sin(d*85)*9*k;y+=Math.cos(d*72)*7*k}}
+ stage.style.transform=`translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,0) scale(1.018)`;
+}
+const _render=render;
+render=function(t){camera(t);_render(t)};
+window.render=render;
+
+window.DUREE=39;
+window.PRET=false;
+document.fonts.ready.then(()=>{ajusterTous();render(0);window.PRET=true});
+render(0);
+</script></body></html>

@@ -1,2 +1,5 @@
-node_modules
-build/frames
+node_modules/
+v2/images/
+v2/planche/
+v2/_*.wav
+build/frames/
