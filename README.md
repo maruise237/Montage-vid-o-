@@ -37,3 +37,17 @@ visionnage et servent les 20 à 30 % de personnes qui regardent sans le son.
 La première image est pleine et déjà en mouvement, ce qui compte pour le
 taux d'accroche à 3 secondes. Pas de fondu au noir final : la vidéo boucle
 proprement. Son à -14 LUFS, voix 9 dB au-dessus de la musique.
+
+## Podcast « Une IA me répond » (`podcast/`)
+
+| Fichier | Rôle |
+|---|---|
+| `podcast_claude_partage.mp4` | version longue, 2 min 05, 5 questions |
+| `podcast_claude_court_partage.mp4` | version courte, 1 min 30, 4 questions |
+| `podcast/reponses.json` | texte des réponses de Claude (voix ElevenLabs « Brian », multilingual v2) |
+| `podcast/montage.py` | plan de montage : coupes de la caméra, voix de Claude resserrée, enveloppe de la voix pour le logo |
+| `podcast/animation.html` | écran Claude (logo réactif, code animé, illustrations), mots-clés, sous-titres karaoké |
+| `podcast/son.py` | musique (deux ambiances), bruitages calés sur `evenements*.json`, ducking |
+
+Reconstruire (mettre la vidéo source dans `podcast/source.mp4`, puis `V=_court` pour la version courte) :
+`python3 podcast/montage.py && python3 podcast/construire.py && node podcast/evenements.mjs && python3 podcast/son.py && node podcast/rendu.mjs`

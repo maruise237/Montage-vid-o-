@@ -3,3 +3,11 @@ v2/images/
 v2/planche/
 v2/_*.wav
 build/frames/
+podcast/lui/
+podcast/images*/
+podcast/planche/
+podcast/source.*
+podcast/page*.html
+podcast_claude.mp4
+podcast_claude_court.mp4
+podcast/*.log
