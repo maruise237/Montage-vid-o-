@@ -120,7 +120,7 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
 - À faire si Mariuse fournit de VRAIES preuves (capture du tableau de bord, messages clients) : les ajouter
   sur l'écran KamForms. Ne jamais en fabriquer.
 
-## 2026-10 — Reel « ChatGPT / KamForms » rallongé (7,5 s → 9,9 s)
+## 2026-10 — Reel « ChatGPT / KamForms » rallongé (7,5 s → 10,5 s)
 - Prise : « ChatGPT génère des photos personnalisées. KamForms génère des formulaires interactifs
   directement sur WhatsApp. » Demande : « trouver un moyen de faire un peu durer la vidéo ».
 - Transcription : whisper se trompait (« formes », « je l'ai pour mes… ») ; **Scribe sur des morceaux de 3 s**
@@ -140,3 +140,7 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
 - Le site a une page « études de cas » (Amina à Abidjan, Seydou à Dakar, Chez Mado à Douala) : NE PAS
   l'utiliser comme preuve sociale en vidéo tant que Mariuse n'a pas confirmé que ce sont de vrais clients.
 - Fichiers : `kamforms2/montage.py`, `kamforms2/son.py`, `kamforms2/finir.sh` → `reel_kamforms_2.mp4`.
+- Retour de Mariuse : « ChatGPT » était coupé au début. Cause : je me suis fié à l'horodatage de whisper
+  (0,74 s) alors que la voix démarre à 0,13 s (« Tchat-dji-pi-ti » dure ~1 s). **Leçon : le point de coupe
+  d'entrée se cale sur l'ÉNERGIE du signal (RMS par 50 ms), jamais sur le premier mot de whisper**, et on
+  réécoute/retranscrit les 3 premières secondes du rendu avant de livrer.

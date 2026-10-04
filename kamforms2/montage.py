@@ -22,7 +22,7 @@ F = lambda n, s: ImageFont.truetype(f'{RACINE}/fonts/{n}', s)
 SANS, SERIF_I = 'InterTight-ExtraBold.ttf', 'InstrumentSerif-Italic.ttf'
 CREME, ENCRE, GRIS = (243, 238, 228), (20, 20, 20), (110, 104, 96)
 
-SEGS = [(0.70, 2.85), (3.88, 6.90)]
+SEGS = [(0.08, 2.85), (3.88, 6.90)]
 OFF = []; o = 0
 for a, b in SEGS: OFF.append((o, o + b - a, a - o)); o += b - a
 FIN_VOIX = o
@@ -44,7 +44,7 @@ def d_de(r):  # instant de démo (sortie) d'un temps réel de capture
     return u
 
 # mots (Scribe pour le texte, horodatage vérifié)
-MOTS = [('ChatGPT', .74, 1.14), ('génère', 1.18, 1.46), ('des', 1.5, 1.6), ('photos', 1.64, 1.9),
+MOTS = [('ChatGPT', .13, 1.08), ('génère', 1.18, 1.46), ('des', 1.5, 1.6), ('photos', 1.64, 1.9),
         ('personnalisées.', 1.96, 2.68), ('KamForms', 3.98, 4.40), ('génère', 4.42, 4.68), ('des', 4.72, 4.82),
         ('formulaires', 4.86, 5.26), ('interactifs', 5.32, 5.82), ('directement', 5.86, 6.30), ('sur', 6.34, 6.44),
         ('WhatsApp.', 6.48, 6.76)]
