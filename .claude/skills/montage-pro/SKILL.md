@@ -13,6 +13,32 @@ Ce fichier grandit à chaque projet. Ordre de lecture :
 2. `references/inspirations.md` : décorticage plan par plan des vidéos que Mariuse adore.
 3. `references/journal.md` : ce qu'on a livré, les retours de Mariuse, ce qu'on a appris.
 
+## 0. RÈGLE MÈRE : choisir les techniques selon la vidéo (pas toutes, pas partout)
+
+Les inspirations sont de **types différents**. Une technique qui marche dans un type peut faire « slop »
+dans un autre. Avant de monter : **identifier le type de vidéo, puis piocher dans SA colonne**.
+Jamais le même traitement par défaut (ex. fond assombri + texte derrière) sur chaque vidéo.
+
+| Type de vidéo (référence) | À utiliser | À éviter |
+|---|---|---|
+| **Tuto outil / astuce** (Toprak, Med, Loucash) | Vraies captures + curseur, **logo officiel** de chaque outil cité, numéro d'étape 1/2/3, fond clair entre les captures | Mèmes en série, B-roll décoratif, longs effets : on veut voir l'outil |
+| **Vulgarisation / histoire** (Faro) | B-roll au-dessus de la tête, mèmes, cartes-titres de chapitre, étude citée, schéma qui se construit, rythme 1 changement / 2 s | Captures d'écran, numéros d'étape (ce n'est pas un tuto) |
+| **Business / preuve** (Wu) | Couleur de marque, preuve sociale (messages clients, chiffres), B-roll lifestyle, mot géant | Mèmes trop potaches qui cassent la crédibilité |
+| **Podcast / interview long** (nos podcasts) | Multicam simulé, sous-titres propres, texte derrière **seulement** sur le hook et les changements de chapitre | Texte derrière en continu, un visuel par phrase (fatigant sur 2 min+) |
+| **Pub / motion design** (Valex) | Typo animée, couleurs de la marque, voix off qui dicte le rythme | Règles facecam (multicam, sous-titres 1–3 mots) si personne à l'écran |
+
+Conditions par technique :
+- **Texte derrière la personne** : seulement s'il y a de la place au-dessus de la tête (≥ 15 % de l'écran)
+  et pas de mains devant le visage ; 2 à 4 fois par vidéo (hook, chapitres), pas tout le temps.
+  Le reste du temps, **image naturelle, non assombrie**.
+- **Assombrissement du fond** (quand texte derrière) : **léger**, `FOND = 0.45`, flou 3 px. Mariuse :
+  « pas exagéré » : à ×0,30 on voyait que la personne était détourée. Ne jamais descendre sous 0,40.
+- **Multicam simulé** : seulement si tourné sous un seul angle. Zoom max selon la résolution (×1,45 pour
+  432 px de large, ×2 possible en 1080 px+).
+- **Mèmes** : seulement si le ton est détendu et le public grand public. Pas dans une pub client.
+- **Captures / logos** : dès qu'un outil, site ou appli est cité (voir règle 7).
+- Dans le doute : **moins d'effets, mieux choisis**. Un effet doit servir la phrase, pas décorer.
+
 ## 1. Les 11 règles qui séparent le pro du slop
 
 1. **Une idée = un écran.** Chaque phrase clé a sa propre composition. Jamais le même layout plus de ~4 s.
@@ -26,8 +52,8 @@ Ce fichier grandit à chaque projet. Ordre de lecture :
 4. **Profondeur : le texte DERRIÈRE le sujet.** Gros titre posé derrière la tête (détourage de la personne)
    = effet magazine immédiat. C'est le marqueur n°1 du « pro » vs « template ».
 5. **Sous-titres : 1 à 3 mots, pas de karaoké coloré criard.** Blanc, propre, **juste sous le menton**
-   (≈ 50–68 % de la hauteur), **jamais dans les 24 % du bas** (légende + boutons) ni la colonne de droite.
-   Les yeux du sujet sur la ligne du tiers haut. Vérifier avec `outils/zone_securite.py`.
+   (≈ 50–68 % de la hauteur), pas collés en bas de l'écran. C'est tout : pas de grosse procédure
+   (Mariuse ne publie pas surtout sur Instagram ; `outils/zone_securite.py` existe si besoin, optionnel).
    Emphase : le mot clé monte en taille, passe en italique serif, OU (style Faro) capitales grasses
    blanches avec **un seul mot fixe en jaune** — c'est différent du karaoké qui colore chaque mot.
 6. **Alterner les ambiances.** Facecam sombre ↔ plein écran clair (papier blanc/crème, formes organiques,
@@ -36,6 +62,13 @@ Ce fichier grandit à chaque projet. Ordre de lecture :
    **cercle loupe** sur le réglage dont on parle, valeurs qui changent (100 % → 85 %). Pas d'icônes génériques.
    **Prouver** : étude datée + revue + photo du chercheur (Faro), capture des messages de clients (Wu).
    B-roll **au-dessus de la tête** (tiers haut, change à chaque phrase) plutôt que de cacher le visage.
+   **Outil cité = son VRAI logo**, jamais une forme inventée ni une icône générique :
+   `python3 outils/logo.py "Nom" [domaine.com]` (Wikimedia → Simple Icons → favicon, cache `assets/logos/`),
+   et **regarder le PNG** avant de l'utiliser. Deux usages vus chez les pros :
+   - mention rapide (on ne s'attarde pas) : petit logo (~120–160 px) qui **pop à côté ou juste sous le
+     sous-titre** pendant 1–1,5 s, ou collé au mot dans le titre (« Instagram » + glyphe, Toprak) ;
+   - l'outil est le sujet : grande carte (fond blanc ou couleur de la marque, coins arrondis) avec le logo
+     officiel complet dans le tiers haut au-dessus de la tête (KlingAI, MiniMax chez Loucash), puis captures.
 8. **Illustrations avec une DA.** Ex. Loucash : aplats corail #E07A5F + crème + traits noirs dessinés main,
    mêmes couleurs partout. Une seule DA par vidéo. Mèmes/GIF pour les punchlines humour (« késtufé louca ? »).
 9. **Structure en 4 temps** (Hook → Build-up → Valeur → CTA), voir §3. Hook = règle des 3 :
@@ -53,7 +86,7 @@ Pipeline de référence : `podcast/` (render(t) déterministe, rendu Playwright 
 
 | Technique pro | Comment la faire chez nous |
 |---|---|
-| Texte derrière le sujet | **Construit.** `outils/detourage.py` (RVM resnet50, ~0,1 s/image, cohérent dans le temps) + exemple complet `outils/demo_derriere.py` → `demo_texte_derriere.mp4`. Calques : fond flouté ×0,30 + vignette → TITRE (45 % du mot géant sous le haut de la tête, mesuré sur l'alpha au début du beat) → personne → sous-titres. Pour une image fixe : remplissage depuis les bords (pub Valex v2). |
+| Texte derrière le sujet | **Construit.** `outils/detourage.py` (RVM resnet50, ~0,1 s/image, cohérent dans le temps) + exemple complet `outils/demo_derriere.py` → `demo_texte_derriere.mp4`. Calques : fond flouté léger ×0,45 + vignette → TITRE (45 % du mot géant sous le haut de la tête, mesuré sur l'alpha au début du beat) → personne → sous-titres. Pour une image fixe : remplissage depuis les bords (pub Valex v2). |
 | Typo mixte | Dans `fonts/` : `InterTight-ExtraBold.ttf` (sans serré) + `InstrumentSerif-Italic/Regular.ttf` (accent). À ajouter au besoin : Anton/Bebas Neue (poster jaune), via `fonts.googleapis.com/css2?family=…` avec un vieux User-Agent pour obtenir le .ttf. |
 | Texte « glow » sur fond sombre | `text-shadow: 0 0 20px rgba(255,255,255,.6)` + serif italique + capitales condensées (cf. « C'EST TOUT UN ART »). |
 | Texture vintage | Grain (bruit canvas animé), aberration chromatique (décalage RGB 2–4 px), légère pixellisation, opacité texte 85 %. |
@@ -62,7 +95,8 @@ Pipeline de référence : `podcast/` (render(t) déterministe, rendu Playwright 
 | Encadré « sélection » | Rectangle pointillé avec poignées aux coins (look Figma/Canva) autour d'un mot (« PAROLE / VISUEL », « FOMO »). |
 | Sous-titre négatif | Texte en masque qui inverse la vidéo dessous (`mix-blend-mode: difference`). |
 | Multicam simulé (tournage à 1 caméra) | Mariuse filme souvent sous UN seul angle. On simule les changements de caméra par recadrage : `large` (×1,00), `serré` (×1,22, centre décalé), `gros plan` (×1,42) en **coupe sèche sur les respirations/fins de phrase**, toutes les 1–2,5 s, jamais deux plans identiques d'affilée. Dans chaque plan : micro-zoom continu +2 %. Gros plan sur les mots forts. Voir `PLANS`/`CAMS` dans `outils/demo_derriere.py`. Limite : source 432 px de large → ne pas dépasser ×1,45 (flou). |
-| Zone de sécurité | **Construit.** `outils/zone_securite.py video.mp4 sortie.jpg [t…]` → planche avec zones de danger hachurées (haut 11 %, bas 24 %, droite 13 %), ligne des yeux (1/3), bande sous-titres verte. À passer sur chaque rendu. |
+| Logo officiel d'un outil | **Construit.** `outils/logo.py` (voir règle 7). Testé sur CapCut, Claude, ChatGPT, Instagram, Google, Facebook, Notion, Canva, Kling, WhatsApp. |
+| Zone de sécurité (optionnel) | `outils/zone_securite.py video.mp4 sortie.jpg [t…]` : planche avec zones cachées par l'appli. Seulement en cas de doute, pas une étape obligatoire. |
 | B-roll au-dessus de la tête | Image détourée ou cadre carré dans le tiers haut (y ≈ 8–30 %), au-dessus du sujet, apparition sèche ou pop 0,15 s, une par phrase. Mèmes et B-roll plein écran pour l'abstrait/l'humour. |
 | Carte-titre de chapitre | Plein écran sur fond animé (cerveau, neurones, texture) : CAPITALES sans grasses + 1 mot en serif italique condensé (« SYSTÈME *NEUROLOGIQUE* »). Annonce le nom savant de la technique. |
 | Numéro d'étape persistant | « 1. » / « 2. » / « 3. » en italique dans le coin haut-gauche (dans la zone sûre) pendant tout le point. |
@@ -88,13 +122,14 @@ Débit de parole des pros : **3,5 à 4,5 mots/s**. Durée : 26–65 s, jusqu'à 
 ## 4. Checklist anti-slop (à passer AVANT de livrer)
 
 Sortir une planche contact (`planche.sh`, 1 image / 1–2 s) et vérifier :
+- [ ] Le type de vidéo est identifié et les techniques viennent de SA ligne du tableau §0.
+- [ ] Chaque outil cité a son vrai logo (vérifié à l'œil).
 - [ ] Aucune séquence de >4 s sans changement visuel (plan, zoom, typo, visuel).
 - [ ] Au moins 3 ambiances différentes (sombre / clair / capture / illustration).
 - [ ] Les 3 premières secondes : parole + texte + visuel forts en même temps.
 - [ ] Le mot fort de chaque phrase clé est géant, le reste petit.
 - [ ] 2 polices max (+1 condensée si DA poster), une seule DA couleur.
 - [ ] Sous-titres 1–3 mots, jamais par-dessus un visuel important.
-- [ ] `outils/zone_securite.py` passé : rien d'important dans les hachures, sous-titres dans la bande verte.
 - [ ] Rien n'est centré « par défaut » : chaque position est un choix.
 - [ ] Faits personnels vérifiés (ville = **Yaoundé**, nom de marque, chiffres).
 - [ ] -14 LUFS, voix intelligible sous la musique.

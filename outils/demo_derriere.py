@@ -29,6 +29,9 @@ CAMS = {'large': (1.00, 0.50), 'serre': (1.22, 0.46), 'gros': (1.42, 0.52)}
 PLANS = [(0.00, 'large'), (1.96, 'serre'), (3.56, 'large'), (4.42, 'gros'),
          (6.84, 'serre'), (7.86, 'gros'), (9.40, 'large')]
 # mots à mettre en italique serif dans les sous-titres
+# assombrissement du fond derrière le titre : léger, pour que le détourage ne se voie pas
+# (0,30 était trop fort : la personne avait l'air « collée »). Flou léger aussi.
+FOND = 0.45
 ACCENT = {'podcast', 'unique.', 'claude', 'répondre.', 'révolution', 'opus', '5.5'}
 
 
@@ -121,8 +124,8 @@ def main():
         if n not in haut_tete:
             lignes = np.where(al[:, W // 3: 2 * W // 3, 0].max(axis=1) > 0.6)[0]
             haut_tete[n] = int(lignes[0]) if len(lignes) else 600
-        flou = np.asarray(Image.fromarray(fr.astype(np.uint8)).filter(ImageFilter.GaussianBlur(5)), np.float32)
-        fond = flou * 0.30 * vignette
+        flou = np.asarray(Image.fromarray(fr.astype(np.uint8)).filter(ImageFilter.GaussianBlur(3)), np.float32)
+        fond = flou * FOND * vignette
         # titre : pop d'entrée (échelle 1.12 → 1) + légère dérive
         p = ease((t - t0) / 0.22)
         ti, haut, bas = titres[k]
@@ -137,7 +140,7 @@ def main():
         couche[y0:y1, x0:x1] = tr[y0 - ty:y1 - ty, x0 - tx:x1 - tx]
         ta = couche[..., 3:4] / 255 * p
         fond = fond * (1 - ta) + couche[..., :3] * ta
-        comp = fond * (1 - al) + fr * 1.05 * al
+        comp = fond * (1 - al) + fr * al
         out = Image.fromarray(comp.clip(0, 255).astype(np.uint8))
         for s0, s1, bloc in subs:
             if s0 <= t < s1:
