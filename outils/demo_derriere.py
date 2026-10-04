@@ -75,7 +75,7 @@ def dessine_sous_titre(img, bloc, t):
         f = F(SERIF_I, 92) if accent else F(SANS, 66)
         parts.append((w.strip('?') if w != '?' else '?', f, a))
     largeur = sum(f.getlength(w) for w, f, _ in parts) + 22 * (len(parts) - 1)
-    x, y = (W - largeur) / 2, 1480
+    x, y = (W - largeur) / 2, 1300  # sous le menton, hors zone boutons (bas 24 %)
     for w, f, a in parts:
         if t >= a - 0.05:  # le mot apparaît quand il est prononcé
             for dx, dy in ((0, 5), (0, 3)):

@@ -13,10 +13,11 @@ Ce fichier grandit à chaque projet. Ordre de lecture :
 2. `references/inspirations.md` : décorticage plan par plan des vidéos que Mariuse adore.
 3. `references/journal.md` : ce qu'on a livré, les retours de Mariuse, ce qu'on a appris.
 
-## 1. Les 10 règles qui séparent le pro du slop
+## 1. Les 11 règles qui séparent le pro du slop
 
 1. **Une idée = un écran.** Chaque phrase clé a sa propre composition. Jamais le même layout plus de ~4 s.
-   Les pros changent de plan/visuel toutes les **1,5 à 4 s** (mesuré : 1,6 s à 4,8 s sur les 8 inspirations).
+   Les pros changent de plan/visuel toutes les **1,7 à 4 s** ; ceux qui cartonnent en format long
+   (Fabien Faro, 144 k likes sur 1 min 55) tiennent **1 changement / 2 s** du début à la fin.
 2. **La typo EST le visuel.** Le mot fort est énorme (50–90 % de la largeur), le reste est petit.
    Hiérarchie = 1 mot géant + 1–3 mots d'accompagnement en petit. Pas de paragraphe à l'écran.
 3. **Mélange de polices avec intention** : un sans-serif gras/serré (Helvetica/Inter/Neue Haas) +
@@ -24,19 +25,27 @@ Ce fichier grandit à chaque projet. Ordre de lecture :
    Ou une seule famille serif éditoriale pour tout (style Loucash). Jamais 3 polices au hasard.
 4. **Profondeur : le texte DERRIÈRE le sujet.** Gros titre posé derrière la tête (détourage de la personne)
    = effet magazine immédiat. C'est le marqueur n°1 du « pro » vs « template ».
-5. **Sous-titres : 1 à 3 mots, pas de karaoké coloré criard.** Blanc, propre, position fixe basse/centre.
-   Le mot clé occasionnel monte en taille ou passe en italique serif. Majuscules condensées jaunes
-   (style Bebas/Anton) seulement si la DA de la vidéo est « jaune/poster ».
+5. **Sous-titres : 1 à 3 mots, pas de karaoké coloré criard.** Blanc, propre, **juste sous le menton**
+   (≈ 50–68 % de la hauteur), **jamais dans les 24 % du bas** (légende + boutons) ni la colonne de droite.
+   Les yeux du sujet sur la ligne du tiers haut. Vérifier avec `outils/zone_securite.py`.
+   Emphase : le mot clé monte en taille, passe en italique serif, OU (style Faro) capitales grasses
+   blanches avec **un seul mot fixe en jaune** — c'est différent du karaoké qui colore chaque mot.
 6. **Alterner les ambiances.** Facecam sombre ↔ plein écran clair (papier blanc/crème, formes organiques,
    branches, objets 3D isolés) ↔ capture d'écran. Le contraste clair/sombre relance l'attention.
 7. **Montrer, pas illustrer.** Vraies captures (Google, CapCut, GitHub, sites, tarifs) avec curseur visible,
    **cercle loupe** sur le réglage dont on parle, valeurs qui changent (100 % → 85 %). Pas d'icônes génériques.
+   **Prouver** : étude datée + revue + photo du chercheur (Faro), capture des messages de clients (Wu).
+   B-roll **au-dessus de la tête** (tiers haut, change à chaque phrase) plutôt que de cacher le visage.
 8. **Illustrations avec une DA.** Ex. Loucash : aplats corail #E07A5F + crème + traits noirs dessinés main,
    mêmes couleurs partout. Une seule DA par vidéo. Mèmes/GIF pour les punchlines humour (« késtufé louca ? »).
 9. **Structure en 4 temps** (Hook → Build-up → Valeur → CTA), voir §3. Hook = règle des 3 :
    parole + visuel + texte frappent ensemble dans les 3 premières secondes.
 10. **CTA dans la continuité** : « abonne-toi, commente MOT et je te l'envoie ». À l'écran : icône dossier
-    + MOT en jaune gras. Pas d'écran de fin générique.
+    + MOT en jaune gras, ou maquette du champ commentaire où le MOT se tape (Toprak). Pas d'écran de fin générique.
+11. **Le look pro commence au tournage** (conseils à donner à Mariuse) : 2 lampes de couleurs opposées
+    derrière (bleu + orange, Toprak), lampes chaudes dans le décor (Faro), un objet en main, un personnage
+    constant (tenue, masque). Avec un grand-angle : **avancer vers l'objectif** pour faire le gros plan au
+    tournage (Faro) au lieu de tout recadrer au montage.
 
 ## 2. Boîte à outils technique (notre pipeline HTML → Playwright → ffmpeg)
 
@@ -53,6 +62,12 @@ Pipeline de référence : `podcast/` (render(t) déterministe, rendu Playwright 
 | Encadré « sélection » | Rectangle pointillé avec poignées aux coins (look Figma/Canva) autour d'un mot (« PAROLE / VISUEL », « FOMO »). |
 | Sous-titre négatif | Texte en masque qui inverse la vidéo dessous (`mix-blend-mode: difference`). |
 | Multicam simulé (tournage à 1 caméra) | Mariuse filme souvent sous UN seul angle. On simule les changements de caméra par recadrage : `large` (×1,00), `serré` (×1,22, centre décalé), `gros plan` (×1,42) en **coupe sèche sur les respirations/fins de phrase**, toutes les 1–2,5 s, jamais deux plans identiques d'affilée. Dans chaque plan : micro-zoom continu +2 %. Gros plan sur les mots forts. Voir `PLANS`/`CAMS` dans `outils/demo_derriere.py`. Limite : source 432 px de large → ne pas dépasser ×1,45 (flou). |
+| Zone de sécurité | **Construit.** `outils/zone_securite.py video.mp4 sortie.jpg [t…]` → planche avec zones de danger hachurées (haut 11 %, bas 24 %, droite 13 %), ligne des yeux (1/3), bande sous-titres verte. À passer sur chaque rendu. |
+| B-roll au-dessus de la tête | Image détourée ou cadre carré dans le tiers haut (y ≈ 8–30 %), au-dessus du sujet, apparition sèche ou pop 0,15 s, une par phrase. Mèmes et B-roll plein écran pour l'abstrait/l'humour. |
+| Carte-titre de chapitre | Plein écran sur fond animé (cerveau, neurones, texture) : CAPITALES sans grasses + 1 mot en serif italique condensé (« SYSTÈME *NEUROLOGIQUE* »). Annonce le nom savant de la technique. |
+| Numéro d'étape persistant | « 1. » / « 2. » / « 3. » en italique dans le coin haut-gauche (dans la zone sûre) pendant tout le point. |
+| Schéma qui se construit | Dessin trait noir sur fond blanc, un élément ajouté à chaque phrase (RÉSULTAT → ACTION → IDENTITÉ), en vignette au-dessus du sujet. |
+| Texte au sol / dans la scène | Mot en perspective posé sur le sol du B-roll (homographie 4 points, `PIL.Image.transform(PERSPECTIVE)`), cf. « Mentleur » chez Wu. |
 | Audio | Voix devant, musique discrète, **-14 LUFS intégré** (mesuré sur les inspirations : -14,4/-14,5). Whoosh sur les changements d'écran, pop sur les mots géants. |
 
 **Règle d'attitude : ne jamais dire « impossible » ou « pas encore construit » sans avoir essayé
@@ -79,16 +94,18 @@ Sortir une planche contact (`planche.sh`, 1 image / 1–2 s) et vérifier :
 - [ ] Le mot fort de chaque phrase clé est géant, le reste petit.
 - [ ] 2 polices max (+1 condensée si DA poster), une seule DA couleur.
 - [ ] Sous-titres 1–3 mots, jamais par-dessus un visuel important.
+- [ ] `outils/zone_securite.py` passé : rien d'important dans les hachures, sous-titres dans la bande verte.
 - [ ] Rien n'est centré « par défaut » : chaque position est un choix.
 - [ ] Faits personnels vérifiés (ville = **Yaoundé**, nom de marque, chiffres).
 - [ ] -14 LUFS, voix intelligible sous la musique.
-- [ ] Je me demande : « Est-ce que MedTheDesigner ou Loucash posterait ça ? » Si non, itérer.
+- [ ] Je me demande : « Est-ce que MedTheDesigner, Loucash ou Fabien Faro posterait ça ? » Si non, itérer.
 
 ## 5. Comment faire grandir ce skill
 
 À la fin de CHAQUE projet vidéo :
 - Ajouter une entrée dans `references/journal.md` (livré, retour de Mariuse, leçon).
-- Nouvelle vidéo d'inspiration → télécharger (`yt-dlp`), transcrire (ElevenLabs Scribe), planche contact,
+- Nouvelle vidéo d'inspiration → télécharger (`yt-dlp`), transcrire (ElevenLabs Scribe ; si quota épuisé :
+  `faster-whisper` modèle `small` en local, `word_timestamps=True`), planche contact,
   mesurer coupes/mots par s/LUFS, ajouter une fiche dans `references/inspirations.md`.
 - Si une leçon devient une règle générale → la promouvoir dans §1 ou §2 ci-dessus.
 - Si une technique de §2 est construite → noter le fichier/fonction réutilisable.

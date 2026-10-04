@@ -70,10 +70,85 @@ un outil concret », jamais de théorie.
 
 ---
 
-## Mesures globales (8 vidéos)
-- Changement de plan visible : toutes les 1,6–4,8 s (médiane ~3,8 s), plus des punch-ins non comptés.
-- Débit : 3,5–4,5 mots/s.
-- Loudness : -14,4 à -14,5 LUFS intégré.
-- Format : 1080×1920 (Med) ou 1440×2560 (Loucash), 30 fps.
-- Hooks : question choc, « il faut absolument que tu saches », résultat d'abord, « j'aurais aimé qu'on me le dise ».
-- CTA : 7/8 finissent par « commente MOT » (ressource envoyée en DM).
+## Créateur C — Fabien Faro (@fabien_faro), vulgarisation psycho/neurosciences
+**La plus grosse audience de toutes nos inspirations** (144 k et 107 k likes) avec des vidéos de 2–3 min.
+
+**ADN visuel**
+- UNE caméra fixe, **objectif ultra grand-angle**, posée bas, chambre avec lampes chaudes (appliques jaunes)
+  + chemise/cravate = personnage reconnaissable. Il tient toujours un objet (micro-cravate, tasse).
+- **Le « changement de caméra » se fait au tournage, pas au montage** : il marche vers l'objectif
+  (plan pied → gros plan visage en 2 pas) et pousse sa tasse vers la lentille → profondeur énorme grâce
+  au grand-angle. Puis coupe sèche, il est de nouveau loin. Résultat : 1 coupe / 1,7–2,4 s sans multicam.
+- **B-roll « au-dessus de la tête »** : une image détourée ou un cadre carré posé dans le tiers haut,
+  par-dessus le décor, change à chaque phrase (photo d'étude, scientifique, mème, scène de film).
+- B-roll plein écran pour les idées abstraites (cerveau 3D, IRM, neurones, foule floue) et mèmes plein
+  écran pour l'humour (Patrick, NPC, chat qui crie, rat pouce levé).
+- **Cartes-titres de chapitre** sur fond animé (cerveau, neurones) : capitales sans gras condensées
+  + serif italique condensé (« SYSTÈME / *NEUROLOGIQUE* », « LA *POTENTIALISATION* », « L'ÉLAGAGE »).
+- **Crédibilité montrée** : année + revue + chercheur (« En 2004… dans Nature » + couverture de Nature ;
+  photo de Daniel Howrigan avec étiquette nom). Sources dans la légende.
+- **Schéma dessiné main qui se construit** étape par étape sur fond blanc (cercles RÉSULTAT → ACTION →
+  IDENTITÉ), en vignette au-dessus de lui pendant qu'il explique.
+- Sous-titres : **capitales grasses blanches, 2–3 mots, 1 mot clé en jaune**, à hauteur de poitrine
+  (≈ 60 % de l'écran). Pas de karaoké : le jaune est fixe sur le mot important.
+- Musique de transition après le hook, signature de fin « C'était Fabien Faro » + mème.
+
+**Script** : hook « Tu savais que des scientifiques avaient découvert la technique ultime pour… » + 3
+promesses concrètes (séduire ton crush, réussir un entretien, devenir pote avec qui tu veux) → nom
+savant de la technique → étude datée → objection du spectateur (« Ok d'accord Fabien, mais moi comment
+je fais ? ») → méthode → morale en une phrase.
+
+## Créateur D — Toprak (@toprak_kreator), marketing pour créateurs
+**ADN visuel**
+- Plan poitrine face caméra, **éclairage bicolore** (contre-jour bleu + orange chaud derrière la tête),
+  fond sombre avec plante → look pro avec 2 lampes LED à 20 €.
+- **Ses yeux sont exactement sur la ligne du tiers haut, ses sous-titres juste sous le menton (≈ 50 %)**.
+  Il l'enseigne lui-même (vidéo 14) : zone de danger (boutons/légende) en bas et à droite, ligne des yeux,
+  sous-titres sous le menton pour que le regard capte visage ET texte → `outils/zone_securite.py`.
+- **Numéro d'étape persistant** « 1. / 2. / 3. » en italique bleu dans le coin haut-gauche pendant tout le
+  point → le spectateur sait où il en est.
+- Vraies captures d'écran (Paramètres Instagram) avec **main-curseur** qui clique, interrupteur qui
+  bascule ; capture filmée sur l'écran du PC (clavier visible) pour la version ordinateur.
+- Logos qui popent sous le menton (Google), mini-mockup « Toi + S'abonner » avec main qui tape.
+- Overlay graphique hachuré rouge pour montrer les zones ; extraits de films avec grille des tiers.
+- CTA : maquette du champ de commentaire où « zone » se tape.
+
+## Créateur E — Mickaël Wu (@mickawu), business
+**ADN visuel**
+- **Format carré 1080×1080**, DA **rouge + blanc cassé**. Facecam assise, fond chaud flou (bokeh bougies).
+- Mot géant **rouge derrière/sur lui** (« TRAVAILLE BIEN », « Peur ») ; « Mentleur » posé **au sol en
+  perspective** sur la route (texte tracké dans la scène).
+- Cartes « papier » blanc cassé avec photo inclinée façon polaroid + légende rouge minuscule.
+- **Preuve sociale** : capture des DM des parents de clients sur un téléphone, fond rouge plein, la phrase
+  clé en gros (« Sceptique », « Transformer ») ; voix off des messages lus.
+- B-roll lifestyle cinématique de lui (forêt, méditation sur la route, salle pleine) = statut.
+- Hook impératif provocant (« Mentez à vos parents ») + chiffres (10 K → 300 K/mois).
+
+**Fiches (créateurs C–E)**
+| # | Créateur | Sujet | Durée | Coupes | Mots/s | Likes | Points clés |
+|---|---|---|---|---|---|---|---|
+| 9 | Faro | Devenir un génie (potentialisation à long terme) | 2 min 55 | 1 / 1,9 s | 3,6 | 20 281 | Étude Nature 2004 jongleurs, mèmes plein écran, cartes-titres cerveau, « LIEN EN BIO » |
+| 10 | Faro | Garder une habitude (automatisation comportementale) | 2 min 57 | 1 / 2,4 s | 4,2 | **107 188** | Scénario vécu (« tout seul dans ta chambre à 2 h… »), schéma qui se construit, « ABSOLUTE CINEMA » |
+| 11 | Faro | L'humour comme arme d'influence | 1 min 55 | 1 / 1,7 s | 3,4 | **144 058** | Hook 3 promesses, chercheur nommé + photo, fin mème chat |
+| 12 | Wu | Mentez à vos parents | 50 s | 1 / 3,0 s | 3,8 | 4 871 | Carré, DA rouge, preuve sociale DM, texte au sol |
+| 13 | Toprak | 3 paramètres Instagram | 36 s | 1 / ~1,5 s* | 4,0 | **22 653** | Numéros 1/2/3, captures + curseur, logos qui popent |
+| 14 | Toprak | La zone de sécurité | 45 s | 1 / 4,1 s | 5,0 | 1 009 | Overlay zones, ligne des yeux, CTA « commente zone » |
+
+\* la détection de scène rate les captures d'écran qui s'enchaînent ; compté sur la planche.
+
+**Leçons**
+- Long format (2–3 min) = OK si le rythme visuel est à **1 changement / 2 s** et qu'on apprend un truc
+  « scientifique » nommé. C'est ce qui fait le plus de likes de toute notre collection.
+- On n'a pas besoin de plusieurs caméras : grand-angle + bouger vers l'objectif (Faro) ou recadrage (nous).
+- Les détails « invisibles » (zone de sécurité, numéro d'étape, éclairage bicolore) font le look pro.
+
+---
+
+## Mesures globales (14 vidéos)
+- Changement de plan visible : **1,7–4,8 s** (Faro 1,7–2,4 s ; Med/Loucash ~3,8 s ; Wu 3,0 s).
+- Débit : 3,4–5,0 mots/s (médiane ~4).
+- Loudness : **-14,1 à -14,5 LUFS** sur les 14 vidéos, sans exception.
+- Format : 1080×1920 (24, 30 ou 60 fps), 1440×2560 (Loucash), **1080×1080 carré (Wu)**.
+- Hooks : « tu savais que des scientifiques… », « ne poste plus jamais… si… », « personne ne regardera tes
+  vidéos tant que… », impératif provocant (« mentez à vos parents »), résultat d'abord.
+- CTA : « commente MOT » (Loucash, Med, Toprak), « abonne-toi » + signature (Faro), aucun (Wu : fin sur preuve).

@@ -4,6 +4,18 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
 
 ---
 
+## 2026-10 — 6 nouvelles inspirations (Fabien Faro, Toprak, Mickaël Wu)
+- Livré : créateurs C–E dans `inspirations.md` (14 vidéos au total), règle 11 (look pro au tournage),
+  `outils/zone_securite.py`.
+- Découverte : Faro (144 k likes) n'a qu'une caméra, comme Mariuse. Il fait ses gros plans en
+  **marchant vers son grand-angle**, ce qui confirme la piste des micro-zooms et donne une option au tournage.
+- **Erreur trouvée sur notre démo** grâce à l'astuce de Toprak : sous-titres à y = 1480 (77 %) = dans la
+  zone des boutons Instagram. Corrigé à y = 1300 (sous le menton), démo re-rendue et vérifiée.
+- Outil : quota ElevenLabs épuisé en cours d'analyse (7 crédits restants) → faster-whisper local en secours.
+- Leçon : passer la vérification de zone de sécurité sur CHAQUE rendu, pas seulement le contenu.
+
+---
+
 ## 2026-10 — Texte derrière la personne (détourage vidéo)
 - Retour de Mariuse : « on a déjà fait du détourage, ne te limite pas, essaie plusieurs façons ».
   J'avais écrit « pas encore construit » alors que la pub Valex v2 avait un portrait détouré. Erreur d'oubli.
