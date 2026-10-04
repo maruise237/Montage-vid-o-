@@ -73,5 +73,23 @@ def logo(nom, domaine=None):
     raise SystemExit(f'Aucun logo trouvé pour {nom} : donner le domaine, ou prendre une capture du site.')
 
 
+def coller(img, nom, centre, taille=140, t=1.0, carte=True):
+    """Pose le logo sur une image PIL, centré sur `centre` (x, y).
+    t = secondes depuis l'apparition : pop 0 → 1,1 → 1 en 0,18 s (mention rapide : laisser 1–1,5 s).
+    carte=True : pastille blanche arrondie derrière (lisible sur fond sombre comme clair)."""
+    from PIL import ImageDraw
+    p = min(1.0, t / 0.18); s = (1.1 * (1 - (1 - p) ** 3)) if p < 1 else 1.0
+    taille_s = max(2, int(taille * s))
+    lg = Image.open(logo(nom)).convert('RGBA'); lg.thumbnail((taille_s, taille_s), Image.LANCZOS)
+    if carte:
+        m = int(taille_s * 0.18)
+        fond = Image.new('RGBA', (lg.width + 2 * m, lg.height + 2 * m), (0, 0, 0, 0))
+        ImageDraw.Draw(fond).rounded_rectangle((0, 0, fond.width - 1, fond.height - 1), radius=m * 2,
+                                               fill=(255, 255, 255, 245))
+        fond.alpha_composite(lg, (m, m)); lg = fond
+    img.paste(lg, (int(centre[0] - lg.width / 2), int(centre[1] - lg.height / 2)), lg)
+    return img
+
+
 if __name__ == '__main__':
     print(logo(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None))
