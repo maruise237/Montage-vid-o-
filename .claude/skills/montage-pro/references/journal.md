@@ -98,3 +98,24 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
 ## 2026-10 — Pub motion design « Valex L'infographiste » (v1 sans voix, v2 voix off)
 - Livré : `valex_motion_design.mp4`, `valex_pub_voix*.mp4`.
 - Leçon : la voix off fournie dicte le rythme ; caler les animations sur les timestamps des mots.
+
+## 2026-10 — Reel « 3 outils IA » qui met KamForms en avant (sans faire pub)
+- Brief : mettre kamforms.com (outil de Mariuse) en avant « sans avoir l'air d'une vidéo publicitaire,
+  grâce à la preuve sociale ». Source : facecam 1728x3072, 16,5 s, 3 phrases « si tu veux faire de la
+  génération de vidéos / photos / formulaires, utilise ça » + « les liens sont en description, commente l'outil ».
+- Type (§0) : tuto outil / liste. Choix faits :
+  - **Preuve sociale par association** : KamForms est le 3e d'une liste avec KlingAI et Nano Banana (Google),
+    **même format d'écran, même durée**, vraie capture du site, vrai logo. Il ne se distingue que parce
+    qu'il est en dernier (place de la chute) et dans le CTA (le champ commentaire tape « KamForms »).
+  - Aucun « mon outil », aucun chiffre ni témoignage inventé (le site n'affiche pas de stats réelles).
+  - Silences coupés : 16,5 s → 11,5 s. Écrans décalés des coupes audio (l'outil apparaît sur « utilise ça »
+    et reste jusqu'au « génération de » suivant) : coupes image ≠ coupes son, ça fait monté à la main.
+  - Texte derrière la tête **sur le hook seulement** (« VIDÉOS »). Les mots des étapes 2 et 3 sont sur une
+    **étiquette crème inclinée** : sur un pagne très chargé, du texte blanc flottant est illisible et on ne
+    veut pas assombrir l'image à chaque étape.
+  - Écran partagé crème (capture en haut, personne en bas) = ambiance claire qui alterne avec la facecam.
+- Outils : captures mobiles via Playwright + proxy (`--ignore-certificate-errors`, `waitUntil: domcontentloaded`,
+  8 s d'attente) ; logo Gemini recadré depuis la capture officielle (`assets/logos/geminisparkle.png`).
+- Fichiers : `kamforms/montage.py` (image), `kamforms/son.py`, `kamforms/finir.sh` → `reel_kamforms.mp4`.
+- À faire si Mariuse fournit de VRAIES preuves (capture du tableau de bord, messages clients) : les ajouter
+  sur l'écran KamForms. Ne jamais en fabriquer.

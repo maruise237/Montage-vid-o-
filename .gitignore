@@ -16,3 +16,8 @@ podcast/pro*_muet.mp4
 podcast/rendu_pro*.log
 podcast/son_pro*.wav
 podcast/evenements_pro*.json
+kamforms/source.*
+kamforms/src_hook.mp4
+kamforms/muet.mp4
+kamforms/son.wav
+kamforms/site.html
