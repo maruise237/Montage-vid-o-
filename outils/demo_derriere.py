@@ -16,13 +16,18 @@ W, H = 1080, 1920
 F = lambda n, s: ImageFont.truetype(f'{RACINE}/fonts/{n}', s)
 SANS, SERIF_I = 'InterTight-ExtraBold.ttf', 'InstrumentSerif-Italic.ttf'
 
-# (début, fin, petit texte au-dessus, MOT GÉANT, police du géant, zoom début, zoom fin)
+# (début, fin, petit texte au-dessus, MOT GÉANT, police du géant)
 BEATS = [
-    (0.00, 1.96, 'épisode 01', 'PODCAST', SANS, 1.00, 1.05),
-    (1.96, 3.56, 'à voix', 'unique', SERIF_I, 1.14, 1.16),
-    (3.56, 6.84, "c'est l'IA qui répond", 'CLAUDE', SANS, 1.02, 1.07),
-    (6.84, 10.75, 'la', 'RÉVOLUTION', SANS, 1.10, 1.20),
+    (0.00, 1.96, 'épisode 01', 'PODCAST', SANS),
+    (1.96, 3.56, 'à voix', 'unique', SERIF_I),
+    (3.56, 6.84, "c'est l'IA qui répond", 'CLAUDE', SANS),
+    (6.84, 10.75, 'la', 'RÉVOLUTION', SANS),
 ]
+# Tournage à UNE caméra : on simule le multicam en recadrant (zoom, centre x).
+# Coupe sèche sur les respirations, micro-zoom continu (+2 %) dans chaque plan.
+CAMS = {'large': (1.00, 0.50), 'serre': (1.22, 0.46), 'gros': (1.42, 0.52)}
+PLANS = [(0.00, 'large'), (1.96, 'serre'), (3.56, 'large'), (4.42, 'gros'),
+         (6.84, 'serre'), (7.86, 'gros'), (9.40, 'large')]
 # mots à mettre en italique serif dans les sous-titres
 ACCENT = {'podcast', 'unique.', 'claude', 'répondre.', 'révolution', 'opus', '5.5'}
 
@@ -87,7 +92,7 @@ def main():
     sw, sh = taille(SRC)
     lecteur = subprocess.Popen(['ffmpeg', '-v', 'error', '-ss', str(DEBUT), '-t', str(DUREE), '-i', SRC,
         '-vf', f'fps={FPS}', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], stdout=subprocess.PIPE)
-    titres = [calque_titre(p, g, f) for _, _, p, g, f, _, _ in BEATS]
+    titres = [calque_titre(p, g, f) for _, _, p, g, f in BEATS]
     subs = sous_titres()
     yy, xx = np.mgrid[0:H, 0:W]
     vignette = (1 - 0.55 * (((xx - W / 2) / (W * 0.75)) ** 2 + ((yy - H * 0.42) / (H * 0.65)) ** 2)).clip(0.25, 1)[..., None]
@@ -100,19 +105,22 @@ def main():
         t = i / FPS
         img = np.frombuffer(lecteur.stdout.read(sw * sh * 3), np.uint8).reshape(sh, sw, 3)
         k = max(j for j, b in enumerate(BEATS) if t >= b[0])
-        t0, t1, _, _, _, z0, z1 = BEATS[k]
-        z = z0 + (z1 - z0) * ((t - t0) / (t1 - t0))
-        # zoom centré sur le visage, appliqué pareil à l'image et au détourage
+        t0, t1 = BEATS[k][:2]
+        n = max(j for j, pl in enumerate(PLANS) if t >= pl[0])
+        p0 = PLANS[n][0]; p1 = PLANS[n + 1][0] if n + 1 < len(PLANS) else DUREE
+        zc, xc = CAMS[PLANS[n][1]]
+        z = zc * (1 + 0.02 * (t - p0) / (p1 - p0))
+        # recadrage appliqué pareil à l'image et au détourage
         cw, ch = sw / z, sh / z
-        cx, cy = sw / 2, sh * 0.42
+        cx, cy = min(max(sw * xc, cw / 2), sw - cw / 2), sh * 0.42
         box = (cx - cw / 2, max(0, cy - ch * 0.42), cx + cw / 2, max(0, cy - ch * 0.42) + ch)
         fr = np.asarray(Image.fromarray(img).resize((W, H), Image.LANCZOS, box=box), np.float32)
         al = np.asarray(Image.fromarray((a * 255).astype(np.uint8)).resize((W, H), Image.BILINEAR, box=box),
                         np.float32)[..., None] / 255
-        # haut de la tête (fixé au début du beat pour éviter que le titre tremble)
-        if k not in haut_tete:
+        # haut de la tête (fixé au début de chaque plan pour éviter que le titre tremble)
+        if n not in haut_tete:
             lignes = np.where(al[:, W // 3: 2 * W // 3, 0].max(axis=1) > 0.6)[0]
-            haut_tete[k] = int(lignes[0]) if len(lignes) else 600
+            haut_tete[n] = int(lignes[0]) if len(lignes) else 600
         flou = np.asarray(Image.fromarray(fr.astype(np.uint8)).filter(ImageFilter.GaussianBlur(5)), np.float32)
         fond = flou * 0.30 * vignette
         # titre : pop d'entrée (échelle 1.12 → 1) + légère dérive
@@ -122,7 +130,7 @@ def main():
         tw, th = int(ti.width * s), int(ti.height * s)
         tr = np.asarray(ti.resize((tw, th), Image.LANCZOS), np.float32)
         # ~45 % du mot géant passe derrière la tête
-        ty = int(haut_tete[k] + 0.45 * (bas - haut) * s - bas * s)
+        ty = int(haut_tete[n] * (1 + 0.02 * (t - p0) / (p1 - p0)) + 0.45 * (bas - haut) * s - bas * s)
         tx = (W - tw) // 2
         couche = np.zeros((H, W, 4), np.float32)
         y0, y1 = max(0, ty), min(H, ty + th); x0, x1 = max(0, tx), min(W, tx + tw)

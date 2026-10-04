@@ -52,7 +52,7 @@ Pipeline de référence : `podcast/` (render(t) déterministe, rendu Playwright 
 | Screen-record pédagogique | Capture → zoom progressif (scale 1→1.3) + cercle loupe blanc 2 px sur la zone + curseur. |
 | Encadré « sélection » | Rectangle pointillé avec poignées aux coins (look Figma/Canva) autour d'un mot (« PAROLE / VISUEL », « FOMO »). |
 | Sous-titre négatif | Texte en masque qui inverse la vidéo dessous (`mix-blend-mode: difference`). |
-| Punch-in | Zoom 100 → 115 % sur la facecam sur les mots forts (coupe sèche, pas de fondu). |
+| Multicam simulé (tournage à 1 caméra) | Mariuse filme souvent sous UN seul angle. On simule les changements de caméra par recadrage : `large` (×1,00), `serré` (×1,22, centre décalé), `gros plan` (×1,42) en **coupe sèche sur les respirations/fins de phrase**, toutes les 1–2,5 s, jamais deux plans identiques d'affilée. Dans chaque plan : micro-zoom continu +2 %. Gros plan sur les mots forts. Voir `PLANS`/`CAMS` dans `outils/demo_derriere.py`. Limite : source 432 px de large → ne pas dépasser ×1,45 (flou). |
 | Audio | Voix devant, musique discrète, **-14 LUFS intégré** (mesuré sur les inspirations : -14,4/-14,5). Whoosh sur les changements d'écran, pop sur les mots géants. |
 
 **Règle d'attitude : ne jamais dire « impossible » ou « pas encore construit » sans avoir essayé

@@ -16,6 +16,9 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   - RVM mobilenet : 0,05 s/image, pour les longues vidéos.
 - Livré : `outils/detourage.py`, `outils/demo_derriere.py`, `demo_texte_derriere.mp4` (10,7 s, hook du podcast).
 - Leçon : relire le journal AVANT de dire qu'une technique manque, et tester plusieurs outils.
+- Retour suivant de Mariuse : la vidéo est tournée sous un seul angle → simuler les changements de caméra
+  par micro-zooms. Fait : 3 caméras virtuelles (large/serré/gros plan), 7 plans en 10,7 s, coupes sur les
+  phrases, titre recalé sur la tête à chaque plan.
 
 ---
 
