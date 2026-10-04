@@ -255,7 +255,8 @@ def preparer():
             im = texte_img(txt, pol, 330 if taille == G else taille, c['th'][role], largeur_max=tw,
                            glow=(c['th'] is NUIT and role == 'txt' and (taille == G or taille > 140)))
             td = mot_t(c['seg'], decl, apres=c['t0'] - 0.3) if decl else c['t0']
-            c['imgs'].append((im, max(c['t0'], (td if td is not None else c['t0']) - 0.04)))
+            ta = max(c['t0'], (td if td is not None else c['t0']) - 0.04)
+            c['imgs'].append((im, c['t0'] if not c['imgs'] else ta))
     return cartes
 
 
@@ -321,21 +322,23 @@ def blocs_sous_titres():
     return out
 
 
-def dessine_sous_titre(img, bloc, t, y, clair):
+def dessine_sous_titre(img, bloc, t, y, clair, discret=False):
     d = ImageDraw.Draw(img); parts = []
     for w, a, b, qui, _ in bloc:
         acc = norm(w) in ACCENT
-        parts.append((w, F(SERIF_I, 88) if acc else F(SANS, 62), a))
-    larg = sum(f.getlength(w) for w, f, _ in parts) + 20 * (len(parts) - 1)
+        parts.append((w, F(SERIF_I, 66 if discret else 88) if acc else F(SANS, 44 if discret else 62), a))
+    larg = sum(f.getlength(w) for w, f, _ in parts) + (14 if discret else 20) * (len(parts) - 1)
     x = (W - larg) / 2
     for w, f, a in parts:
         if t >= a - 0.05:
-            if clair:
+            if discret:
+                d.text((x, y), w, font=f, fill=((120, 112, 104, 255) if clair else (165, 160, 152, 255)), anchor='ls')
+            elif clair:
                 d.text((x, y), w, font=f, fill=(22, 21, 20, 255), anchor='ls')
             else:
                 d.text((x, y + 4), w, font=f, fill=(0, 0, 0, 150), anchor='ls')
                 d.text((x, y), w, font=f, fill=(255, 255, 255, 255), anchor='ls')
-        x += f.getlength(w) + 20
+        x += f.getlength(w) + (14 if discret else 20)
 
 
 # ---------------------------------------------------------------- spéciaux des cartes
@@ -476,7 +479,7 @@ def main():
             img = carte(c, t)
             for s0, s1, b in subs:
                 if s0 <= t < s1 and b[0][3] == 'c' and not b[0][4] == 0 and t > 2.6:
-                    dessine_sous_titre(img, b, t, 1620, c['th'] is PAPIER)
+                    dessine_sous_titre(img, b, t, 1640, c['th'] is PAPIER, discret=True)
             enc.stdin.write(img.convert('RGB').tobytes()); continue
         # ----- Mariuse
         c = next(c for c in s['clips'] if t < c['t1'] or c is s['clips'][-1])
