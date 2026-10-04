@@ -4,6 +4,21 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
 
 ---
 
+## 2026-10 — Texte derrière la personne (détourage vidéo)
+- Retour de Mariuse : « on a déjà fait du détourage, ne te limite pas, essaie plusieurs façons ».
+  J'avais écrit « pas encore construit » alors que la pub Valex v2 avait un portrait détouré. Erreur d'oubli.
+- Banc d'essai sur la facecam du podcast (fond tissu à motifs, le pire cas) :
+  - rembg u2net_human_seg : perd la personne sur certaines images. ✗
+  - rembg isnet-general-use : garde parfois seulement le visage. ✗
+  - mediapipe selfie multiclass : masque flou, laisse passer le tissu (besoin de `apt install libegl1`). ✗
+  - BiRefNet portrait : très propre mais 30 s/image et saturation mémoire au 2e passage. ✗
+  - **RVM resnet50 (ONNX) : propre, cheveux OK, 0,1 s/image, stable dans le temps. ✓ retenu**
+  - RVM mobilenet : 0,05 s/image, pour les longues vidéos.
+- Livré : `outils/detourage.py`, `outils/demo_derriere.py`, `demo_texte_derriere.mp4` (10,7 s, hook du podcast).
+- Leçon : relire le journal AVANT de dire qu'une technique manque, et tester plusieurs outils.
+
+---
+
 ## 2026-10 — Analyse de 8 vidéos d'inspiration (MedTheDesigner, Loucash)
 - Livré : ce skill + `inspirations.md`.
 - Demande de Mariuse : des vidéos comme les vrais pros, pas du slop IA ; une compétence qui grandit.

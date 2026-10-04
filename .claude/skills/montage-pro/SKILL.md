@@ -44,8 +44,8 @@ Pipeline de référence : `podcast/` (render(t) déterministe, rendu Playwright 
 
 | Technique pro | Comment la faire chez nous |
 |---|---|
-| Texte derrière le sujet | Détourage par frame (rembg / mediapipe selfie-seg à installer) → calques : fond, TEXTE, personne détourée, sous-titres. **Pas encore construit, priorité n°1.** |
-| Typo mixte | Polices libres : Inter Tight 800 (sans serré), Instrument Serif / Playfair Display italique (accent), Anton/Bebas Neue (poster jaune). Les télécharger dans `fonts/` en woff2. |
+| Texte derrière le sujet | **Construit.** `outils/detourage.py` (RVM resnet50, ~0,1 s/image, cohérent dans le temps) + exemple complet `outils/demo_derriere.py` → `demo_texte_derriere.mp4`. Calques : fond flouté ×0,30 + vignette → TITRE (45 % du mot géant sous le haut de la tête, mesuré sur l'alpha au début du beat) → personne → sous-titres. Pour une image fixe : remplissage depuis les bords (pub Valex v2). |
+| Typo mixte | Dans `fonts/` : `InterTight-ExtraBold.ttf` (sans serré) + `InstrumentSerif-Italic/Regular.ttf` (accent). À ajouter au besoin : Anton/Bebas Neue (poster jaune), via `fonts.googleapis.com/css2?family=…` avec un vieux User-Agent pour obtenir le .ttf. |
 | Texte « glow » sur fond sombre | `text-shadow: 0 0 20px rgba(255,255,255,.6)` + serif italique + capitales condensées (cf. « C'EST TOUT UN ART »). |
 | Texture vintage | Grain (bruit canvas animé), aberration chromatique (décalage RGB 2–4 px), légère pixellisation, opacité texte 85 %. |
 | Letterbox Loucash | Vidéo dans une bande centrale ~16:9, bandes noires haut/bas ; visuel/titre dans la bande du haut, sous-titre serif dans celle du bas. |
@@ -54,6 +54,9 @@ Pipeline de référence : `podcast/` (render(t) déterministe, rendu Playwright 
 | Sous-titre négatif | Texte en masque qui inverse la vidéo dessous (`mix-blend-mode: difference`). |
 | Punch-in | Zoom 100 → 115 % sur la facecam sur les mots forts (coupe sèche, pas de fondu). |
 | Audio | Voix devant, musique discrète, **-14 LUFS intégré** (mesuré sur les inspirations : -14,4/-14,5). Whoosh sur les changements d'écran, pop sur les mots géants. |
+
+**Règle d'attitude : ne jamais dire « impossible » ou « pas encore construit » sans avoir essayé
+au moins 3 méthodes.** Vérifier d'abord le journal : on l'a peut-être déjà fait.
 
 ## 3. Structure de script (formule virale en 4 étapes, d'après MedTheDesigner)
 
