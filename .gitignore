@@ -11,3 +11,4 @@ podcast/page*.html
 podcast_claude.mp4
 podcast_claude_court.mp4
 podcast/*.log
+__pycache__/
