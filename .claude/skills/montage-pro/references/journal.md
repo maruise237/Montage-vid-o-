@@ -119,3 +119,24 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
 - Fichiers : `kamforms/montage.py` (image), `kamforms/son.py`, `kamforms/finir.sh` → `reel_kamforms.mp4`.
 - À faire si Mariuse fournit de VRAIES preuves (capture du tableau de bord, messages clients) : les ajouter
   sur l'écran KamForms. Ne jamais en fabriquer.
+
+## 2026-10 — Reel « ChatGPT / KamForms » rallongé (7,5 s → 9,9 s)
+- Prise : « ChatGPT génère des photos personnalisées. KamForms génère des formulaires interactifs
+  directement sur WhatsApp. » Demande : « trouver un moyen de faire un peu durer la vidéo ».
+- Transcription : whisper se trompait (« formes », « je l'ai pour mes… ») ; **Scribe sur des morceaux de 3 s**
+  (≈ 1 crédit chacun) a donné la vraie phrase. Avec peu de crédits : découper l'audio, pas tout envoyer.
+- **Comment rallonger sans remplissage** (règle à retenir) :
+  1. couper quand même les silences (la parole doit rester nerveuse) ;
+  2. ajouter une **démo réelle** après la phrase produit : l'animation du téléphone de kamforms.com, capturée
+     image par image (Playwright, `page.screenshot` en boucle + horodatage), **accélérée sur les temps morts**
+     (×4 pendant l'attente, ×2 pendant la frappe, ×1 sur la réponse) ;
+  3. des étapes écrites à lire pendant la démo (« 1. tu décris / 2. l'IA crée / 3. tu partages ») ;
+  4. la musique remonte de 6 dB quand la voix s'arrête (ponctuation), pop sur chaque bulle ;
+  5. finir sur l'URL en pastille, la musique s'arrête sur un carillon.
+- Hook : ChatGPT = mention rapide → logo officiel qui pop sous le sous-titre ; « PHOTOS » derrière la tête,
+  assombrissement qui arrive **progressivement** avec le titre (pas avant).
+- Note loudness : sur une vidéo < 10 s, `loudnorm` en un passage reste ~1 dB trop bas → viser -12,8 pour
+  obtenir -14,2 (vérifier avec ebur128).
+- Le site a une page « études de cas » (Amina à Abidjan, Seydou à Dakar, Chez Mado à Douala) : NE PAS
+  l'utiliser comme preuve sociale en vidéo tant que Mariuse n'a pas confirmé que ce sont de vrais clients.
+- Fichiers : `kamforms2/montage.py`, `kamforms2/son.py`, `kamforms2/finir.sh` → `reel_kamforms_2.mp4`.

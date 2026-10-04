@@ -1,0 +1,1 @@
+{"detail": {"type": "invalid_request", "code": "quota_exceeded", "message": "This request exceeds your quota of 10000. You have 7 credits remaining, while 8 credits are required for this request.", "status": "quota_exceeded", "request_id": "833428bee2fc057e200f47e11efc7be8"}}
