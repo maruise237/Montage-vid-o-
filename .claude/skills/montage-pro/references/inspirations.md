@@ -152,3 +152,35 @@ je fais ? ») → méthode → morale en une phrase.
 - Hooks : « tu savais que des scientifiques… », « ne poste plus jamais… si… », « personne ne regardera tes
   vidéos tant que… », impératif provocant (« mentez à vos parents »), résultat d'abord.
 - CTA : « commente MOT » (Loucash, Med, Toprak), « abonne-toi » + signature (Faro), aucun (Wu : fin sur preuve).
+
+---
+
+## Son (14 vidéos, séparation demucs voix / reste)
+
+| # | Créateur | Musique présente | Musique sous la voix | Hook vs corps | Bruitages / min | Coupes sonorisées (hasard) |
+|---|---|---|---|---|---|---|
+| 1 | Med (poster) | 100 % | -6 dB | égal | 46 | 19 % (31 %) |
+| 2 | Med | 69 % | -25 dB | -40 / -44 | 48 | 46 % (32 %) |
+| 3 | Med | 83 % | -19 dB | **sec** -43 / -36 | 50 | 69 % (33 %) |
+| 4 | Med | 100 % | -12 dB | glow -22 puis riser → musique à 9,2 s | 57 | 57 % (38 %) |
+| 5 | Loucash (long) | 68 % | -29 dB | mélodie douce continue | 23 | 14 % (15 %) |
+| 6 | Loucash | 89 % | -21 dB | **sec** -56 / -39 | 36 | 36 % (24 %) |
+| 7 | Loucash | 90 % | -17 dB | **sec** -51, riser → musique à 7,7 s | 61 (30 whoosh) | 57 % (41 %) |
+| 8 | Loucash | 80 % | -24 dB | **sec** -50 / -40 | 36 | 42 % (24 %) |
+| 9 | Faro | 94 % | -12 dB | **épique** -19 / -33, silence puis « musique de transition » à 43 s | 28 | 27 % (19 %) |
+| 10 | Faro | 92 % | -12 dB | **épique** -17 / -30 | 18 (27 impacts) | 19 % (12 %) |
+| 11 | Faro | 90 % | -14 dB | **épique**, 4 s de musique seule (drop électro) sur « LA PSYCHOLOGIE DE L'HUMOUR » | 42 | 35 % (28 %) |
+| 12 | Wu | 88 % | -10 dB | égal ; **musique coupée 1,5–3 s sur 3 punchlines** | 15 | 24 % (10 %) |
+| 13 | Toprak | 99 % | -18 dB | égal, texture qui change à l'étape 2, clics UI | **81** | 75 % (54 %) |
+| 14 | Toprak | 100 % | -4 dB | lit musical dense constant | 4 | 9 % (3 %) |
+
+Hook vs corps = niveau médian de la musique (dBFS) pendant les 3 premières s / le reste.
+« Hasard » = proportion attendue si les bruitages tombaient au hasard : l'écart mesure le calage volontaire.
+Les transitoires comptent aussi des notes de musique : chiffres à lire comme des ordres de grandeur.
+
+## Stratégie abonnés (14 vidéos)
+| Fin | Exemples | Commentaires / like |
+|---|---|---|
+| Abonne-toi + commente MOT + envoi en message | Loucash 5–8, Toprak 14, Med 2–3 | 0,72 · 0,42 · 1,15 · 1,48 · 0,73 · 0,59 · 0,62 |
+| Abonne-toi seul / lien en bio | Med 1 et 4, Toprak 13, Faro 9–11 | 0,011 · 0,009 · 0,008 · 0,005 · 0,005 · 0,006 |
+| Aucun CTA (fin sur la preuve) | Wu 12 | 0,012 |

@@ -4,6 +4,21 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
 
 ---
 
+## 2026-10 — Retours de Mariuse : contexte, logos, assombrissement, son, abonnés
+- « Toutes les techniques ne vont pas sur toutes les vidéos » → §0 du skill : tableau type de vidéo →
+  techniques à utiliser / à éviter, conditions par technique.
+- « Pas d'usine à gaz pour la zone Instagram » → règle simplifiée (sous le menton), outil optionnel.
+- « L'assombrissement se voit, on voit le détourage » → `FOND` 0,30 → 0,45, flou 5 → 3. Démo re-rendue.
+- « Quand je cite un outil, mettre son VRAI logo » → `outils/logo.py` (Wikimedia → Simple Icons → favicon,
+  cache `assets/logos/`, `coller()` pour le pop). 1er essai : Instagram renvoyait un logo Instagram+Threads
+  → filtrage des titres resserré. Leçon : toujours regarder le logo téléchargé.
+- « Tu n'as rien appris sur les bruitages, la musique, les abonnés » : juste, je n'avais analysé que l'image.
+  Fait : séparation demucs des 14 vidéos + spectrogrammes → §2bis (deux ouvertures selon le type,
+  ponctuation musicale, bruitages sur actions visibles) et stratégie abonnés chiffrée (§3).
+- Leçon : analyser une inspiration = image + **son** + **CTA/légende**, pas seulement l'image.
+
+---
+
 ## 2026-10 — 6 nouvelles inspirations (Fabien Faro, Toprak, Mickaël Wu)
 - Livré : créateurs C–E dans `inspirations.md` (14 vidéos au total), règle 11 (look pro au tournage),
   `outils/zone_securite.py`.

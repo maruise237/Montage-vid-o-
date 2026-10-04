@@ -102,7 +102,37 @@ Pipeline de référence : `podcast/` (render(t) déterministe, rendu Playwright 
 | Numéro d'étape persistant | « 1. » / « 2. » / « 3. » en italique dans le coin haut-gauche (dans la zone sûre) pendant tout le point. |
 | Schéma qui se construit | Dessin trait noir sur fond blanc, un élément ajouté à chaque phrase (RÉSULTAT → ACTION → IDENTITÉ), en vignette au-dessus du sujet. |
 | Texte au sol / dans la scène | Mot en perspective posé sur le sol du B-roll (homographie 4 points, `PIL.Image.transform(PERSPECTIVE)`), cf. « Mentleur » chez Wu. |
-| Audio | Voix devant, musique discrète, **-14 LUFS intégré** (mesuré sur les inspirations : -14,4/-14,5). Whoosh sur les changements d'écran, pop sur les mots géants. |
+| Audio | Voix devant, **-14 LUFS intégré** (les 14 inspirations : -14,1 à -14,5). Détail en §2bis. Bruitages synthétisés déjà prêts dans `podcast/son.py` : `whoosh`, `riser`, `impact`, `pop`, `tic`, `touche`, `glitch`, `carillon`. |
+
+## 2bis. Son : musique et bruitages (mesuré sur les 14 inspirations)
+
+Méthode : séparation voix / reste avec `demucs --two-stems=vocals`, niveaux par 0,25 s, spectrogramme
+avec les coupes marquées (`references/inspirations.md`, section Son).
+
+**Musique**
+- Présente 70–100 % du temps, **12 à 25 dB sous la voix** (médiane ~17 dB). Long format = plus bas (Loucash
+  2 min 26 : 29 dB sous la voix, mélodie douce). Exception : DA « poster » rapide (Med vidéo 1) ~6 dB.
+- **Deux façons d'ouvrir, selon le type (§0)** :
+  - *Tuto / outil* (Med, Loucash) : **hook presque sec** (voix + petits pops), puis un **riser de 1–1,5 s**
+    qui mène à une coupe, et la musique démarre sur cette coupe, hook fini.
+  - *Vulgarisation / histoire* (Faro) : **musique épique forte sous le hook** (presque au niveau de la voix
+    pendant les promesses), puis elle baisse de ~12 dB pour le corps.
+- **Ponctuation musicale** (c'est ce qui fait « pro ») :
+  - juste après avoir nommé le concept clé, **2–4 s de musique seule** (montée/drop) sur la carte-titre (Faro) ;
+  - **couper net la musique 1,5–2 s sur la punchline** (« Travaille bien », « une anomalie » chez Wu) :
+    le silence met la phrase en valeur ;
+  - changer de musique/texture au changement de chapitre ou d'étape (Toprak à l'étape 2, Faro après le hook).
+- Musique : bibliothèques libres de droits ou synthèse maison (`podcast/son.py`). Jamais de morceau commercial.
+
+**Bruitages**
+- 15 à 80 par minute selon le type : tuto à captures 60–80 (Toprak, Loucash vidéo 7), vulgarisation
+  20–40, long format ~20. Ce ne sont pas des whoosh partout :
+  - **whoosh** sur les transitions d'écran : environ **une coupe sur deux**, pas toutes (40–75 % des coupes
+    sonorisées chez les tutos, à peine plus que le hasard chez Faro) ;
+  - **clic / touche** à chaque clic du curseur dans une capture (Toprak) ;
+  - **pop** à l'apparition d'un logo, d'un sticker, d'un mot ;
+  - **impact grave** sur un mot géant ou un B-roll choc (Faro « habitudes » : 27 impacts).
+- Un bruitage doit coller à une action visible. Pas de bruitage sur une coupe « invisible » (punch-in).
 
 **Règle d'attitude : ne jamais dire « impossible » ou « pas encore construit » sans avoir essayé
 au moins 3 méthodes.** Vérifier d'abord le journal : on l'a peut-être déjà fait.
@@ -116,6 +146,18 @@ au moins 3 méthodes.** Vérifier d'abord le journal : on l'a peut-être déjà 
    Opposition « le problème c'est jamais X, c'est Y ». Ennemi commun (le prix, les abonnements…).
 3. **Valeur** : une idée = une phrase. Étapes numérotées. Digeste > exhaustif.
 4. **CTA** : FOMO + mot-clé à commenter + promesse d'envoi en message.
+
+**Stratégie abonnés (mesurée : commentaires par like)**
+| Fin de vidéo | Commentaires / like | Qui |
+|---|---|---|
+| « Abonne-toi, **commente MOT** et je te l'envoie en message » | **0,6 à 1,5** | Loucash (10 808 commentaires), Toprak, Med |
+| « Abonne-toi » seul / « lien en bio » | **0,006 à 0,009** (≈ 100× moins) | Faro, Toprak, Med |
+- Le mot-clé fait commenter (signal fort pour l'algorithme) et donne un contact en message privé.
+- La ressource promise est **liée à la vidéo** (le lien de l'outil, le guide, le fichier montré), jamais générique.
+- « Abonne-toi » AVANT « commente » ; la légende répète le CTA dès la 1re ligne (« Commente « Zone » pour l'avoir »).
+- Fidéliser : signature fixe (« C'était Fabien Faro »), rendez-vous (« j'en balance une chaque semaine »),
+  série annoncée (« je vais faire d'autres vidéos sur le sujet »).
+- Exception : vidéo d'émotion / preuve (Wu) → pas de CTA, on finit sur la preuve.
 
 Débit de parole des pros : **3,5 à 4,5 mots/s**. Durée : 26–65 s, jusqu'à 2 min 30 si le sujet le mérite.
 
@@ -132,14 +174,17 @@ Sortir une planche contact (`planche.sh`, 1 image / 1–2 s) et vérifier :
 - [ ] Sous-titres 1–3 mots, jamais par-dessus un visuel important.
 - [ ] Rien n'est centré « par défaut » : chaque position est un choix.
 - [ ] Faits personnels vérifiés (ville = **Yaoundé**, nom de marque, chiffres).
-- [ ] -14 LUFS, voix intelligible sous la musique.
+- [ ] -14 LUFS, musique 12–25 dB sous la voix, ouverture adaptée au type (hook sec ou épique).
+- [ ] Au moins une ponctuation musicale (drop sur le concept, ou silence sur la punchline).
+- [ ] Bruitages sur des actions visibles seulement (≈ 1 coupe sur 2), pas un whoosh à chaque coupe.
+- [ ] CTA « commente MOT » + ressource liée à la vidéo (sauf vidéo émotion/preuve).
 - [ ] Je me demande : « Est-ce que MedTheDesigner, Loucash ou Fabien Faro posterait ça ? » Si non, itérer.
 
 ## 5. Comment faire grandir ce skill
 
 À la fin de CHAQUE projet vidéo :
 - Ajouter une entrée dans `references/journal.md` (livré, retour de Mariuse, leçon).
-- Nouvelle vidéo d'inspiration → télécharger (`yt-dlp`), transcrire (ElevenLabs Scribe ; si quota épuisé :
+- Nouvelle vidéo d'inspiration → analyser IMAGE + SON (demucs, spectrogramme) + CTA/légende ; télécharger (`yt-dlp`), transcrire (ElevenLabs Scribe ; si quota épuisé :
   `faster-whisper` modèle `small` en local, `word_timestamps=True`), planche contact,
   mesurer coupes/mots par s/LUFS, ajouter une fiche dans `references/inspirations.md`.
 - Si une leçon devient une règle générale → la promouvoir dans §1 ou §2 ci-dessus.
