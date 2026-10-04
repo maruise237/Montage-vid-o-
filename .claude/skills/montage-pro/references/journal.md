@@ -163,3 +163,13 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   - un whoosh sur la 1re syllabe masque le mot (« Chat-GPT ») → whoosh fini AVANT le mot (t − 0,40).
   - transcrire aussi la SOURCE au même endroit pour savoir si un mot manque à cause de la coupe ou de whisper.
 - Fichiers : `djoumi/montage.py`, `djoumi/son.py`, `djoumi/finir.sh` → `reel_djoumi.mp4`.
+
+## 2026-10 — Légendes et hashtags par plateforme (5 vidéos)
+- Livré : `publications/legendes.html` (page avec bouton copier, compteurs de caractères et de hashtags).
+- Règles 2026 vérifiées sur le web (4 oct. 2026) :
+  - Instagram : **5 hashtags max** (limite imposée depuis déc. 2025), dans la légende, CTA en 1re ligne (~125 car. visibles).
+  - TikTok : la légende est lue par la recherche → mots-clés que les gens tapent ; 3–5 hashtags précis, pas #fyp.
+  - YouTube Shorts : titre 60–80 car. sans hashtag ; 3–5 hashtags en fin de description dont #shorts
+    (les 3 premiers s'affichent au-dessus du titre) ; liens de description NON cliquables → « vidéo associée ».
+- Chaque légende reprend le CTA « commente MOT » de la vidéo (ou en ajoute un) ; vérifier dans la timeline que
+  ce qu'on annonce est bien dans la version publiée (ex. la réponse r2 est dans la version courte du podcast).
