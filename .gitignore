@@ -12,3 +12,7 @@ podcast_claude.mp4
 podcast_claude_court.mp4
 podcast/*.log
 __pycache__/
+podcast/pro*_muet.mp4
+podcast/rendu_pro*.log
+podcast/son_pro*.wav
+podcast/evenements_pro*.json
