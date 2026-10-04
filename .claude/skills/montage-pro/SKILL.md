@@ -150,8 +150,8 @@ au moins 3 méthodes.** Vérifier d'abord le journal : on l'a peut-être déjà 
 **Stratégie abonnés (mesurée : commentaires par like)**
 | Fin de vidéo | Commentaires / like | Qui |
 |---|---|---|
-| « Abonne-toi, **commente MOT** et je te l'envoie en message » | **0,6 à 1,5** | Loucash (10 808 commentaires), Toprak, Med |
-| « Abonne-toi » seul / « lien en bio » | **0,006 à 0,009** (≈ 100× moins) | Faro, Toprak, Med |
+| « Abonne-toi, **commente MOT** et je te l'envoie en message » | **0,4 à 1,5** | Loucash (10 808 commentaires), Toprak, Med |
+| « Abonne-toi » seul / « lien en bio » | **0,005 à 0,011** (≈ 100× moins) | Faro, Toprak, Med |
 - Le mot-clé fait commenter (signal fort pour l'algorithme) et donne un contact en message privé.
 - La ressource promise est **liée à la vidéo** (le lien de l'outil, le guide, le fichier montré), jamais générique.
 - « Abonne-toi » AVANT « commente » ; la légende répète le CTA dès la 1re ligne (« Commente « Zone » pour l'avoir »).
