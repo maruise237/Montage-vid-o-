@@ -23,7 +23,7 @@ E = [
  dict(t=(10.2, 14.35), box=(200, 405, 1010, 505), en=[("Keep my launch on track", S)],
       fr=[("Garder mon lancement au cap", S, None)], align='l', frappe=True, tref=13.2, maxw=700),
  # --- 4. Muse ---
- dict(t=(14.75, 21.3), box=(95, 268, 990, 425), en=[("Built for ", S), ("everyday", SI), (" tasks", S)],
+ dict(t=(16.0, 21.3), box=(95, 268, 990, 425), en=[("Built for ", S), ("everyday", SI), (" tasks", S)],
       fr=[("Pensé pour le ", S, None), ("quotidien", SI, BLEU)], align='c'),
  dict(t=(16.5, 17.55), box=(170, 765, 830, 840), en=[("Help me stay on top of school em", 'sans-m')], taille=44.8,
       fr=[("Aide-moi à gérer mes mails", 'sans-m', None)], align='l', frappe=True, k=41, tref=17.4, maxw=640),
@@ -59,7 +59,7 @@ E = [
  dict(t=(41.0, 46.3), puces=[[(60, 1300, 222, 1358), (238, 1300, 377, 1358), (389, 1300, 532, 1358), (548, 1300, 750, 1358), (762, 1300, 992, 1358)]],
       labels=[["10 pages", "Prix", "Vie privée", "Pour & contre", "3 alternatives"]], police='sans-m', taille=29),
  # --- 9. CTA ---
- dict(t=(46.3, 50.1), box=(300, 225, 790, 362), en=[("Comment", S)], fr=[("Commente", S, None)], align='c'),
+ dict(t=(46.3, 50.1), box=(90, 200, 990, 362), en=[("Comment", S)], fr=[("Commente", S, None)], align='c'),
  dict(t=(46.3, 50.1), box=(850, 745, 960, 795), en=[("Post", SB)], fr=[("Publier", SB, None)], align='r', k=31),
  dict(t=(46.3, 50.1), box=(210, 955, 560, 985), en=[("sent you a message · now", 'sans-m')], fr=[("t'a envoyé un message · à l'instant", 'sans-m', None)], align='l', k=31, maxw=420),
  dict(t=(46.3, 50.1), box=(140, 1040, 620, 1090), en=[("Here's your AI agent guide", SA)], fr=[("Voici ton guide des agents IA", SA, None)], align='l', k=31),
