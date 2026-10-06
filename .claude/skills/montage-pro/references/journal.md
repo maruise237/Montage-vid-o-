@@ -205,3 +205,22 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
     + « *Et toi ?* » en serif italique et un cœur qui pop sur KamForms au moment du choix (6,2 s), avec un pop sonore.
 - Leçon : `outils/logo.py "Google Forms"` renvoie le favicon Google (faux) → logo pris sur Wikimedia
   (`Google_Forms_2020_Logo.svg`), rangé dans `assets/logos/googleforms.png`. Toujours regarder le PNG.
+
+## 2026-10 — Série de 6 mèmes marketing KamForms
+- Brief : « cherche des vidéos de mème, plusieurs variantes, fais-moi des mèmes marketing viraux pour
+  KamForms, surprends-moi ».
+- Source des clips : **YouTube bloqué depuis le conteneur** (403 / « confirm you're not a bot », tous
+  les player_client essayés). **Tenor marche** : page `tenor.com/search/<mots>-gifs`, puis remplacer le
+  suffixe d'ID par `AAAPo` pour avoir le MP4 (≈ 500–640 px, sans son). Toujours regarder les images :
+  beaucoup ont du texte incrusté ou un filigrane → choisir les versions propres ou recadrer.
+- Livré (`memes/memes.py` → `memes/meme_kamforms_*.mp4`, 5,5–6,5 s, ≈ -13,5 LUFS) :
+  Drake (Google Forms non / KamForms dans les groupes WhatsApp oui), Leonardo DiCaprio qui pointe,
+  Panik → Kalm (le client veut un formulaire pour ce soir → l'IA de KamForms crée les questions),
+  supporter de cricket déçu (« Réponses : 3 »), Bernie (« je vous demande encore une fois de remplir
+  mon formulaire » dans le groupe de la famille), The Rock sourcil levé.
+- Format « page mème » : légende noire alignée à gauche sur fond blanc, mème pleine largeur, signature
+  logo + kamforms.com ; bloc centré verticalement (mesuré sur la dernière image). Les arguments viennent
+  du site (WhatsApp, réponses en privé, l'IA crée les questions), rien d'inventé.
+- Son : boucle synthétisée + pops. Conseil donné : en publiant, mettre un son tendance de l'appli.
+- Leçon Drake : le clip Tenor « hotline bling » est la danse, pas les deux poses du mème ; Drake refuse
+  à gauche du cadre (0,8–1,1 s) et sourit à droite (2,2–2,6 s) → recadrages différents par case.
