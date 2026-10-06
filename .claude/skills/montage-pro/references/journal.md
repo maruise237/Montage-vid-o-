@@ -186,3 +186,22 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
 - Leçon : choisir le passage de référence le plus propre (ici 14–30 s), pas le début de l'enregistrement.
 - Piste : voix Claude de secours sans crédits ElevenLabs (Brian) → mode « voice design » d'OmniVoice
   (`instruct=`), à tester avant le prochain podcast.
+
+## 2026-10 — Mème « Jerry a choisi son parfum » → KamForms vs Google Forms
+- Brief : reprendre un mème viral (Jerry hésite entre deux flacons Acqua di Giò puis en serre un dans
+  ses bras) et remplacer les produits par les logos Google Forms et KamForms, nom écrit dessous.
+  « Pour la suite, surprends-moi. » Mariuse a demandé en cours de route d'enlever le petit logo du
+  compte d'origine en haut à gauche.
+- Fait (`meme_jerry/montage.py` → `meme_jerry/meme_kamforms_jerry.mp4`, 7 s, -13,3 LUFS) :
+  - Plan fixe → fond propre = médiane temporelle + interpolation ligne par ligne à travers les flacons
+    et le filigrane ; ombres au sol refaites depuis une ligne propre décalée (sinon la médiane reprend
+    les pieds de Jerry → traînée orange).
+  - Jerry détouré par couleur (R−B > 55, + contour noir dans un voisinage, + trous bouchés), pas besoin
+    de RVM pour un dessin animé sur fond gris.
+  - **KamForms à GAUCHE parce que Jerry choisit le flacon de gauche** : regarder la fin du mème avant
+    de placer les marques.
+  - Logos debout sur la table : ombre de contact, reflet sur la table vernie, nom en Inter Tight dessous.
+  - Surprise : légende qui reprend la légende d'origine (« Jerry a choisi son outil de formulaires. »)
+    + « *Et toi ?* » en serif italique et un cœur qui pop sur KamForms au moment du choix (6,2 s), avec un pop sonore.
+- Leçon : `outils/logo.py "Google Forms"` renvoie le favicon Google (faux) → logo pris sur Wikimedia
+  (`Google_Forms_2020_Logo.svg`), rangé dans `assets/logos/googleforms.png`. Toujours regarder le PNG.
