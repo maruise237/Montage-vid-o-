@@ -31,3 +31,13 @@ djoumi/src_hook.mp4
 djoumi/muet.mp4
 djoumi/son.wav
 djoumi/site.html
+# doublage : sources téléchargées et fichiers de travail
+doublage/src/
+doublage/f/
+doublage/test/
+doublage/essais/
+doublage/planche/
+doublage/rendu/
+doublage/ref.json
+doublage/voix/*.mp3
+doublage/voix/*.wav
