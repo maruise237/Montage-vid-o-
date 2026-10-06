@@ -248,3 +248,22 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   → bandeau crème opaque au-dessus et centre du zoom calé pour que l'en-tête passe dessous.
 - Piège PIL : une taille de police animée qui part de 0 plante (`font size must be > 0`) → ne rien
   dessiner tant que l'échelle < 0,02.
+- **Retours de Mariuse sur la v1 (2 corrections importantes)** :
+  1. « Tu devais utiliser ces hooks avec une bonne transition vers le contenu de KamForms » → il voulait
+     les VRAIS extraits viraux en ouverture (pratique courante, Theo fait pareil), pas seulement la mécanique.
+     v3 : `pubs_hooks/pubs_v2.py` (extraction des passages + transitions) + `pubs_v3.py` (contenu) →
+     `pubs_hooks/v3/pub_kamforms_hookNN_*.mp4`. Transition calée sur l'action de l'extrait : flash + secousse
+     sur un impact (immeuble, collision, pastèque), whip sur un mouvement (mât, train), zoom avant
+     (enclos, rivière), carte qui s'envole (illusion, avant/après), glitch (hamac). Le passage de Theo
+     « THIS is a … hook » est toujours exclu ; une légende incrustée dans l'extrait se cache sous la nôtre.
+  2. **KamForms n'est PAS un outil de commandes WhatsApp.** C'est un outil de formulaires pour tout
+     (inscriptions, événements, formations, avis, dons, sondages, institutions), créé depuis le téléphone.
+     Sa seule vraie différence : **les réponses arrivent sur WhatsApp** (option « Redirection WhatsApp » :
+     le répondant arrive sur ton WhatsApp avec ses réponses) **+ notification push** pour qui a l'appli.
+     Pas d'appli ni de compte pour répondre, import de Google Forms, export CSV, 10 formulaires gratuits.
+     → Les « commandes » ne sont qu'UN exemple (celui des captures du site), jamais le message principal.
+- Vraies captures de l'appli téléchargées depuis kamforms.com (`pubs_hooks/site/` : création IA, détail
+  d'un formulaire avec « Redirection WhatsApp », réponse avec « Répondre sur WhatsApp », boîte de réception,
+  import Google Forms, statistiques, 4 mascottes d'usages). Pour lister les images d'un site : Playwright
+  + `document.querySelectorAll('img')` (les sections « apparaissent au défilement » sont vides en capture
+  pleine page → défiler par pas de 700 px avec 1,6 s d'attente, ou télécharger les images directement).

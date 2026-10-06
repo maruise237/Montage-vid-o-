@@ -30,3 +30,21 @@ CTA final « Comment HOOKS for my 1000 viral hooks templates » (13,5 K commenta
 8. Question : « Qui d'autre relit 50 messages pour retrouver UNE adresse ? » → « Plus besoin. »
 9. Valeur : 5 questions à mettre dans un formulaire de commande → « ou écris-les en une phrase ».
 10. Coulisses : clap, REC, la création réelle d'un formulaire étape par étape.
+
+## v3 (après retour de Mariuse) — `v3/pub_kamforms_hookNN_*.mp4`
+Chaque pub ouvre sur le vrai passage viral (sans la carte « THIS is a … » de Theo), légende française,
+transition calée sur l'action, puis le contenu KamForms : outil de formulaires pour tout, réponses sur
+WhatsApp, notification sur l'appli, vraies captures de l'appli (dossier `site/`).
+
+| # | Extrait (reel) | Transition | Contenu KamForms |
+|---|---|---|---|
+| 01 | mât qui tombe (DdE-CVfOdnU) | whip | inscriptions en vrac dans le groupe → un lien → partage → réponses sur WhatsApp → notifications |
+| 02 | bouton → immeuble qui s'effondre (DdzXvSrOLTA) | flash | tu décris, l'IA crée → partage → réponses sur WhatsApp |
+| 03 | femme penchée hors du train (Dd18EpaOFb_) | whip | notifications → réponses sur WhatsApp → boîte de réception + CSV |
+| 04 | quasi-collision (Dc4G45kugdW) | flash | « Fais plutôt un formulaire » → création → partage → réponses |
+| 05 | course dans l'enclos (Ddo78efOZFk) | zoom | partage sans appli ni compte → réponse détaillée → notifications |
+| 06 | arrosoir dans la rivière (DduM5aZOcLA) | zoom | un outil pour tous les formulaires (formations, événements, avis, dons) → création → réponses |
+| 07 | pastèque qui explose (Dd7DJXmuX-u) | flash | toutes les réponses au même endroit → réponse détaillée → notifications « Avis clients » |
+| 08 | faux téléphone en papier (DeFWAu0uV0Y) | carte | illusion : « tu crois que je discute ? » → c'est l'IA qui crée le formulaire |
+| 09 | avant/après transformation (DdrpUqqOyM7) | carte | import de Google Forms → réponses sur WhatsApp → notifications |
+| 10 | hamac qui lâche (DeCzvKsOqPz) | glitch | coulisses : création réelle étape par étape |

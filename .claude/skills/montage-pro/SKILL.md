@@ -175,6 +175,8 @@ Sortir une planche contact (`planche.sh`, 1 image / 1–2 s) et vérifier :
 - [ ] Sous-titres 1–3 mots, jamais par-dessus un visuel important.
 - [ ] Rien n'est centré « par défaut » : chaque position est un choix.
 - [ ] Faits personnels vérifiés (ville = **Yaoundé**, nom de marque, chiffres).
+- [ ] KamForms = **outil de formulaires pour tout** (inscriptions, événements, avis, dons…) dont les réponses
+      arrivent sur WhatsApp + notification sur l'appli. Jamais le réduire à « prendre des commandes ».
 - [ ] -14 LUFS, musique 12–25 dB sous la voix, ouverture adaptée au type (hook sec ou épique).
 - [ ] Au moins une ponctuation musicale (drop sur le concept, ou silence sur la punchline).
 - [ ] Bruitages sur des actions visibles seulement (≈ 1 coupe sur 2), pas un whoosh à chaque coupe.
