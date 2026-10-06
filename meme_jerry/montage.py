@@ -34,6 +34,19 @@ def lire_images():
 def fond_propre(images):
     """Médiane temporelle puis interpolation ligne par ligne à travers les flacons."""
     med = np.median(images[::3], axis=0).astype(np.float32)
+    # Jerry reste presque tout le temps au centre : la médiane simple l'imprime dans le fond et un
+    # « fantôme » reste sur place quand il part à la fin. Au centre, médiane des seules images où le
+    # pixel n'est PAS couvert par Jerry (masque élargi pour inclure son ombre).
+    y0, y1, x0, x1 = 520, 900, 220, 510
+    pile = images[:, y0:y1, x0:x1].astype(np.float32)
+    for i, im in enumerate(images):
+        m = masque_jerry(im)[y0:y1, x0:x1, 0] > 0.05
+        m = ndi.binary_dilation(m, iterations=10)
+        pile[i][m] = np.nan
+    centre = np.nanmedian(pile, axis=0)
+    trou = np.isnan(centre)
+    centre[trou] = med[y0:y1, x0:x1][trou]
+    med[y0:y1, x0:x1] = centre
     plaque = med.copy()
     cols = np.arange(W)
     for x0, y0, x1, y1 in (FLACON_G, FLACON_D, FILIGRANE):

@@ -224,3 +224,8 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
 - Son : boucle synthétisée + pops. Conseil donné : en publiant, mettre un son tendance de l'appli.
 - Leçon Drake : le clip Tenor « hotline bling » est la danse, pas les deux poses du mème ; Drake refuse
   à gauche du cadre (0,8–1,1 s) et sourit à droite (2,2–2,6 s) → recadrages différents par case.
+- Retour de Mariuse sur le mème Jerry : « à la fin, quand Jerry saute, une version de lui reste sur
+  place ». Cause : fond propre = médiane temporelle, or Jerry est au centre presque tout le temps →
+  il s'imprime dans le fond. Correction : au centre, médiane des seules images où le pixel n'est pas
+  couvert par Jerry (masque élargi de 10 px, `np.nanmedian`). **Règle : un fond propre par médiane
+  n'est valable que si le sujet bouge beaucoup ; sinon exclure ses pixels avant la médiane.**
