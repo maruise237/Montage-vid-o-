@@ -229,3 +229,22 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   il s'imprime dans le fond. Correction : au centre, médiane des seules images où le pixel n'est pas
   couvert par Jerry (masque élargi de 10 px, `np.nanmedian`). **Règle : un fond propre par médiane
   n'est valable que si le sujet bouge beaucoup ; sinon exclure ses pixels avant la médiane.**
+
+## 2026-10 — 10 pubs KamForms tirées des hooks de @theo.vizuals
+- Brief : prendre les 10 reels les plus vus de @theo.vizuals (compte qui classe les hooks viraux),
+  extraire les hooks, faire 10 vidéos publicitaires KamForms.
+- Récupération : `vidiq_ig_profile_reels` (12 reels max, vues incluses, 5 crédits) pour le classement ;
+  vidéos via treg `tikhub.x.instagram-v1-fetch-post-by-url` (0,001 $ l'appel, champ `video_url`) —
+  yt-dlp sur instagram.com renvoie 429. Réponse JSON énorme → déléguer les appels à un sous-agent.
+- Theo ne fait que nommer des hooks sur des extraits d'autres créateurs → on reprend les MÉCANIQUES
+  (anticipation, visuel, stitch, danger, stress, illusion, avant/après, question, valeur, coulisses),
+  pas les images. Relevé dans `pubs_hooks/hooks_theo.md`.
+- Livré : `pubs_hooks/pubs.py` → `pubs_hooks/pub_kamforms_01…10_*.mp4` (10–12 s, motion design, sans voix).
+  Chaque pub : hook 2–4 s → vraie démo du téléphone kamforms.com (`kamforms2/tel`, cycle 7,6–17,0 s,
+  vitesse adaptée à la durée) → carte de fin commune (logo, « La *façon simple* de créer des
+  formulaires. » comme sur le site, pastille kamforms.com, « 10 formulaires gratuits · Réponses illimitées »).
+- DA KamForms mesurée sur le site : vert **#0F6F3C**, ciel (129,189,217) → crème, serif Instrument.
+- Illusion : le gros plan ne doit pas montrer l'en-tête « Nouveau formulaire » (ça casse la surprise)
+  → bandeau crème opaque au-dessus et centre du zoom calé pour que l'en-tête passe dessous.
+- Piège PIL : une taille de police animée qui part de 0 plante (`font size must be > 0`) → ne rien
+  dessiner tant que l'échelle < 0,02.
