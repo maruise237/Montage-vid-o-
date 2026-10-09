@@ -200,3 +200,29 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   sont laissés en anglais.
 - Droits : la vidéo est de @sanjai.builds ; doubler pour un test OK, mais pour publier il faut l'accord / créditer
   et avoir SON propre guide derrière « Commente AGENT ».
+
+## 2026-10 — Pub motion design « KamForms disponible sur APKPure » (46 s)
+- Demande : annoncer que l'appli Android KamForms est publiée et vérifiée sur APKPure (« Apple » dans la dictée
+  vocale = **APKPure**), avec captures, clics, bruitages, voix off Fish Audio, « surprends-moi ».
+- Type (§0) : **pub / motion design** → typo animée, couleurs de la marque, la voix dicte le rythme, pas de sous-titres
+  continus (le titre cinétique de chaque scène EST le sous-titre).
+- Sources :
+  - APKPure : `apkpure.com/p/…` renvoie le défi Cloudflare (curl ET Chromium headless) ; **`apkpure.com/<nom>/<paquet>`
+    passe** (curl avec UA mobile, Playwright avec proxy). Captures du store en 1080x1920 sur `image.winudf.com/…/screen-N.jpg`
+    **avec `?fakeurl=1&type=.jpg`** (sans ces paramètres → 404). Capture de la page en ×3 → en-tête + carte « Security Check
+    Completed / No Virus / VERIFIED by APKPURE » = la preuve à montrer.
+  - Les 8 visuels du store ont déjà des titres : on les **découpe en calques** (`prep.py` : téléphone, bulle de lien,
+    notification, carte WhatsApp…) et on remet NOTRE typo par-dessus, fond = couleur échantillonnée + grille CSS,
+    bords des découpes en fondu (`mask-image`).
+- Voix : Fish Audio direct = 0 crédit API (402). **Passer par treg `fishaudio.tts.s2-1-pro`** (`call_media`, fichier
+  sauvé dans tool-results) : ~0,013 $ pour tout le script. Voix « africain » `b4d249c2468940f791068ffbc3fe446b`
+  (claire, persuasive, faite pour la pub), `prosody.speed 1.1`, une requête par phrase, même voix. Horodatage des mots :
+  faster-whisper `small` sur chaque phrase.
+- Moteur (`animation.html`) : x/y des animations = **décalages** autour de `def.x/def.y` (base). Pièges vus :
+  - un `div` absolu sans largeur est limité à 1080 px → une capture plus large est rognée : `.crop{width:max-content}` ;
+  - une animation de sortie `s:[1,…]` impose s=1 AVANT de démarrer → partir de l'échelle réelle de l'élément ;
+  - les bruitages sont émis par l'animation (`son(t,'clic')`) → `sons.json` → `son.py` : chaque bruit colle à un geste.
+- Ponctuation : pad seul sous le hook, riser, **drop** sur « Le principe est simple », musique **coupée 0,3 s** avant
+  « GRATUIT » + boom + tremblement, carillon sur la carte finale.
+- Fichiers : `kamforms3/` (`prep.py`, `construire.py`, `animation.html`, `rendu.mjs`, `son.py`, `finir.sh`)
+  → `reel_kamforms_apkpure.mp4` (+ `_partage`).
