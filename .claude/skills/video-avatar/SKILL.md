@@ -40,14 +40,21 @@ Toujours lire d'abord `.claude/skills/montage-pro/SKILL.md` (règles anti-slop) 
 - Avatar maître validé par Mariuse : `assets/avatar/maitre.png` (3D Pixar, grosse tête, grands yeux,
   corps entier, t-shirt noir logo KAMTECH, jean, baskets blanches, fond crème uni).
 - Poses : `assets/avatar/poses/NOM.png` (détourées, PNG transparent). Liste et prompts :
-  `python3 outils/avatar_gemini.py poses`.
+  `python3 outils/avatar_cloudflare.py poses`.
+- **Générateur par défaut : Cloudflare Workers AI** (`outils/avatar_cloudflare.py`, FLUX.2 klein 9B,
+  variables `CLOUDFLARE_ACCOUNT_ID` + `CLOUDFLARE_API_TOKEN`). **Gratuit** : 10 000 neurons/jour
+  (remise à zéro 00:00 UTC), au-delà la requête est refusée, jamais facturée.
+  klein-9b ≈ 1 400 neurons/image (1 réf.) à ~1 500 (3–4 réf.) → **6 à 7 images/jour** ;
+  klein-4b ≈ 170 neurons → ~55/jour mais moins fidèle (brouillons). Consommation réelle lue dans
+  l'en-tête `cf-ai-neurons` et notée dans `assets/avatar/depenses.csv`.
 - **Réutiliser avant de générer.** Une pose manque → la générer depuis le maître :
-  `python3 outils/avatar_gemini.py pose NOM sortie.png [flash-lite|flash]`, la regarder (mains, logo,
-  visage identique au maître), puis la détourer et la ranger dans `poses/`.
-- Coût : **aucun quota gratuit** chez Google pour les images. `flash-lite` ≈ 0,034 $/image (défaut),
-  `flash` ≈ 0,067 $. Chaque appel est noté dans `assets/avatar/depenses.csv`. Annoncer le coût à Mariuse
-  avant toute génération en série.
-- Photos de Mariuse : envoyées en base64 inline à Google, **jamais** sur un hébergeur public, jamais commitées.
+  `python3 outils/avatar_cloudflare.py pose NOM sortie.png [klein-9b|klein-4b]`, la regarder (mains, logo,
+  visage identique au maître), puis la détourer et la ranger dans `poses/`. Banque complète (14 poses)
+  = 2 à 3 jours de quota gratuit : étaler, ne pas payer.
+- Secours payant uniquement si Mariuse l'accepte : `outils/avatar_gemini.py` (Google, aucun quota
+  gratuit, ≈ 0,034 $/image, facturation à activer dans AI Studio).
+- Images de référence : redimensionnées sous 512x512 et envoyées en multipart (`input_image_0..3`).
+- Photos de Mariuse : envoyées directement dans la requête (Cloudflare ou Google), **jamais** sur un hébergeur public, jamais commitées.
 
 ## 4. Fabrication (pipeline maison HTML → Playwright → ffmpeg, cf. `podcast/`)
 

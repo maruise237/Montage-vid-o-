@@ -187,3 +187,16 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   → il faut activer la facturation dans AI Studio. Alternative : treg (crédit 0,57 $), Nano Banana Pro via
   reAPI à 0,03 $/image, mais les images de référence doivent être des URL publiques (pas d'inline).
   Les poses partent de l'avatar maître (pas de la photo de Mariuse) : seules elles peuvent passer par URL.
+
+## 2026-10 — Avatar 3D : passage à Cloudflare Workers AI (gratuit)
+- Google `google_api` : 429 « limit 0 » sur les images → Mariuse a ajouté `CLOUDFLARE_ACCOUNT_ID` et
+  `CLOUDFLARE_API_TOKEN` (jeton Workers AI). Quota gratuit : **10 000 neurons/jour**, refus au-delà, pas de facture.
+- Construit : `outils/avatar_cloudflare.py` (mêmes commandes maitre / pose / poses que la version Gemini,
+  mêmes STYLE / TENUE / POSES importés, + `libre`). FLUX.2 klein 9B, repli klein 4B si erreur serveur.
+  REST `…/ai/run/@cf/black-forest-labs/flux-2-klein-9b`, multipart `prompt`, `width`, `height`,
+  `input_image_0..3` (réf. < 512x512). Réponse JSON `result.image` = **JPEG** en base64 (converti en PNG).
+  La doc du modèle ne donne pas les noms de champs : validés par test.
+- Test sans photo (référence de style seule, 768x1344) : **1 393,91 neurons** (en-tête `cf-ai-neurons`),
+  résultat très propre (logo KAMTECH lisible, fond crème, corps entier) → ~7 images/jour gratuites.
+  klein-4b : ~170 neurons/image → ~55/jour pour les brouillons.
+- En attente : les photos de Mariuse (face fond gris + dos logo) → `assets/avatar/photos/` (ignoré par git).
