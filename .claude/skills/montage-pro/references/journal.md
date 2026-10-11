@@ -173,3 +173,13 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
     (les 3 premiers s'affichent au-dessus du titre) ; liens de description NON cliquables → « vidéo associée ».
 - Chaque légende reprend le CTA « commente MOT » de la vidéo (ou en ajoute un) ; vérifier dans la timeline que
   ce qu'on annonce est bien dans la version publiée (ex. la réponse r2 est dans la version courte du podcast).
+
+## 2026-10 — Avatar 3D : passage de Pollinations à Google Gemini
+- Crédit Pollinations à 0 → nouvelle clé Google dans l'environnement : variable **`google_api`**.
+- Coût vérifié (pricing Gemini, oct. 2026) : **pas de quota gratuit** pour les modèles d'image.
+  `gemini-3.1-flash-lite-image` ≈ 0,034 $/image 1K (défaut), `gemini-3.1-flash-image` ≈ 0,067 $.
+  Avatar maître + ~14 poses avec retouches ≈ 30 images ≈ **1 à 2 $**.
+- Construit : `outils/avatar_gemini.py` (photos en base64 inline, jamais d'hébergeur public ; journal
+  des dépenses dans `assets/avatar/depenses.csv` ; liste des poses) et la compétence
+  `.claude/skills/video-avatar/` (demander voix off ou script, demander le style si flou).
+- En attente : les 2 photos de Mariuse (face fond gris + dos logo KAMTECH), puis validation du maître.
