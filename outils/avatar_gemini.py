@@ -33,8 +33,13 @@ STYLE = ("3D animated character in the style of a Pixar film: big head, large ex
          "skin shading, smooth stylized proportions, full body visible from head to sneakers, "
          "soft studio lighting, plain flat uniform cream background (#F1EBE0) with nothing else, "
          "no text, no watermark, vertical 9:16 framing with margin around the character.")
-TENUE = ("Outfit always identical: black crew-neck t-shirt with the white KAMTECH logo on the chest "
-         "(a small stylized person icon, a blue bar, and the word KAMTECH), blue jeans, white sneakers.")
+TENUE = ("Outfit always identical: plain black crew-neck t-shirt with the KAMTECH logo printed small on "
+         "the left side of the chest: a white round dot (head) above a diagonal indigo-blue bar and a white "
+         "chevron shape that together form the letter K, followed by the white letters AMTECH in a geometric "
+         "font, so it reads KAMTECH; blue jeans, white sneakers.")
+VISAGE = ("Face of the real person: young Black man from Cameroon, dark brown skin, clean-shaven with NO "
+          "beard and no moustache, very short black hair with a sharp fade and straight hairline, oval face, "
+          "prominent cheekbones, small ears, dark brown eyes, full lips.")
 
 POSES = {
     'face': 'standing straight facing the camera, arms relaxed, friendly smile',
@@ -99,8 +104,8 @@ def _noter(nom, prix, sortie):
 
 
 def maitre(sortie, modele, photos):
-    texte = (f"Turn the real person in the photos into a {STYLE} Keep his face shape, skin tone, "
-             f"hairstyle and beard recognisable. The last image is only a STYLE reference, do not copy "
+    texte = (f"Turn the real person in the photos into a {STYLE} Keep his face recognisable. {VISAGE}"
+             f" The last image is only a STYLE reference, do not copy "
              f"that character. {TENUE} Pose: {POSES['face']}.")
     return generer(texte, list(photos) + [STYLE_REF], sortie, modele)
 

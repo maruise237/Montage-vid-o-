@@ -26,7 +26,7 @@ import requests
 from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from avatar_gemini import AVATAR, MAITRE, POSES, RACINE, STYLE, STYLE_REF, TENUE  # noqa: E402
+from avatar_gemini import AVATAR, MAITRE, POSES, RACINE, STYLE, STYLE_REF, TENUE, VISAGE  # noqa: E402
 
 MODELES = {'klein-9b': '@cf/black-forest-labs/flux-2-klein-9b',
            'klein-4b': '@cf/black-forest-labs/flux-2-klein-4b'}
@@ -99,16 +99,15 @@ def _noter(nom, neurons, source, sortie):
 
 
 def maitre(sortie, modele, photos):
-    n = len(photos)
-    texte = (f"Turn the real person in the first {n} image{'s' if n > 1 else ''} into a {STYLE} Keep his "
-             f"face shape, skin tone, hairstyle and beard recognisable. The last image is only a STYLE "
-             f"reference, do not copy that character. {TENUE} Pose: {POSES['face']}.")
+    texte = (f"Turn the real person of image 1 (his face photo) into a {STYLE} {VISAGE} The other photos "
+             f"show the exact KAMTECH logo of his t-shirt: reproduce it faithfully. The last image is only a "
+             f"STYLE reference, do not copy that character. {TENUE} Pose: {POSES['face']}.")
     return generer(texte, list(photos)[:3] + [STYLE_REF], sortie, modele)
 
 
 def pose(nom, sortie, modele):
     texte = (f"Same exact character as in the image (same face, hair, body, outfit, same 3D style), "
-             f"new pose: {POSES.get(nom, nom)}. {TENUE} {STYLE}")
+             f"new pose: {POSES.get(nom, nom)}. {VISAGE} {TENUE} {STYLE}")
     return generer(texte, [MAITRE], sortie, modele)
 
 
