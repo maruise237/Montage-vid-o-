@@ -223,3 +223,5 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
 - CTA ajouté à l'écran seulement : « abonne-toi, commente AVATAR » (Mariuse ne le dit pas dans le vocal).
 - Fichiers : `avatar1/coupe.py` (voix), `avatar1/montage.py` (image, rendu sur 4 cœurs, `planche` pour vérifier),
   `avatar1/son.py`, `avatar1/finir.sh` → `video_avatar_1.mp4` (-14,1 LUFS, musique 17 dB sous la voix).
+- Après livraison, Mariuse : « garde les images et classe-les » → `assets/banque/` (poses par humeur, décors,
+  personnages, illustrations), `CATALOGUE.md` court + `apercu.jpg`. Règle : piocher dans la banque avant de générer.

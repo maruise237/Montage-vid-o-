@@ -13,7 +13,13 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 ICI = os.path.dirname(os.path.abspath(__file__)); RACINE = os.path.dirname(ICI)
-AV = f'{RACINE}/assets/avatar'; LOGOS = f'{RACINE}/assets/logos'
+AV = f'{RACINE}/assets/avatar'; LOGOS = f'{RACINE}/assets/logos'; BQ = f'{RACINE}/assets/banque'
+POSE = dict(face='neutre_face_bras_le_long', pouce='content_pouce_clin_doeil', choque='choque_mains_sur_joues',
+            reflechit='pensif_main_menton', bras_croises='confiant_bras_croises', explique='explique_mains_ouvertes',
+            haussement='perplexe_haussement_epaules', pointe='enthousiaste_pointe_haut_gauche', victoire='victoire_poing_leve',
+            ordinateur='concentre_ordinateur', telephone='amuse_telephone', marche='cool_marche_lunettes_soleil')
+def chemin_pose(n):
+    return f'{BQ}/personnages/mascotte_claude_marche_lunettes.png' if n == 'claude_mascotte' else f'{BQ}/avatar_poses/{POSE[n]}.png'
 W, H, FPS = 1080, 1920, 30
 CREME, ENCRE, ROUGE, BLANC = (241, 235, 224), (18, 18, 18), (217, 68, 43), (255, 255, 255)
 F = lambda n, s: ImageFont.truetype(f'{RACINE}/fonts/{n}', s)
@@ -169,21 +175,17 @@ R = {}
 def init():
     if R: return
     R['creme'] = fond_creme()
-    R['ciel'] = couvrir(f'{AV}/brut/fond_ciel.png'); R['ville'] = couvrir(f'{AV}/brut/fond_ville.png')
-    R['plage'] = couvrir(f'{AV}/brut/fond_plage.png')
-    b = Image.open(f'{AV}/brut/fond_bureau.png').convert('RGB')
-    # vrai logo KAMTECH posé sur le panneau noir du mur (repéré : x 314–704, y 254–583 sur 768x1344)
-    lg = Image.open(f'{LOGOS}/kamtech.png').convert('RGBA'); s = (704 - 314) * .82 / lg.width
-    lg = lg.resize((int(lg.width * s), int(lg.height * s)), Image.LANCZOS)
-    b2 = b.copy().convert('RGBA'); b2.alpha_composite(lg, (int(509 - lg.width / 2), int(418 - lg.height / 2)))
-    b2.convert('RGB').save(f'{ICI}/fond_bureau_kamtech.png')
-    R['bureau'] = couvrir(f'{AV}/brut/fond_bureau.png'); R['bureau_k'] = couvrir(f'{ICI}/fond_bureau_kamtech.png')
+    D = f'{BQ}/decors'
+    R['ciel'] = couvrir(f'{D}/ciel_nuages_jour.png'); R['ville'] = couvrir(f'{D}/ville_yaounde_rue_taxis.png')
+    R['plage'] = couvrir(f'{D}/plage_kribi_palmiers.png')
+    # bureau_kamtech_logo_mur = le même bureau + vrai logo KAMTECH sur le panneau noir (x 314–704, y 254–583)
+    R['bureau'] = couvrir(f'{D}/bureau_moderne_panneau_noir_vide.png'); R['bureau_k'] = couvrir(f'{D}/bureau_kamtech_logo_mur.png')
     R['rouge'] = Image.new('RGB', (W, H), ROUGE)
     for n in ['pointe', 'victoire', 'face', 'pouce', 'explique', 'haussement', 'reflechit', 'bras_croises',
               'ordinateur', 'telephone', 'choque', 'marche', 'claude_mascotte']:
-        R['p_' + n] = sticker(f'{AV}/poses/{n}.png')
+        R['p_' + n] = sticker(chemin_pose(n))
     for n in ['choque', 'pouce', 'reflechit', 'victoire']:
-        R['mini_' + n] = sticker(f'{AV}/poses/{n}.png', 540, 9)
+        R['mini_' + n] = sticker(chemin_pose(n), 540, 9)
     R['env'] = enveloppe()
 
 

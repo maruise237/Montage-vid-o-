@@ -42,11 +42,13 @@ Toujours lire d'abord `.claude/skills/montage-pro/SKILL.md` (règles anti-slop) 
 - Rythme : **1 changement / 1,5 s**. Fin : écran rouge plein « ABONNE-TOI » + CTA « commente MOT ».
 - Son : -14 LUFS, musique 12–25 dB sous la voix, pop à chaque apparition de pose/carte (`podcast/son.py`).
 
-## 3. Banque de poses (générée une fois, complétée au fil des vidéos)
+## 3. Banque d'images : PIOCHER AVANT DE GÉNÉRER
 
-- Avatar maître validé par Mariuse : `assets/avatar/maitre.png` (3D Pixar, grosse tête, grands yeux,
-  corps entier, t-shirt noir logo KAMTECH, jean, baskets blanches, fond crème uni).
-- Poses : `assets/avatar/poses/NOM.png` (détourées, PNG transparent). Liste et prompts :
+- **Toujours lire d'abord `assets/banque/CATALOGUE.md`** (et regarder `assets/banque/apercu.jpg`) : poses de
+  l'avatar classées par humeur, décors, mascotte Claude, cartes et tampons déjà faits. On réutilise.
+- On ne génère que ce qui manque. Chaque nouvelle image va dans `assets/banque/<dossier>/humeur_action.png`
+  (ou `lieu_detail.png`), on ajoute 1 ligne au catalogue, on refait `apercu.jpg`, et on commite.
+- Avatar maître (référence) : `assets/avatar/maitre.png`. Liste des prompts de poses :
   `python3 outils/avatar_cloudflare.py poses`.
 - **Générateur par défaut : Cloudflare Workers AI** (`outils/avatar_cloudflare.py`, FLUX.2 klein 9B,
   variables `CLOUDFLARE_ACCOUNT_ID` + `CLOUDFLARE_API_TOKEN`). **Gratuit** : 10 000 neurons/jour
@@ -57,12 +59,11 @@ Toujours lire d'abord `.claude/skills/montage-pro/SKILL.md` (règles anti-slop) 
   sans message). Toujours regarder chaque image en grand (bras doublé sur `victoire` la 1re fois).
 - Détourage d'une pose : `python3 outils/detourage_pose.py src.png dst.png` (rembg isnet, couleurs d'origine,
   blanc des yeux rebouché : sinon les yeux deviennent transparents).
-- Décors déjà prêts dans `assets/avatar/brut/` : ciel, ville (Yaoundé), bureau (+ vrai logo KAMTECH sur le panneau,
-  `assets/logos/kamtech.png`), plage. Mascotte Claude : `poses/claude_mascotte.png`. Consommation réelle lue dans
+- Logo KAMTECH propre (blanc et bleu, fond transparent) : `assets/logos/kamtech.png`. Consommation réelle lue dans
   l'en-tête `cf-ai-neurons` et notée dans `assets/avatar/depenses.csv`.
-- **Réutiliser avant de générer.** Une pose manque → la générer depuis le maître :
-  `python3 outils/avatar_cloudflare.py pose NOM sortie.png [klein-9b|klein-4b]`, la regarder (mains, logo,
-  visage identique au maître), puis la détourer et la ranger dans `poses/`. Banque complète (14 poses)
+- Une pose manque → la générer depuis le maître :
+  `python3 outils/avatar_cloudflare.py pose NOM sortie.png klein-4b`, la regarder en grand (mains, bras, logo,
+  visage identique au maître), la détourer et la ranger dans `assets/banque/avatar_poses/`. Banque complète (14 poses)
   = 2 à 3 jours de quota gratuit : étaler, ne pas payer.
 - Secours payant uniquement si Mariuse l'accepte : `outils/avatar_gemini.py` (Google, aucun quota
   gratuit, ≈ 0,034 $/image, facturation à activer dans AI Studio).
