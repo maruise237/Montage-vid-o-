@@ -1,0 +1,222 @@
+[
+ {
+  "k": 0,
+  "texte": "cette vidéo est entièrement montée avec du code",
+  "src": [
+   44.42,
+   47.735
+  ],
+  "debut": 0.15,
+  "fin": 3.465,
+  "decalage": -44.27
+ },
+ {
+  "k": 1,
+  "texte": "nous venons de passer à un nouveau cap pour la génération de vidéos avec l'intelligence artificielle",
+  "src": [
+   13.57,
+   18.07
+  ],
+  "debut": 3.815,
+  "fin": 8.315,
+  "decalage": -9.754999999999999
+ },
+ {
+  "k": 2,
+  "texte": "Maintenant, nous sommes dans les vidéos illustrées avec Avatar",
+  "src": [
+   18.04,
+   21.19
+  ],
+  "debut": 8.615,
+  "fin": 11.765,
+  "decalage": -9.424999999999999
+ },
+ {
+  "k": 3,
+  "texte": "pour générer cette vidéo,",
+  "src": [
+   23.7,
+   25.15
+  ],
+  "debut": 12.015,
+  "fin": 13.465,
+  "decalage": -11.685
+ },
+ {
+  "k": 4,
+  "texte": "donc tout a été généré de façon 100 % gratuite",
+  "src": [
+   32.915,
+   35.33
+  ],
+  "debut": 13.665000000000001,
+  "fin": 16.08,
+  "decalage": -19.25
+ },
+ {
+  "k": 5,
+  "texte": "mon ami Claude va faire le montage, il va animer mon personnage",
+  "src": [
+   37.45,
+   41.84
+  ],
+  "debut": 16.43,
+  "fin": 20.82,
+  "decalage": -21.020000000000003
+ },
+ {
+  "k": 6,
+  "texte": "ce n'est pas un modèle de génération de vidéos comme VO3,",
+  "src": [
+   56.45,
+   60.77
+  ],
+  "debut": 21.119999999999997,
+  "fin": 25.439999999999998,
+  "decalage": -35.33
+ },
+ {
+  "k": 7,
+  "texte": "ou Clean AI,",
+  "src": [
+   61.255,
+   63.315
+  ],
+  "debut": 25.639999999999997,
+  "fin": 27.7,
+  "decalage": -35.615
+ },
+ {
+  "k": 8,
+  "texte": "ou Seedense,",
+  "src": [
+   69.935,
+   71.57
+  ],
+  "debut": 27.9,
+  "fin": 29.535,
+  "decalage": -42.035000000000004
+ },
+ {
+  "k": 9,
+  "texte": "cette vidéo va être illustrée par Claude,",
+  "src": [
+   75.175,
+   78.33
+  ],
+  "debut": 29.884999999999998,
+  "fin": 33.04,
+  "decalage": -45.29
+ },
+ {
+  "k": 10,
+  "texte": "comme je parle de Claude, Claude, tu dois mettre ton logo,",
+  "src": [
+   80.575,
+   83.325
+  ],
+  "debut": 33.24,
+  "fin": 35.99,
+  "decalage": -47.335
+ },
+ {
+  "k": 11,
+  "texte": "Change l'arrière -plan du personnage",
+  "src": [
+   84.565,
+   86.42
+  ],
+  "debut": 36.49,
+  "fin": 38.345,
+  "decalage": -48.075
+ },
+ {
+  "k": 12,
+  "texte": "mets le personnage dans une ville",
+  "src": [
+   88.8,
+   90.56
+  ],
+  "debut": 39.045,
+  "fin": 40.805,
+  "decalage": -49.755
+ },
+ {
+  "k": 13,
+  "texte": "mets maintenant le personnage dans une salle où on voit KAMTECH",
+  "src": [
+   91.9,
+   95.09
+  ],
+  "debut": 41.504999999999995,
+  "fin": 44.695,
+  "decalage": -50.395
+ },
+ {
+  "k": 14,
+  "texte": "tous ces exemples que je viens de prendre, c'est juste pour vous montrer la puissance de Claude",
+  "src": [
+   96.4,
+   101.08
+  ],
+  "debut": 45.394999999999996,
+  "fin": 50.074999999999996,
+  "decalage": -51.005
+ },
+ {
+  "k": 15,
+  "texte": "Claude, génère un avatar de toi qui est en train de marcher avec les lunettes sur la plage",
+  "src": [
+   101.45,
+   107.97
+  ],
+  "debut": 50.475,
+  "fin": 56.995,
+  "decalage": -50.975
+ },
+ {
+  "k": 16,
+  "texte": "Ok, mets maintenant mon avatar derrière toi",
+  "src": [
+   108.955,
+   111.595
+  ],
+  "debut": 57.795,
+  "fin": 60.434999999999995,
+  "decalage": -51.160000000000004
+ },
+ {
+  "k": 17,
+  "texte": "Ok Claude, merci",
+  "src": [
+   112.285,
+   113.685
+  ],
+  "debut": 61.035,
+  "fin": 62.434999999999995,
+  "decalage": -51.25
+ },
+ {
+  "k": 18,
+  "texte": "Et si vous ne suivez pas les hésitations, ça veut dire que Claude a encore bien fait son travail, les gars",
+  "src": [
+   116.76,
+   121.6
+  ],
+  "debut": 62.934999999999995,
+  "fin": 67.775,
+  "decalage": -53.825
+ },
+ {
+  "k": 19,
+  "texte": "C'est juste un vocal que j'ai fait et j'ai envoyé à Claude. Donc, si vous voyez la vidéo, ça veut dire que Claude m'a encore surpris",
+  "src": [
+   128.28,
+   134.62
+  ],
+  "debut": 68.17500000000001,
+  "fin": 74.515,
+  "decalage": -60.105000000000004
+ }
+]
