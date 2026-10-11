@@ -183,3 +183,7 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   des dépenses dans `assets/avatar/depenses.csv` ; liste des poses) et la compétence
   `.claude/skills/video-avatar/` (demander voix off ou script, demander le style si flou).
 - En attente : les 2 photos de Mariuse (face fond gris + dos logo KAMTECH), puis validation du maître.
+- Test réel (11 oct.) : la clé `google_api` renvoie **429 « free_tier limit: 0 »** sur les modèles d'image
+  → il faut activer la facturation dans AI Studio. Alternative : treg (crédit 0,57 $), Nano Banana Pro via
+  reAPI à 0,03 $/image, mais les images de référence doivent être des URL publiques (pas d'inline).
+  Les poses partent de l'avatar maître (pas de la photo de Mariuse) : seules elles peuvent passer par URL.
