@@ -26,6 +26,7 @@ Jamais le même traitement par défaut (ex. fond assombri + texte derrière) sur
 | **Business / preuve** (Wu) | Couleur de marque, preuve sociale (messages clients, chiffres), B-roll lifestyle, mot géant | Mèmes trop potaches qui cassent la crédibilité |
 | **Podcast / interview long** (nos podcasts) | Multicam simulé, sous-titres propres, texte derrière **seulement** sur le hook et les changements de chapitre | Texte derrière en continu, un visuel par phrase (fatigant sur 2 min+) |
 | **Pub / motion design** (Valex) | Typo animée, couleurs de la marque, voix off qui dicte le rythme | Règles facecam (multicam, sous-titres 1–3 mots) si personne à l'écran |
+| **Pub payante Facebook / Instagram Ads** (e-book Excel) | Tout ce qui précède + hook dès l'image 0, lisible sans le son, contenu dans la zone 4:5 centrale (export 9:16 + 4:5), preuve chiffrée, prix barré, CTA « clique sur le bouton » | « Commente MOT » (la pub a un bouton), texte collé en bas (couvert par la légende) |
 
 Conditions par technique :
 - **Texte derrière la personne** : seulement s'il y a de la place au-dessus de la tête (≥ 15 % de l'écran)
