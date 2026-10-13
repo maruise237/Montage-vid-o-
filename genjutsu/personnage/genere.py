@@ -75,9 +75,9 @@ ref.thumbnail((W, H))
 canvas.paste(ref, ((W - ref.width) // 2, (H - ref.height) // 2))
 
 prompt = ('A young African man, slim athletic build, very short clean fade haircut, wearing a black graphic t-shirt '
-          'with blue and white abstract design and small logo, brown chino pants, black crossbody bag, black and gray sneakers, '
+          'with blue and white abstract design and small logo, long brown chino trousers covering the legs down to the ankles, black crossbody bag, black and gray sneakers, '
           'playing football on a stadium pitch at night, dynamic motion, realistic, sharp details')
-neg = 'robe, gown, hat, cap, sunglasses, blurry, deformed, extra limbs, low quality, cartoon, text, watermark'
+neg = 'shorts, bare legs, bare knees, robe, gown, hat, cap, sunglasses, blurry, deformed, extra limbs, low quality, cartoon, text, watermark'
 from diffusers import WanVACEPipeline, AutoencoderKLWan
 from diffusers.schedulers.scheduling_unipc_multistep import UniPCMultistepScheduler
 M = os.environ.get('GENJUTSU_MODELS', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'models')) + '/vace13'

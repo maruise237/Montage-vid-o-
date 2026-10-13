@@ -1,9 +1,9 @@
 import os, torch
 M=os.environ.get('GENJUTSU_MODELS', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'models')) + '/vace13'
 prompt = ('A young African man, slim athletic build, very short clean fade haircut, wearing a black graphic t-shirt '
-          'with blue and white abstract design and small logo, brown chino pants, black crossbody bag, black and gray sneakers, '
+          'with blue and white abstract design and small logo, long brown chino trousers covering the legs down to the ankles, black crossbody bag, black and gray sneakers, '
           'playing football on a stadium pitch at night, dynamic motion, realistic, sharp details')
-neg = 'robe, gown, hat, cap, sunglasses, blurry, deformed, extra limbs, low quality, cartoon, text, watermark'
+neg = 'shorts, bare legs, bare knees, robe, gown, hat, cap, sunglasses, blurry, deformed, extra limbs, low quality, cartoon, text, watermark'
 emb = M + '/../prompt_embeds.pt'
 if not os.path.exists(emb):
     from transformers import UMT5EncoderModel, AutoTokenizer
