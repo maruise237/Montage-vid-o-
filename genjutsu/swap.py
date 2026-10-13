@@ -1,6 +1,6 @@
 """Remplace le visage d'une vidéo par celui d'une image de référence, en local sur processeur.
 
-  python3 swap.py SOURCE.mp4 REFERENCE.jpg [--sans-enhancer]
+  python3 swap.py SOURCE.mp4 REFERENCE.jpg [REFERENCE2.jpg ...] [--sans-enhancer] [--tous-les-visages]
 
 Modèles : hyperswap_1a_256 (remplacement) + gfpgan_1.4 (netteté du visage), via FaceFusion.
 Sortie dans runs/<date>/ : final.mp4 (son d'origine complet), comparaison.jpg.
@@ -26,19 +26,23 @@ def a_du_son(path):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument('source'); p.add_argument('reference')
+    p.add_argument('source'); p.add_argument('references', nargs='+', help='une ou plusieurs photos du même visage')
     p.add_argument('--sans-enhancer', action='store_true', help='3x plus rapide, visage moins net')
+    p.add_argument('--tous-les-visages', action='store_true', help='par défaut seul le plus grand visage de chaque image change')
     args = p.parse_args()
     if not (FF / '.venv').exists():
         subprocess.run(['bash', str(ROOT / 'setup.sh')], check=True)
 
-    source, reference = Path(args.source).resolve(), Path(args.reference).resolve()
+    source = Path(args.source).resolve()
+    references = [Path(r).resolve() for r in args.references]
+    reference = references[0]
     job = ROOT / 'runs' / time.strftime('%Y%m%d-%H%M%S')
     job.mkdir(parents=True)
     swapped = job / 'visage_remplace.mp4'
     processors = ['face_swapper'] + ([] if args.sans_enhancer else ['face_enhancer'])
     subprocess.run([str(FF / '.venv/bin/python'), 'facefusion.py', 'headless-run',
-                    '--source-paths', str(reference), '--target-path', str(source), '--output-path', str(swapped),
+                    '--source-paths', *map(str, references),
+                    '--face-selector-mode', 'many' if args.tous_les_visages else 'one', '--target-path', str(source), '--output-path', str(swapped),
                     '--processors', *processors, '--face-swapper-model', 'hyperswap_1a_256',
                     '--face-enhancer-model', 'gfpgan_1.4', '--output-video-quality', '90',
                     '--execution-providers', 'cpu', '--execution-thread-count', '4',
@@ -65,7 +69,8 @@ def main():
                     '[0][1][2]vstack=3', str(job / 'comparaison.jpg')], check=True)
     for r in rows:
         r.unlink()
-    shutil.copy(reference, job / ('reference' + reference.suffix.lower()))
+    for i, r in enumerate(references, 1):
+        shutil.copy(r, job / f'reference{i}{r.suffix.lower()}')
     print(f'Terminé : {final}\nComparaison : {job / "comparaison.jpg"}')
     return 0
 

@@ -11,9 +11,11 @@ avec [FaceFusion](https://github.com/facefusion/facefusion) (version figée) :
 Le son d'origine est recopié tel quel dans la vidéo finale.
 
 ```bash
-python3 swap.py source.mp4 reference.jpg            # installe FaceFusion au premier lancement
+python3 swap.py source.mp4 visage1.jpg [visage2.jpg ...]   # installe FaceFusion au premier lancement
 python3 swap.py source.mp4 reference.jpg --sans-enhancer   # ~3x plus rapide, visage moins net
 ```
+
+Par défaut seul le plus grand visage de chaque image change (`--tous-les-visages` pour tous).
 
 Sortie : `runs/<date>/final.mp4` et `comparaison.jpg` (référence | source | résultat).
 
