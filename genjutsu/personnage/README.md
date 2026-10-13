@@ -20,6 +20,7 @@ cp chemin/vers/personnage_corps_entier.png reference.png
 ../.venv/bin/python ../genere.py src16.mp4 mask16.mp4 reference.png x.mp4 --pose-cache poses.npy --pose-seule
 ../.venv/bin/python ../emb.py            # adapter prompt/neg dans emb.py ET genere.py au personnage
 ../tout.sh .
+../.venv/bin/python ../assemble.py    # fondu entre morceaux, 720x1280 24 i/s, son de reel.mp4
 ```
 
 Le prompt décrit le personnage de référence (habits, coiffure) : il est à modifier pour chaque personnage.

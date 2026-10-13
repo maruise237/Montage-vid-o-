@@ -11,7 +11,7 @@ for ((d=0; d+R<N; d+=STEP)); do
   if [ ! -s "$out" ]; then
     echo "=== morceau $k (images $d..$((d+L-1))) $(date +%H:%M)"
     "$PY" -W ignore "$HERE/genere.py" src16.mp4 mask16.mp4 reference.png "$out" --debut $d --frames $L \
-      --steps 4 --cond 0.75 --amincir 1 --pose-cache poses.npy ${prev:+--suite $prev --recouvre $R} 2>&1 \
+      --steps 4 --cond 0.75 --amincir 1 --pose-cache poses.npy 2>&1 \
       | tr '\r' '\n' | grep -i "étape\|génération\|^ok\|error\|trace\|killed"
     [ -s "$out" ] || { echo "ÉCHEC morceau $k"; exit 1; }
   fi
