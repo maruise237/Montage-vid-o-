@@ -191,3 +191,9 @@ Sortir une planche contact (`planche.sh`, 1 image / 1–2 s) et vérifier :
 - Si une leçon devient une règle générale → la promouvoir dans §1 ou §2 ci-dessus.
 - Si une technique de §2 est construite → noter le fichier/fonction réutilisable.
 - Commit + push sur la branche de travail.
+
+## 6. Kit classé (pour les autres projets)
+Le dossier `kit-montage-pro/` (ou le zip `kit-montage-pro.zip`) range ce savoir en fiches séparées :
+principes, compétences par famille (script, image, typo, son, diffusion), recettes par type de vidéo,
+outils, polices, logos, modèles de brief. Dans un nouveau projet : copier ce skill dans `.claude/skills/`,
+`04-outils/python/` dans `outils/`, `05-ressources/logos/` dans `assets/logos/`, `05-ressources/polices/` dans `fonts/`.
