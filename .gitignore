@@ -31,3 +31,14 @@ djoumi/src_hook.mp4
 djoumi/muet.mp4
 djoumi/son.wav
 djoumi/site.html
+boutique/sources/
+boutique/audio/
+boutique/audio_hq/
+boutique/sep/
+boutique/test/
+boutique/pub*/plans/
+boutique/pub*/images/
+boutique/pub*/planche/
+boutique/pub*/base.mp4
+boutique/pub*/*.mp4
+boutique/pub*/*.wav

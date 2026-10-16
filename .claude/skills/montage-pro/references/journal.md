@@ -173,3 +173,15 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
     (les 3 premiers s'affichent au-dessus du titre) ; liens de description NON cliquables → « vidéo associée ».
 - Chaque légende reprend le CTA « commente MOT » de la vidéo (ou en ajoute un) ; vérifier dans la timeline que
   ce qu'on annonce est bien dans la version publiée (ex. la réponse r2 est dans la version courte du podcast).
+
+## Pubs NGUELEK PRINT (imprimerie / gadgets, Yaoundé-Messassi) — 2 pubs de 1 min+ à partir de 32 reels Facebook
+- Livré : `boutique/livrables/` → pub1 « L'atelier » (73 s, services, sans voix sauf extrait porte-stylos 2 000 F) et
+  pub2 « Cadeaux » (65 s, portée par la voix du patron), + versions 720p WhatsApp + légendes.
+- Pipeline réutilisable : `boutique/moteur.py` (plans ffmpeg : mode plein avec zoom/position, mode « tirage photo » sur
+  fond flouté pour les sources basse déf ou paysage) + `calque.html` (titres, chapitres numérotés, sous-titres, balayage
+  CMJN, logo animé en calques, écran de fin) + `son_commun.py` (musique afro-house / douce synthétisée, demucs, -14 LUFS).
+- Logo client découpé en calques par couleur (`boutique/logo/calques.py`) → animation N, P, 4 vagues CMJN, texte, anneau.
+- Leçons : téléchargement Facebook OK avec `yt-dlp` ; quota ElevenLabs épuisé → faster-whisper `small` (passer un tableau
+  numpy, PyAV incompatible) ; recadrer pour retirer les numéros incrustés dans les sources ; l'identité CMJN du logo sert
+  de transition (balayage 4 bandes) = DA propre à la marque, pas un effet générique ; ne jamais réutiliser les chansons
+  des sources (droits) : seules les voix sont gardées.
