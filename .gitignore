@@ -50,3 +50,7 @@ boutique/rendu_v2.log
 boutique/sons/sepm/
 boutique/sons/test_cat.json
 boutique/pub1/f52.jpg
+boutique/pub3/sepm/
+boutique/pub3/*.wav
+boutique/pub3/voix/*.raw
+boutique/pub3/rendu.log

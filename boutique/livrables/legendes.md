@@ -43,6 +43,25 @@ Offrez un souvenir à votre image :
 
 #CadeauPersonnalisé #Yaoundé #Cameroun #Mariage #Anniversaire #IdéeCadeau #NguelekPrint
 
+
+## Pub 3 — « Tu commandes, on fabrique » (1 min 50)
+
+Tu commandes… on fabrique ! ✅
+Polos brodés, stylos à ton logo, porte-stylos dès 2 000 FCFA, sacs, agendas, trophées, porte-clés gravés,
+veilleuses photo, gourdes en bambou, façades… et ton nom en lettres lumineuses sur ton toit.
+Chez NGUELEK PRINT, toutes les machines sont sur place. 🔥
+
+Toi aussi, tu as une idée ? 👇
+📲 wa.me/237676113057
+☎️ 676 11 30 57 / 699 58 09 63
+📍 Yaoundé, carrefour Messassi (face au commissariat)
+🕐 Lundi au samedi, de 7h30 à 18h00
+✈️ Livraison et expédition partout (frais à la charge du client)
+On est ensemble ! 🤝
+
+#Yaoundé #Cameroun #Personnalisation #ImpressionUV #Broderie #GravureLaser #EnseigneLumineuse #NguelekPrint
+
 ---
 Musiques : « Let's Play Africa » et « Feeling Happy » (Mixkit, licence Stock Music Free : réseaux sociaux et
 publicités en ligne autorisés, sans mention obligatoire ; pas pour la TV ou la radio). Bruitages : Mixkit Sound Effects.
+Pub 3 : voix générées par Gemini TTS et musique originale générée par Lyria 3.5 (Google, via treg).

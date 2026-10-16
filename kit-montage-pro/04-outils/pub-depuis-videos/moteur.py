@@ -111,8 +111,7 @@ def donnees(pub, dossier):
     debuts, duree = temps_plans(pub)
     D = {'duree': duree, 'elements': pub.CALQUE, 'coupes': debuts}
     open(os.path.join(dossier, 'donnees.js'), 'w').write('window.D=' + json.dumps(D, ensure_ascii=False) + ';')
-    for f in ('calque.html',):
-        shutil.copy(os.path.join(ICI, f), os.path.join(dossier, f))
+    shutil.copy(os.path.join(ICI, getattr(pub, 'CALQUE_HTML', 'calque.html')), os.path.join(dossier, 'calque.html'))
     print('donnees.js écrit, durée', round(duree, 2))
 
 

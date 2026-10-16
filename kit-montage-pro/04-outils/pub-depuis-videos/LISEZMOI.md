@@ -27,3 +27,10 @@ Pour : une boutique / un atelier qui a déjà des dizaines de petites vidéos (F
 
 Chemins attendus : `sources/`, `sep/htdemucs/<src>/vocals.wav`, `sons/musique/<id>.mp3`, `sons/bruit/<id>.mp3`,
 `logo/calque_*.png`, polices dans `../fonts/`, logos d'outils dans `../assets/logos/`. Règles son : `01-competences/D-son/05-son-humain-anti-ia.md`.
+
+## Variante « voix off + musique générées » (pub3.py, oct. 2026)
+Voix d'animateur et réponses : Gemini TTS via treg ; musique sur mesure : Lyria 3.5 via treg (voir journal du skill).
+`pub3_outils/extraire.py` décode la réponse treg sauvegardée, `analyse_voix.py` compare des voix (débit, hauteur,
+dynamique, transcription), `decoupe.py` coupe chaque réplique sur ses silences et jette la consigne de style lue.
+`calque3.html` : DA « bon de commande + tampon encre » (questions au mot près, ticket imprimé, tampons, ticket final).
+La timeline se construit sur les MESURES de la musique (`musique_grille.json`), voir `pub3.py`.

@@ -174,6 +174,11 @@ Ce que font les humains (et ce qu'on fait maintenant, `boutique/son_reel.py`) :
    **Chaque plan rendu au nombre exact d'images** (`-frames:v`), sinon l'image dérive de plusieurs images.
 7. Contrôle : retranscrire la bande son finale et vérifier que chaque phrase finit entière.
 
+**Voix et musique générées (treg)** — quand Mariuse demande une voix off ou une musique sur mesure :
+voix `gemini-3-8-flash-tts` (Fenrir énergique, Laomedeia féminine), musique `lyria-3-5` (instrumentale, BPM, sections,
+fin franche demandés dans le prompt). La consigne de style est lue à voix haute : la couper au mot près. Détails et
+coûts : `references/journal.md` (pub 3 NGUELEK). Même règle §2ter : vérifier, monter sur les temps, son direct en plus.
+
 **Règle d'attitude : ne jamais dire « impossible » ou « pas encore construit » sans avoir essayé
 au moins 3 méthodes.** Vérifier d'abord le journal : on l'a peut-être déjà fait.
 
