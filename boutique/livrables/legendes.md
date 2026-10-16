@@ -1,6 +1,6 @@
 # Légendes à publier — NGUELEK PRINT
 
-## Pub 1 — « L'atelier » (1 min 13)
+## Pub 1 — « L'atelier » (1 min 18)
 
 De la planche brute… à l'enseigne qui brille la nuit ✨
 Chez NGUELEK PRINT, tout est fabriqué ICI, sur nos machines :
@@ -23,7 +23,7 @@ Votre idée, on la fabrique. 👇
 
 #Yaoundé #Cameroun #EnseigneLumineuse #ImpressionUV #Broderie #GravureLaser #Trophées #GadgetsPublicitaires #NguelekPrint
 
-## Pub 2 — « Cadeaux » (1 min 05)
+## Pub 2 — « Cadeaux » (1 min 12)
 
 N'offrez plus de cadeaux qui finissent dans la cuisine 😅
 Offrez un souvenir à votre image :
@@ -42,3 +42,7 @@ Offrez un souvenir à votre image :
 ✈️ Livraison et expédition partout (frais à la charge du client)
 
 #CadeauPersonnalisé #Yaoundé #Cameroun #Mariage #Anniversaire #IdéeCadeau #NguelekPrint
+
+---
+Musiques : « Let's Play Africa » et « Feeling Happy » (Mixkit, licence Stock Music Free : réseaux sociaux et
+publicités en ligne autorisés, sans mention obligatoire ; pas pour la TV ou la radio). Bruitages : Mixkit Sound Effects.

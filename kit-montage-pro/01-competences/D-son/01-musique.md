@@ -24,5 +24,13 @@
 La musique baisse automatiquement sous la voix (enveloppe de la voix) — voir `04-outils/python/son_pro.py`.
 
 ## Source
-Bibliothèques libres de droits ou synthèse maison (`04-outils/python/bruitages.py` : kick, hat, clap,
-basse, pluck, pad). **Jamais de morceau commercial.**
+- **Vraie musique enregistrée** d'une bibliothèque dont la licence couvre l'usage. Mixkit « Stock Music Free
+  License » : réseaux sociaux + publicités en ligne autorisés, pas TV/radio, pas de remix en morceau seul.
+  (Le site est derrière Cloudflare : passer par Playwright/Chromium ; ne garder que les fichiers
+  `assets.mixkit.co`, les « audio-previews.elements.envatousercontent.com » sont PAYANTS.)
+- Choisir pour la marque et le public (afro pour une boutique de Yaoundé, guitare chaleureuse pour des cadeaux),
+  vérifier avec demucs qu'il n'y a **pas de chant** si une voix parle dessus.
+- **Monter la musique comme un humain** : coupes des plans sur les temps du morceau (`librosa` beat_track →
+  `caler()`), 1er temps du morceau sur la coupe après le hook, **vraie fin du morceau raccordée sur l'écran
+  final** (saut au temps le plus proche du début de l'outro), pas de fondu de sortie.
+- **Jamais de musique synthétisée par nous** (sinusoïdes en boucle = son « IA »). Jamais de morceau commercial.

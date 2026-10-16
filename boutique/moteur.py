@@ -43,7 +43,7 @@ def filtre_plan(pl, w, h):
         w, h = int(w * (x1 - x0)) // 2 * 2, int(h * (y1 - y0)) // 2 * 2
     if v != 1.0:
         f.append(f"setpts=PTS/{v}")
-    f.append('fps=30')
+    f.append('fps=30,tpad=stop_mode=clone:stop_duration=2')
     zt = f"({z0}+({z1}-{z0})*min(t/{d}\\,1))"
     if pl.get('mode', 'plein') == 'plein':
         cov = max(W / w, H / h)
@@ -71,15 +71,15 @@ def rendre_plan(i, pl, dossier):
     out = os.path.join(dossier, f'p{i:03d}.mp4')
     d = pl['d']
     if pl.get('mode') == 'noir':
-        cmd = ['ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i', f'color=c=black:s={W}x{H}:r={FPS}:d={d}',
-               '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-pix_fmt', 'yuv420p', out]
+        cmd = ['ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i', f'color=c=black:s={W}x{H}:r={FPS}:d={d+1}',
+               '-frames:v', str(round(d * FPS)), '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-pix_fmt', 'yuv420p', out]
     else:
         p, w, h = info(pl['src'])
         v = pl.get('v', 1.0)
         simple, graphe = filtre_plan(pl, w, h)
         cmd = ['ffmpeg', '-v', 'error', '-y', '-ss', str(pl['t']), '-t', str(d * v + .2), '-i', p]
         cmd += (['-vf', simple] if simple else ['-filter_complex', graphe, '-map', '[v]'])
-        cmd += ['-an', '-t', str(d), '-r', str(FPS), '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16',
+        cmd += ['-an', '-frames:v', str(round(d * FPS)), '-r', str(FPS), '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16',
                 '-pix_fmt', 'yuv420p', out]
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode:

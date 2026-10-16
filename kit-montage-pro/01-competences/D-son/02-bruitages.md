@@ -7,6 +7,9 @@
 | Vulgarisation | 20–40 |
 | Long format | ~20 |
 
+> ⚠️ Depuis oct. 2026 : **bruitages ENREGISTRÉS uniquement**, voir `05-son-humain-anti-ia.md`.
+> Les sons synthétisés de `bruitages.py` ne servent plus qu'aux maquettes, jamais en livrable.
+
 ## Quel son pour quelle action
 | Son | Quand |
 |---|---|
@@ -26,5 +29,7 @@
 - Caler les bruitages sur un fichier d'événements (`evenements.json` : temps + type) généré depuis l'animation.
 
 ## Code
-`04-outils/python/bruitages.py` : `whoosh`, `riser`, `impact`, `pop`, `tic`, `touche`, `glitch`,
-`carillon`, `caisse`, `etincelle`, `allumage` (numpy mono 44,1 kHz, synthétisés : aucun droit d'auteur).
+- Livrable : `04-outils/pub-depuis-videos/son_reel.py` → `bruit(B, [ids…], t)` pose un vrai échantillon
+  (Mixkit SFX), jamais le même deux fois de suite, hauteur ± 3,5 %, gain ± 2 dB, décalage 10–20 ms ;
+  `ambiance(A, source, a, d, t)` pose le son direct d'une vidéo source.
+- Maquette seulement : `04-outils/python/bruitages.py` (sons synthétisés = repérables comme « IA »).

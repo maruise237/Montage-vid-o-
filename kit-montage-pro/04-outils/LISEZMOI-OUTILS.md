@@ -30,3 +30,8 @@ du temps seul, déterministe), `window.DUREE` et `window.PRET`. Playwright prend
 | `exemple-pub-valex/` | animation.html + son.py + mots.json de la pub Valex (exemple complet) |
 
 Chemin Chromium dans `rendu.mjs` : à adapter à ta machine (`executablePath`).
+
+## pub-depuis-videos/
+Pipeline complet « pub d'une minute à partir des vidéos d'un client » (NGUELEK PRINT) : plans ffmpeg calés sur
+les temps de la musique, calque HTML, logo animé en calques, **son humain** (vraie musique, son direct des
+machines, bruitages enregistrés, voix coupée sur ses silences). Voir `pub-depuis-videos/LISEZMOI.md`.

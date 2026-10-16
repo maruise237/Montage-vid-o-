@@ -18,7 +18,7 @@ Chaque compétence est dans son propre fichier pour pouvoir piocher **seulement 
 | Besoin | Fichier(s) |
 |---|---|
 | Savoir quelles techniques utiliser pour MA vidéo | `00-principes/01-regle-mere-type-de-video.md` puis `02-recettes-par-type/` |
-| Éviter l'effet « vidéo IA / template » | `00-principes/02-les-11-regles-anti-slop.md` |
+| Éviter l'effet « vidéo IA / template » | `00-principes/02-les-12-regles-anti-slop.md` |
 | Vérifier une vidéo avant de la publier | `00-principes/03-checklist-avant-livraison.md` |
 | Écrire un script / un hook qui accroche | `01-competences/A-ecriture-script/` |
 | Faire gagner des abonnés et des commentaires | `01-competences/A-ecriture-script/03-cta-et-strategie-abonnes.md` |
@@ -36,6 +36,8 @@ Chaque compétence est dans son propre fichier pour pouvoir piocher **seulement 
 | Bruitages | `01-competences/D-son/02-bruitages.md` |
 | Volume, mixage, -14 LUFS, export | `01-competences/D-son/03-mixage-loudness-export.md` |
 | Transcrire, couper les silences, caler au mot | `01-competences/D-son/04-transcription-et-coupes.md` |
+| **Éviter le son « IA »** (bruitages, musique) | `01-competences/D-son/05-son-humain-anti-ia.md` |
+| **Pub à partir des vidéos d'un client** (boutique, atelier) | `04-outils/pub-depuis-videos/LISEZMOI.md` |
 | Légendes, hashtags par plateforme | `01-competences/E-diffusion/01-legendes-hashtags.md` |
 | Mieux filmer (lumière, cadrage) | `01-competences/E-diffusion/02-tournage.md` |
 | Mettre en avant MON produit sans faire pub | `02-recettes-par-type/06-mettre-son-produit-en-avant.md` |

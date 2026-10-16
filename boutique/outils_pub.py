@@ -19,6 +19,22 @@ def plans_vers_temps(plans):
     return L
 
 
+def caler(plans, temps, debut=0.0):
+    """Fait tomber la fin de chaque plan sur le temps de musique le plus proche (comme un monteur qui coupe au beat).
+    Un plan avec cale=False garde sa durée (plans synchronisés sur la voix) ; 'min' = durée minimale."""
+    t = debut
+    for p in plans:
+        fin = t + p['d']
+        if p.get('cale', True) and temps:
+            cands = [b for b in temps if b >= t + p.get('min', .35)]
+            if cands:
+                fin = min(cands, key=lambda b: abs(b - fin))
+        fin = round(fin * 30) / 30                      # à l'image près : pas de dérive image/son
+        p['d'] = round(fin - t, 4)
+        t = fin
+    return plans
+
+
 def sous_titres(mots, groupes, decalage, y=1180, ys=None):
     """mots : [(texte, début, fin[, emphase])] dans la source ; groupes : listes d'indices (1 à 3 mots).
     Chaque groupe reste affiché jusqu'au début du suivant (ou sa fin + 0,3 s)."""

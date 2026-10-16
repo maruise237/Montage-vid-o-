@@ -39,7 +39,7 @@ Conditions par technique :
 - **Captures / logos** : dès qu'un outil, site ou appli est cité (voir règle 7).
 - Dans le doute : **moins d'effets, mieux choisis**. Un effet doit servir la phrase, pas décorer.
 
-## 1. Les 11 règles qui séparent le pro du slop
+## 1. Les 12 règles qui séparent le pro du slop
 
 1. **Une idée = un écran.** Chaque phrase clé a sa propre composition. Jamais le même layout plus de ~4 s.
    Les pros changent de plan/visuel toutes les **1,7 à 4 s** ; ceux qui cartonnent en format long
@@ -80,6 +80,10 @@ Conditions par technique :
     constant (tenue, masque). Avec un grand-angle : **avancer vers l'objectif** pour faire le gros plan au
     tournage (Faro) au lieu de tout recadrer au montage.
 
+12. **Le son doit sonner ENREGISTRÉ, jamais généré** (§2ter). Bruitages synthétisés, un son sur chaque élément,
+    placement mécanique, riser→impact, musique en boucle avec fondu = signature « monté par une IA ». Son direct
+    des sources + vraie musique montée sur ses temps + quelques bruitages enregistrés qui ont du sens.
+
 ## 2. Boîte à outils technique (notre pipeline HTML → Playwright → ffmpeg)
 
 Pipeline de référence : `podcast/` (render(t) déterministe, rendu Playwright parallèle, mix numpy, loudnorm).
@@ -103,7 +107,7 @@ Pipeline de référence : `podcast/` (render(t) déterministe, rendu Playwright 
 | Numéro d'étape persistant | « 1. » / « 2. » / « 3. » en italique dans le coin haut-gauche (dans la zone sûre) pendant tout le point. |
 | Schéma qui se construit | Dessin trait noir sur fond blanc, un élément ajouté à chaque phrase (RÉSULTAT → ACTION → IDENTITÉ), en vignette au-dessus du sujet. |
 | Texte au sol / dans la scène | Mot en perspective posé sur le sol du B-roll (homographie 4 points, `PIL.Image.transform(PERSPECTIVE)`), cf. « Mentleur » chez Wu. |
-| Audio | Voix devant, **-14 LUFS intégré** (les 14 inspirations : -14,1 à -14,5). Détail en §2bis. Bruitages synthétisés déjà prêts dans `podcast/son.py` : `whoosh`, `riser`, `impact`, `pop`, `tic`, `touche`, `glitch`, `carillon`. |
+| Audio | Voix devant, **-14 LUFS intégré** (les 14 inspirations : -14,1 à -14,5). Détail en §2bis et **§2ter (son humain, obligatoire)**. Moteur : `boutique/son_reel.py` (vraie musique montée sur ses temps, son direct des sources, bruitages enregistrés, voix coupée sur ses silences). Les bruitages synthétisés de `podcast/son.py` = **interdits en livrable** (pattern IA détecté par Mariuse). |
 
 ## 2bis. Son : musique et bruitages (mesuré sur les 14 inspirations)
 
@@ -123,7 +127,9 @@ avec les coupes marquées (`references/inspirations.md`, section Son).
   - **couper net la musique 1,5–2 s sur la punchline** (« Travaille bien », « une anomalie » chez Wu) :
     le silence met la phrase en valeur ;
   - changer de musique/texture au changement de chapitre ou d'étape (Toprak à l'étape 2, Faro après le hook).
-- Musique : bibliothèques libres de droits ou synthèse maison (`podcast/son.py`). Jamais de morceau commercial.
+- Musique : **vraie musique enregistrée** d'une bibliothèque dont la licence couvre l'usage (Mixkit « Stock Music
+  Free » : pubs en ligne + réseaux OK, vérifier la licence à chaque fois). Jamais de morceau commercial, **jamais de
+  musique synthétisée par nous** (sinusoïdes = son « IA »).
 
 **Bruitages**
 - 15 à 80 par minute selon le type : tuto à captures 60–80 (Toprak, Loucash vidéo 7), vulgarisation
@@ -134,6 +140,39 @@ avec les coupes marquées (`references/inspirations.md`, section Son).
   - **pop** à l'apparition d'un logo, d'un sticker, d'un mot ;
   - **impact grave** sur un mot géant ou un B-roll choc (Faro « habitudes » : 27 impacts).
 - Un bruitage doit coller à une action visible. Pas de bruitage sur une coupe « invisible » (punch-in).
+
+## 2ter. SON HUMAIN — règle anti-pattern IA (retour Mariuse, pubs NGUELEK PRINT, oct. 2026)
+
+Mariuse : « les bruitages, effets d'apparition, tchou-tchou… sont trop génériques, on détecte que c'est monté par
+Claude ». Ce qui trahissait l'IA dans la v1 :
+- des bruitages **synthétisés** (sinus « pop », bruit blanc filtré « whoosh », « riser », « impact ») : timbre
+  artificiel, toujours le même ;
+- **un son sur chaque élément** (chaque étiquette, chaque morceau de logo, chaque coupe) ;
+- un placement **à l'image près** et un gain identique à chaque fois (régularité mécanique) ;
+- des clichés de bande-annonce (riser → impact avant chaque logo, carillon à la fin) ;
+- une musique synthétisée en boucle, sans structure, coupée par un fondu.
+
+Ce que font les humains (et ce qu'on fait maintenant, `boutique/son_reel.py`) :
+1. **Son direct d'abord** : le vrai bruit de ce qu'on voit (machine, atelier, rue, papier manipulé), tiré des
+   vidéos sources et synchrone avec l'image. Vérifier avant (demucs 4 pistes / transcription) que la source n'a
+   pas de chanson par-dessus. C'est le son le plus « humain » et le plus propre à la marque.
+2. **Vraie musique** enregistrée, choisie pour la marque et le public (afro pour Yaoundé, guitare chaleureuse
+   pour des cadeaux), **montée sur ses temps** : les coupes tombent sur les beats du morceau (`caler()`), le début
+   du morceau sur la coupe qui suit le hook, et **sa vraie fin raccordée sur l'écran final** (saut à un temps
+   de l'outro), jamais un fondu de sortie. Vérifier qu'elle n'a pas de chant (demucs) sous une voix.
+3. **Bruitages enregistrés** (Mixkit SFX…), **qui ont un sens pour la marque** : imprimerie = feuille qui glisse,
+   page tournée, imprimante matricielle, frappe de machine à écrire ; cadeau = interrupteur de veilleuse, trousseau
+   de clés ; rafale = vrais déclencheurs photo. Pas de « pop » ni de « whoosh » génériques.
+4. **Rares** : seulement sur une action visible qui le mérite (pas sur les étiquettes de texte, pas sur chaque
+   morceau du logo). Silence = choix.
+5. **Variés** : jamais deux fois le même échantillon d'affilée, hauteur ± 3 %, gain ± 2 dB, décalage de 10–20 ms
+   (`bruit()` le fait).
+6. **Voix** : son d'origine de la caméra (vrai ambiant de pièce) plutôt que la voix isolée par demucs ; demucs
+   sert à MESURER. **Coupes sur les vrais silences** (`affiner()` : énergie < -38 dB pendant 60 ms), jamais sur
+   les horodatages de la transcription (ils coupent la fin des mots : « cuisine », « problème » tronqués en v1).
+   Plan synchro voix = commence au même point de la source que la voix (lèvres), finit après le dernier mot.
+   **Chaque plan rendu au nombre exact d'images** (`-frames:v`), sinon l'image dérive de plusieurs images.
+7. Contrôle : retranscrire la bande son finale et vérifier que chaque phrase finit entière.
 
 **Règle d'attitude : ne jamais dire « impossible » ou « pas encore construit » sans avoir essayé
 au moins 3 méthodes.** Vérifier d'abord le journal : on l'a peut-être déjà fait.
@@ -178,6 +217,10 @@ Sortir une planche contact (`planche.sh`, 1 image / 1–2 s) et vérifier :
 - [ ] -14 LUFS, musique 12–25 dB sous la voix, ouverture adaptée au type (hook sec ou épique).
 - [ ] Au moins une ponctuation musicale (drop sur le concept, ou silence sur la punchline).
 - [ ] Bruitages sur des actions visibles seulement (≈ 1 coupe sur 2), pas un whoosh à chaque coupe.
+- [ ] **Son humain (§2ter)** : zéro bruitage synthétisé, son direct des sources quand on voit une machine/action,
+      vraie musique montée sur ses temps avec sa vraie fin, bruitages enregistrés rares et variés.
+- [ ] **Voix** : coupes recalées sur les silences (`affiner()`), bande son retranscrite : aucune phrase tronquée,
+      lèvres synchro (plans au nombre exact d'images).
 - [ ] CTA « commente MOT » + ressource liée à la vidéo (sauf vidéo émotion/preuve).
 - [ ] Je me demande : « Est-ce que MedTheDesigner, Loucash ou Fabien Faro posterait ça ? » Si non, itérer.
 

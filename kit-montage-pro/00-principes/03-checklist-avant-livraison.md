@@ -20,6 +20,10 @@ Sortir une planche contact (1 image toutes les 1–2 s, `04-outils/rendu-html/pl
 - [ ] Au moins une ponctuation musicale (drop sur le concept OU silence sur la punchline).
 - [ ] Bruitages sur des actions visibles seulement (≈ 1 coupe sur 2), pas un whoosh partout.
 - [ ] Le premier mot n'est pas coupé (réécouter les 3 premières secondes du rendu).
+- [ ] **Son humain** : zéro bruitage synthétisé ; son direct des sources dès qu'on voit une machine/action ;
+      vraie musique montée sur ses temps avec SA vraie fin ; bruitages enregistrés rares, variés, qui ont du sens.
+- [ ] **Voix** : coupes sur les vrais silences (aucun mot tronqué au début NI à la fin), bande son finale
+      retranscrite ; lèvres synchro (chaque plan = nombre exact d'images).
 
 ## Fond
 - [ ] Faits personnels vérifiés (ville = Yaoundé, nom de marque, chiffres).

@@ -1,4 +1,4 @@
-# Les 11 règles qui séparent le pro du « slop IA »
+# Les 12 règles qui séparent le pro du « slop IA »
 
 Le slop IA = gabarit répété, animations génériques, tout centré, tout pareil du début à la fin.
 
@@ -18,3 +18,7 @@ Le slop IA = gabarit répété, animations génériques, tout centré, tout pare
 11. **Le look pro commence au tournage** : lumière, cadrage, personnage constant (voir `E-diffusion/02-tournage.md`).
 
 Question finale : « Est-ce que MedTheDesigner, Loucash ou Fabien Faro posterait ça ? » Si non, itérer.
+12. **Le son doit sonner ENREGISTRÉ, jamais généré.** Bruitages synthétisés, un son sur chaque élément, placement
+    mécanique, riser→impact, musique en boucle avec fondu = signature « monté par une IA » (Mariuse l'a repéré).
+    Son direct des sources + vraie musique montée sur ses temps + quelques bruitages enregistrés qui ont du sens.
+    Détail : `01-competences/D-son/05-son-humain-anti-ia.md`.

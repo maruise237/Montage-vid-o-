@@ -3,19 +3,20 @@ Structure : hook avant/après (planche → enseigne allumée) · « tout est fab
 7 services numérotés (couleurs CMJN du logo) · « et tout le reste » · écran de fin (adresse + WhatsApp)."""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from outils_pub import P, C, sous_titres, plans_vers_temps
+from outils_pub import P, C, sous_titres, plans_vers_temps, caler
+from son_reel import grille, affiner
 
 # ---------------------------------------------------------------- PLANS (timeline)
 PLANS = [
     # HOOK avant / après
-    P('v07', 3.0, 1.5, z0=1.30, z1=1.42),                       # 0.0  planche découpée (CNC)
+    P('v07', 3.0, 1.5, z0=1.30, z1=1.42, cale=False),           # 0.0  planche découpée (CNC) — son direct, pas de musique
     P('v10', 3.0, 1.5, z0=1.50, z1=1.62, py=.29),               # 1.5  enseigne allumée la nuit
     # « tout est fabriqué ici » : les machines
-    P('v12', 0.4, .6, z0=1.25, z1=1.32),                        # 3.0  brodeuse
-    P('v04', 4.1, .6, z0=1.40, z1=1.48, py=0),                  # 3.6  UV (lumière bleue)
-    P('v15', 0.6, .6, z0=1.70, z1=1.80, py=.45),                # 4.2  laser
-    P('v13', 12.6, .6, z0=1.25, z1=1.32),                       # 4.8  UV stylos
-    P('v07', 20.0, .6, z0=1.70, z1=1.80, px=.85, py=.05),       # 5.4  broche CNC
+    P('v12', 0.4, .51, z0=1.25, z1=1.32),                        # 3.0  brodeuse
+    P('v04', 4.1, .51, z0=1.40, z1=1.48, py=0),                  # 3.6  UV (lumière bleue)
+    P('v15', 0.51, .51, z0=1.70, z1=1.80, py=.45),                # 4.2  laser
+    P('v13', 12.51, .51, z0=1.25, z1=1.32),                       # 4.8  UV stylos
+    P('v07', 20.0, .51, z0=1.70, z1=1.80, px=.85, py=.05),       # 5.4  broche CNC
     # LOGO
     P(None, 0, 2.0, mode='noir'),                               # 6.0
     # 01 ENSEIGNES LUMINEUSES
@@ -65,9 +66,25 @@ PLANS = [
     P('v19', 8.2, .4, z0=1.50, py=.55),
     P('v30', 56.0, .4, z0=1.20, py=.3),
     # FIN
-    P(None, 0, 8.0, mode='noir'),                               # 65.0
+    P(None, 0, 8.0, mode='noir', cale=False),                   # fin : la vraie fin du morceau
 ]
+# ---------------------------------------------------------------- calage sur la musique
+MUS = 1084                                   # « Let's Play Africa » (Mixkit, licence Stock Music Free)
+BEATS = grille(MUS)
+DEP = 1.5 - BEATS[0]                         # le 1er temps du morceau tombe sur « …à ça » (1,5 s)
+caler(PLANS[:-1], [b + DEP for b in BEATS if b + DEP < 90])
+V16 = (2.22, 11.50)                          # voix porte-stylos recalée sur ses silences (fin avant « c'est-à-dire »)
+_T = plans_vers_temps(PLANS)
+if _T[26] < _T[22] + (V16[1] - V16[0]) + .25:  # le bloc voix doit couvrir toute la phrase
+    PLANS[25]['d'] += round(_T[22] + (V16[1] - V16[0]) + .25 - _T[26] + .51, 3)
+    caler(PLANS[26:-1], [b + DEP for b in BEATS], plans_vers_temps(PLANS)[26])
+# raccord sur la fin réelle du morceau : on saute au temps le plus proche de 104,5 s (début de l'outro)
+_T = plans_vers_temps(PLANS)
+SAUT = min(BEATS, key=lambda b: abs(b - 104.5))
+FIN_MUS = 114.4
+PLANS[-1]['d'] = round(round((FIN_MUS - SAUT) * 30) / 30, 4)
 T = plans_vers_temps(PLANS)   # T[i] = début du plan i
+MORCEAUX_MUS = [(BEATS[0], T[46] - DEP, 1.5), (SAUT, None, T[46])]
 
 # ---------------------------------------------------------------- CALQUE
 def chap(i0, i1, num, nom, nom2, sous, coul):
@@ -77,7 +94,7 @@ def det(i, txt, coul='m', y=1500, d=None):
     t1 = T[i] + d if d else T[i + 1]
     return {'type': 'detail', 't0': T[i] + .12, 't1': t1, 'txt': txt, 'coul': coul, 'y': y}
 
-VOIX = [('v16', 2.30, 11.55, T[22])]
+VOIX = [('v16', V16[0], V16[1], T[22] + .12)]
 MOTS16 = [  # transcription corrigée (faster-whisper + écoute) — temps dans la source v16
     ('Personnalisez', 2.37, 3.87), ('les', 3.87, 4.05), ('porte-stylos', 4.05, 5.21, 1), ('de', 5.21, 5.51),
     ('votre', 5.51, 5.95), ('entreprise', 5.95, 7.07, 1), ('et', 7.07, 7.33), ('chez', 7.33, 7.47),
@@ -117,8 +134,8 @@ CALQUE = [
     {'type': 'balayage', 't': T[19], 'couleurs': ['j', 'c', 'm', 'n']},
     chap(19, 26, '03', 'Impression', 'UV', 'sur tous vos objets', 'j'),
     det(19, 'stylos', 'j'), det(20, 'à votre logo', 'j'), det(21, 'gourdes & thermos', 'j'),
-    sous_titres(MOTS16, GROUPES16, decalage=T[22] - 2.30, y=1440),
-    {'type': 'etiquette', 't0': T[22] + (9.77 - 2.30), 't1': T[26], 'x': 640, 'y': 1180, 'rot': -9,
+    sous_titres(MOTS16, GROUPES16, decalage=T[22] + .12 - V16[0], y=1440),
+    {'type': 'etiquette', 't0': T[22] + .12 + (9.77 - V16[0]), 't1': T[26], 'x': 640, 'y': 1180, 'rot': -9,
      'haut': 'dès', 'milieu': '2 000', 'bas': 'FCFA'},
     # 04
     {'type': 'balayage', 't': T[26], 'couleurs': ['n', 'c', 'm', 'j']},
@@ -144,7 +161,7 @@ CALQUE = [
         {'txt': 'le reste.', 'police': 'sans', 'px': 200, 'coul': 'b', 'dt': .25}]},
     # fin
     {'type': 'balayage', 't': T[46]},
-    {'type': 'fin', 't0': T[46], 't1': T[46] + 8.0,
+    {'type': 'fin', 't0': T[46], 't1': T[47],
      'accroche': [{'txt': 'Votre idée,', 'police': 'serif', 'px': 120, 'coul': 'n'},
                   {'txt': 'on la fabrique.', 'police': 'sans', 'px': 100, 'coul': 'n'}],
      'lieu1': 'Carrefour Messassi', 'lieu2': 'face au commissariat · Yaoundé',
@@ -152,32 +169,35 @@ CALQUE = [
      'plus': 'Livraison & expédition partout'},
 ]
 
-# ---------------------------------------------------------------- SON
+# ---------------------------------------------------------------- SON (v2 : réel, pas de synthèse)
+PAPIER = [1530, 2380, 1105, 2386, 1104]           # feuille qui glisse / page : le balayage CMJN = une feuille imprimée
+FRAPPE = [1382, 1365, 1384, 1362]                 # frappe mécanique pour le numéro de chapitre
+DECLIC = [1133, 1430, 1434, 1440]                 # vrais déclencheurs photo pour la rafale
+
 def son(dossier):
-    from son_commun import (Piste, musique, voix, mixer, whoosh, impact, pop, riser, carillon, caisse, allumage,
-                            tic, declic, etincelle, glitch, touche)
-    D = T[-1] + PLANS[-1]['d']
-    M = musique(D, 120, [(0, 'montee'), (1.5, 'groove'), (6.0, 'montee'), (8.0, 'plein'), (31.0, 'groove'),
-                         (40.3, 'plein'), (61.8, 'plein'), (65.0, 'fin')], 'energie',
-                courbe=[(0, .7), (1.5, 1), (60, 1), (65, 1.15), (D, 1.15)])
-    B = Piste(D)
-    B.add(riser(1.4, 1.0), 0.1, 0, .7)
-    B.add(impact(1.0), 1.5); B.add(allumage(.45, 1.0), 1.5, .2)          # l'enseigne s'allume
-    for k, t in enumerate(T[2:7]): B.add(declic(1.0), t, (-.3, .3)[k % 2])  # rafale machines
-    B.add(pop(520, .9), 3.0 + .6); B.add(pop(700, 1.0), 3.0 + 1.8)
-    B.add(riser(1.0, .9), T[7] - 1.0)
-    for t in [e['t'] for e in CALQUE if e['type'] == 'balayage']:
-        B.add(whoosh(.5, True, 1.0), t - .3, .2); B.add(impact(.6), t)
-    lg = T[7]   # pops du logo : N, P, 4 vagues, texte
-    for k, dt in enumerate((.08, .16, .34, .41, .48, .55)): B.add(pop(480 + 70 * k, .8), lg + dt, (-.2, .2)[k % 2])
-    B.add(carillon(1318, 1.4, .7), lg + 1.0)
-    for e in CALQUE:                                                       # chaque étiquette qui apparaît
-        if e['type'] == 'detail': B.add(pop(820, .55, .1), e['t0'], .25)
-        if e['type'] == 'chapitre': B.add(impact(.5), e['t0'] + .05)
-        if e['type'] == 'etiquette': B.add(caisse(1.0), e['t0'])
-    for k, t in enumerate(T[38:46]): B.add(declic(1.1), t, (-.3, .3)[k % 2])
-    f = T[46]
-    for k, dt in enumerate((.08, .16, .34, .41, .48, .55)): B.add(pop(480 + 70 * k, .8), f + dt)
-    B.add(carillon(1568, 1.8, .8), f + 1.6); B.add(carillon(2093, 1.6, .5), f + 1.66, .2)
+    from son_reel import Bus, musique_montee, ambiance, bruit, voix, mixer
+    D = T[-1]
+    M = musique_montee(MUS, MORCEAUX_MUS, D)
+    A = Bus(D); B = Bus(D)
+    # hook : le vrai bruit de la CNC, seul, puis l'enseigne s'allume et la musique entre
+    ambiance(A, 'v07', 3.0, 1.5, 0.0, 1.0)
+    bruit(B, [2585], 1.47, .9, varier=False)
+    bruit(B, [910], 1.5, .25, d=1.4)
+    # « tout est fabriqué ici » : chaque machine avec son propre son
+    for i, (src, a) in zip(range(2, 7), [('v12', .4), ('v04', 4.1), ('v15', .6), (None, 0), ('v07', 20.0)]):
+        if src: ambiance(A, src, a, PLANS[i]['d'], T[i], .8)
+    # logo : il « s'imprime »
+    bruit(B, [1371], T[7] + .25, .55, varier=False)
+    # son direct des machines dans les chapitres (sous la musique)
+    for i, src, a, g in ((8, 'v07', 14.5, .5), (10, 'v09', 2.0, .35), (20, 'v11', 9.4, .45), (26, 'v12', .3, .55),
+                         (27, 'v12', 11.3, .45), (30, 'v15', .5, .5), (31, 'v15', 9.0, .45)):
+        ambiance(A, src, a, PLANS[i]['d'], T[i], g)
+    for e in CALQUE:
+        if e['type'] == 'balayage': bruit(B, PAPIER, e['t'] - .22, .6)
+        if e['type'] == 'chapitre': bruit(B, FRAPPE, e['t0'] + .06, .45)
+        if e['type'] == 'etiquette': bruit(B, [2995], e['t0'] + .05, .5)
+    for k, t in enumerate(T[38:46]):
+        if k % 2 == 0 or k == 7: bruit(B, DECLIC, t, .45, (-.2, .2)[k % 2])
+    bruit(B, [1368], T[46] + 1.75, .3)             # sonnette de machine à écrire quand le numéro s'affiche
     V = voix(D, VOIX)
-    mixer(os.path.join(dossier, 'son.wav'), D, M, B, V, g_mus=.5, g_bru=.55)
+    mixer(os.path.join(dossier, 'son.wav'), D, M, A, B, V, g_mus=.55, g_amb=.7, g_bru=.6)
