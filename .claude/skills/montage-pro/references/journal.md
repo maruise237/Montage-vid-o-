@@ -225,3 +225,14 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   `avatar1/son.py`, `avatar1/finir.sh` → `video_avatar_1.mp4` (-14,1 LUFS, musique 17 dB sous la voix).
 - Après livraison, Mariuse : « garde les images et classe-les » → `assets/banque/` (poses par humeur, décors,
   personnages, illustrations), `CATALOGUE.md` court + `apercu.jpg`. Règle : piocher dans la banque avant de générer.
+
+## 2026-10 — Vidéo « mon ennemi / mon fan » (15,6 s, citation sombre) → `video_mystere_1.mp4`
+- Matière : la piste audio de Mariuse (voix + musique déjà mixées, drop à 10,7 s) + son transcript. On garde la piste
+  telle quelle (pas de 2e musique), seulement 4 bruitages discrets. Temps des mots : Whisper Cloudflare.
+- Demande : « personnages mystérieux adaptés à ce qui est dit, belles transitions, sous-titres propres en bas ».
+  4 images klein-9b (photo visage en référence, ~5 600 neurons, 0 €) → `assets/banque/mystere/`. 1re version de la scène
+  fans refusée à l'œil (visage minuscule, cheveux gris) → refaite en plan taille.
+- Montage `mystere1/` : gros plan qui avance + lumière qui vacille ; glitch RGB → ruelle (travelling + chuchotements en
+  serif italique qui flottent) ; flash blanc → serré sur le visage, on recule et la foule apparaît sur « FAN » ;
+  bandes cinéma + dos dans le brouillard sur le drop ; retour très serré sur le regard au 2e coup de basse.
+  Sous-titres en bas (y=1560), 2–3 mots, mot fort en rouge, ombre douce (pas de bordure).

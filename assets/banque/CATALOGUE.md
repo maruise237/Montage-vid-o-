@@ -26,6 +26,14 @@ Avatar maître (référence pour générer une nouvelle pose) : `assets/avatar/m
 |---|---|
 | mascotte_claude_marche_lunettes | mascotte orange « Claude » (soleil, lunettes noires) qui marche vers la droite |
 
+## mystere/ — photoréaliste sombre, lumière rouge, brouillard (vrai visage de Mariuse, 9:16)
+| Fichier | Pour une phrase qui… |
+|---|---|
+| mariuse_capuche_regard_ombre | menace, défi, regard caméra, hook sombre (gros plan possible sur les yeux) |
+| silhouettes_chuchotent_dans_le_dos | rumeurs, jaloux, « dans mon dos », critiques cachées |
+| mariuse_projecteur_foule_fans | succès, fans, scène, « ils me regardent » (bras croisés, sourire) |
+| mariuse_part_de_dos_brouillard | fin, départ, solitude, « je trace ma route » |
+
 ## decors/ — fonds 3D style Pixar, sans personnage, sol dans le tiers bas
 | Fichier | Lieu / ambiance |
 |---|---|
