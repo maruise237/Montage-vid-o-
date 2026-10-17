@@ -61,3 +61,12 @@ Pour un texte différent sur une carte ou un tampon : fonctions `carte()`, `tamp
 - Logos officiels : `assets/logos/` (claude, chatgpt, kamtech, veo, kling, seedance, cloudflare, whatsapp, google…).
 - Essais ratés / anciennes versions : `assets/avatar/essais/` (ne pas utiliser).
 - Photos réelles de Mariuse : `assets/avatar/photos/`, privées, jamais sur GitHub.
+
+## calme/ — photoréaliste sombre, lumière dorée + ombres bleu-vert (vrai visage de Mariuse, 9:16)
+| Fichier | Pour une phrase qui… |
+|---|---|
+| mariuse_calme_yeux_fermes | sérénité, « ne t'énerve pas », maîtrise de soi, hook calme |
+| poster_sali_boue | on salit ton nom, diffamation, réputation attaquée |
+| mariuse_entoure_bavards | tout le monde parle de toi, critiques, tu restes debout au centre |
+| scene_vide_micro | personne n'écoute, parler dans le vide, salle vide (silhouette sans visage) |
+| mariuse_sourire_assure | conclusion confiante, sourire caméra, « je m'en fous », fin de vidéo |
