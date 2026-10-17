@@ -144,7 +144,7 @@ CALQUE = [
     {'type': 'fin', 't0': T[32], 't1': T[33],
      'accroche': [{'txt': 'Le cadeau qui ne finit', 'police': 'serif', 'px': 92, 'coul': 'n'},
                   {'txt': 'pas dans la cuisine.', 'police': 'sans', 'px': 84, 'coul': 'b', 'fond': 'm'}],
-     'lieu1': 'Carrefour Messassi', 'lieu2': 'face au commissariat · Yaoundé',
+     'lieu1': 'Carrefour Messassi', 'lieu2': 'face au poste de police · Yaoundé',
      'tel': '676 11 30 57', 'horaires': 'Lun – Sam · 7h30 – 18h00',
      'plus': 'Livraison & expédition partout'},
 ]

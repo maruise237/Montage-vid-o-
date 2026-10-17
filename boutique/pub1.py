@@ -164,7 +164,7 @@ CALQUE = [
     {'type': 'fin', 't0': T[46], 't1': T[47],
      'accroche': [{'txt': 'Votre idée,', 'police': 'serif', 'px': 120, 'coul': 'n'},
                   {'txt': 'on la fabrique.', 'police': 'sans', 'px': 100, 'coul': 'n'}],
-     'lieu1': 'Carrefour Messassi', 'lieu2': 'face au commissariat · Yaoundé',
+     'lieu1': 'Carrefour Messassi', 'lieu2': 'face au poste de police · Yaoundé',
      'tel': '676 11 30 57', 'horaires': 'Lun – Sam · 7h30 – 18h00',
      'plus': 'Livraison & expédition partout'},
 ]

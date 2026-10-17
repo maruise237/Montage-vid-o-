@@ -17,7 +17,7 @@ Chez NGUELEK PRINT, tout est fabriqué ICI, sur nos machines :
 Votre idée, on la fabrique. 👇
 📲 wa.me/237676113057
 ☎️ 676 11 30 57 / 699 58 09 63
-📍 Yaoundé, carrefour Messassi (face au commissariat)
+📍 Yaoundé, carrefour Messassi (face au poste de police)
 🕐 Lundi au samedi, de 7h30 à 18h00
 ✈️ Livraison et expédition partout (frais à la charge du client)
 
@@ -37,7 +37,7 @@ Offrez un souvenir à votre image :
 
 📲 Écrivez-nous sur WhatsApp : wa.me/237676113057
 ☎️ 676 11 30 57 / 699 58 09 63
-📍 Yaoundé, carrefour Messassi (face au commissariat)
+📍 Yaoundé, carrefour Messassi (face au poste de police)
 🕐 Lundi au samedi, de 7h30 à 18h00
 ✈️ Livraison et expédition partout (frais à la charge du client)
 
@@ -54,7 +54,7 @@ Chez NGUELEK PRINT, toutes les machines sont sur place. 🔥
 Toi aussi, tu as une idée ? 👇
 📲 wa.me/237676113057
 ☎️ 676 11 30 57 / 699 58 09 63
-📍 Yaoundé, carrefour Messassi (face au commissariat)
+📍 Yaoundé, carrefour Messassi (face au poste de police)
 🕐 Lundi au samedi, de 7h30 à 18h00
 ✈️ Livraison et expédition partout (frais à la charge du client)
 On est ensemble ! 🤝
