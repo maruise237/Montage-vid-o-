@@ -174,6 +174,10 @@ Ce que font les humains (et ce qu'on fait maintenant, `boutique/son_reel.py`) :
    **Chaque plan rendu au nombre exact d'images** (`-frames:v`), sinon l'image dérive de plusieurs images.
 7. Contrôle : retranscrire la bande son finale et vérifier que chaque phrase finit entière.
 
+**« Surprends-moi » = changer de concept, pas d'habillage** (validé par Mariuse sur la pub 3 NGUELEK, « niveau agence ») :
+un fil narratif unique tenu de bout en bout, une DA tirée du métier du client, deux voix qui se répondent, montage
+sur les mesures, un silence avant le climax, une fin qui récapitule + appel à l'action concret.
+
 **Voix et musique générées (treg)** — quand Mariuse demande une voix off ou une musique sur mesure :
 voix `gemini-3-8-flash-tts` (Fenrir énergique, Laomedeia féminine), musique `lyria-3-5` (instrumentale, BPM, sections,
 fin franche demandés dans le prompt). La consigne de style est lue à voix haute : la couper au mot près. Détails et

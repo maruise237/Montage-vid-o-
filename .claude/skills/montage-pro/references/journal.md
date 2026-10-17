@@ -220,3 +220,12 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   silence de 0,45 s avant le grand « C'EST FAIT ! » + petite foule enregistrée.
 - Piège : `mask-image: url(fichier.png)` est bloqué par Chromium en file:// (CORS) → le tampon était invisible.
   Mettre les textures de masque en data URI.
+
+### Retour de Mariuse sur la pub 3 → validée, référence « niveau agence »
+- « Magnifique, j'adore le concept, tu m'as vraiment surpris, on dirait un vrai travail d'agence, pas des trucs
+  génériques. » = la meilleure note des trois pubs.
+- Ce qui a fait la différence (à refaire) : UN concept narratif tenu du début à la fin (commande → machine → tampon
+  → ticket) au lieu d'un catalogue de plans ; une DA née du métier du client (ticket, encre, tampon) et non d'un
+  modèle de pub ; deux voix qui dialoguent avec de l'énergie ; montage sur les MESURES de la musique ; une respiration
+  (silence) avant le climax ; fin qui récapitule tout (le ticket complet) + appel à l'action concret.
+- Quand Mariuse dit « surprends-moi » : changer de CONCEPT (structure, DA, voix), pas seulement d'habillage.
