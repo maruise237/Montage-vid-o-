@@ -1,0 +1,6 @@
+{"sous": [[0.02, 0.96, "NE T'ÉNERVE", null], [0.96, 1.58, "JAMAIS", "JAMAIS"], [1.58, 2.7, "QUAND TU ENTENDS", null],
+ [2.7, 3.68, "DES GENS QUI", null], [3.68, 4.36, "SALISSENT", null], [4.36, 5.25, "TON NOM.", "NOM."],
+ [5.38, 6.08, "ILS SONT", null], [6.08, 7.1, "OBLIGÉS", null], [7.1, 8.3, "DE PARLER DE TOI,", "TOI,"],
+ [8.44, 9.66, "PARCE QUE QUAND", null], [9.66, 10.56, "ILS PARLENT", null], [10.56, 11.95, "D'EUX-MÊMES,", "D'EUX-MÊMES,"],
+ [12.14, 12.86, "PERSONNE", "PERSONNE"], [12.86, 14.1, "NE LES ÉCOUTE.", null]],
+ "beats": [14.78, 15.6, 16.4, 17.22, 18.03, 18.84, 19.65], "drop": 14.78, "duree": 20.85}
