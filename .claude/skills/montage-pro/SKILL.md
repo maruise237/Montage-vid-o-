@@ -107,6 +107,7 @@ Pipeline de référence : `podcast/` (render(t) déterministe, rendu Playwright 
 | Numéro d'étape persistant | « 1. » / « 2. » / « 3. » en italique dans le coin haut-gauche (dans la zone sûre) pendant tout le point. |
 | Schéma qui se construit | Dessin trait noir sur fond blanc, un élément ajouté à chaque phrase (RÉSULTAT → ACTION → IDENTITÉ), en vignette au-dessus du sujet. |
 | Texte au sol / dans la scène | Mot en perspective posé sur le sol du B-roll (homographie 4 points, `PIL.Image.transform(PERSPECTIVE)`), cf. « Mentleur » chez Wu. |
+| Plan généré par IA « cinéma » | Partir d'une référence de vrai film, nommer la technique, puis prompter : méthode en 6 sites + gabarit dans `references/ressources-cine.md`. |
 | Audio | Voix devant, **-14 LUFS intégré** (les 14 inspirations : -14,1 à -14,5). Détail en §2bis et **§2ter (son humain, obligatoire)**. Moteur : `boutique/son_reel.py` (vraie musique montée sur ses temps, son direct des sources, bruitages enregistrés, voix coupée sur ses silences). Les bruitages synthétisés de `podcast/son.py` = **interdits en livrable** (pattern IA détecté par Mariuse). |
 
 ## 2bis. Son : musique et bruitages (mesuré sur les 14 inspirations)
