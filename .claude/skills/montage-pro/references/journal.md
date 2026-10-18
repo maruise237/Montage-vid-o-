@@ -229,3 +229,18 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   modèle de pub ; deux voix qui dialoguent avec de l'énergie ; montage sur les MESURES de la musique ; une respiration
   (silence) avant le climax ; fin qui récapitule tout (le ticket complet) + appel à l'action concret.
 - Quand Mariuse dit « surprends-moi » : changer de CONCEPT (structure, DA, voix), pas seulement d'habillage.
+
+## Lancement Yaplus (57,9 s, 9:16) : style « SaaS launch » (réf. Luminovo) en motion design
+- Demande : vidéo de lancement de l'appli Yaplus (dépôt maruise237/Yaplus), dans le style d'une référence motion
+  design (fond bleu nuit, traits lumineux bleu/orange, cartes en verre, écrans de l'appli inclinés en 3D), voix off treg.
+- Fait : `yaplus_lancement/` (lancement.html = render(t), rendu.mjs, son.py). **Vrais écrans** de l'appli capturés en
+  mode démo (`/?demo=1`, Playwright 390×844 ×3, sombre ; masquer `nextjs-portal` du serveur de dev), avant/après d'un vrai
+  tap (toast « KG5 ajouté à la liste »). Récit : chaos (bulles de l'équipe) → cahier illisible → groupe WhatsApp →
+  conséquences → silence → logo sur le drop → tap → patron en direct → WhatsApp → hors ligne → oubliés → CTA.
+- treg (~0,10 $) : narratrice Laomedeia (posée, « présentatrice de lancement ») + employé Fenrir. Musique Lyria
+  « tech launch + touche afro, 100 BPM, intro tendue 16 s, riser, drop ~0:22 » : drop réel à 22,92 s (onset), on y pose
+  « Y'a plus » ; 4 mesures retirées (38,94 → 48,09 s) pour que le coup final tombe juste après le CTA.
+- Pièges : (1) un `<feGaussianBlur>` sur un trait SVG est **coupé net** par la boîte du filtre → `filterUnits="userSpaceOnUse"`
+  avec une grande zone ; (2) un élément `#tel` sans `position:absolute` → `left:50%` ignoré, téléphone hors cadre ;
+  (3) TTS criée : « Patron ! » entendu « Tintron » par 2 modèles whisper → regénéré avec « en articulant bien chaque mot ».
+  Toujours retranscrire la bande finale (small + medium sur les passages douteux).

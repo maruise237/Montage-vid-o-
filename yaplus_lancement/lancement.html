@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Outfit;font-weight:300;src:url(assets/outfit-300.woff)}
+@font-face{font-family:Outfit;font-weight:400;src:url(assets/outfit-400.woff)}
+@font-face{font-family:Outfit;font-weight:500;src:url(assets/outfit-500.woff)}
+@font-face{font-family:Outfit;font-weight:600;src:url(assets/outfit-600.woff)}
+@font-face{font-family:Outfit;font-weight:700;src:url(assets/outfit-700.woff)}
+@font-face{font-family:Serif;font-style:italic;src:url(assets/InstrumentSerif-Italic.ttf)}
+@font-face{font-family:Main;src:url(assets/reenie.woff)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#03060f}
+body{font-family:Outfit;color:#fff;position:relative}
+.abs{position:absolute}
+i,.s{font-family:Serif;font-style:italic;font-weight:400;letter-spacing:-.01em}
+#bg{inset:0;background:radial-gradient(120% 70% at 50% 45%,#0a1530 0%,#050a1a 55%,#02040b 100%)}
+#streaks{inset:0;width:1080px;height:1920px}
+#vig{inset:0;background:radial-gradient(90% 60% at 50% 50%,transparent 55%,rgba(0,0,0,.55) 100%)}
+#grain{inset:-200px;background:url(assets/grain.png);opacity:.07;mix-blend-mode:overlay}
+.titre{left:90px;right:90px;font-weight:500;font-size:96px;line-height:1.02;letter-spacing:-.035em;opacity:0}
+.titre i{font-size:1.12em}
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.13),rgba(255,255,255,.04));border:1.5px solid rgba(255,255,255,.16);
+  box-shadow:0 30px 80px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.18);backdrop-filter:blur(18px);border-radius:34px}
+.bulle{display:flex;gap:22px;align-items:flex-start;padding:28px 38px 28px 28px;font-size:52px;font-weight:500;line-height:1.15;opacity:0;white-space:nowrap}
+.av{width:72px;height:72px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:34px;font-weight:600}
+.nom{font-size:26px;font-weight:500;opacity:.55;margin-bottom:6px}
+#scene3d{inset:0;perspective:2200px;perspective-origin:50% 45%}
+#tel{position:absolute;left:50%;top:50%;width:620px;height:1342px;margin:-671px 0 0 -310px;transform-style:preserve-3d;opacity:0}
+#tel .cadre{position:absolute;inset:-14px;border-radius:70px;background:linear-gradient(150deg,#2b3550,#0d1222 50%,#1e2740);
+  box-shadow:0 60px 140px rgba(0,0,0,.7),0 0 0 1.5px rgba(255,255,255,.12),0 0 120px rgba(11,123,224,.25)}
+#tel .ecran{position:absolute;inset:0;border-radius:56px;overflow:hidden;background:#1e1e1e}
+#tel .ecran img{position:absolute;inset:0;width:100%;height:100%;opacity:0}
+#tel .reflet{position:absolute;inset:0;border-radius:56px;background:linear-gradient(115deg,rgba(255,255,255,.10) 0%,transparent 35%);pointer-events:none}
+.tap{width:96px;height:96px;margin:-48px 0 0 -48px;border-radius:50%;opacity:0;background:rgba(255,255,255,.35);border:3px solid rgba(255,255,255,.9);box-shadow:0 0 40px rgba(255,255,255,.4)}
+.onde{width:96px;height:96px;margin:-48px 0 0 -48px;border-radius:50%;border:3px solid rgba(255,255,255,.8);opacity:0}
+.puce{display:inline-flex;align-items:center;gap:20px;padding:26px 40px;font-size:48px;font-weight:500;white-space:nowrap}
+.page{width:760px;height:900px;background:#efe8d8;border-radius:12px;box-shadow:0 40px 100px rgba(0,0,0,.6);overflow:hidden;
+  background-image:repeating-linear-gradient(#efe8d8 0 74px,#9fb6d4 74px 76px);}
+.page .marge{position:absolute;left:96px;top:0;bottom:0;width:3px;background:#d98c8c}
+.page .l{position:absolute;left:130px;font-family:Main;font-size:84px;color:#273a73;white-space:nowrap;transform-origin:left center}
+.wa{width:640px;height:1000px;padding:0;overflow:hidden}
+.wa .tete{height:120px;display:flex;align-items:center;gap:22px;padding:0 30px;border-bottom:1px solid rgba(255,255,255,.1);font-size:36px;font-weight:600}
+.wa .fil{position:absolute;left:0;right:0;top:120px;bottom:0;overflow:hidden}
+.wa .m{position:absolute;max-width:470px;padding:18px 24px;border-radius:24px;font-size:32px;line-height:1.2;background:rgba(255,255,255,.10)}
+.wa .m.moi{right:26px;background:rgba(37,211,102,.22)}
+.wa .m .q{font-size:22px;opacity:.6;display:block;margin-bottom:4px;font-weight:600}
+#msg{width:720px;padding:34px 40px 30px;font-size:36px;line-height:1.32;opacity:0;border-radius:36px;background:linear-gradient(160deg,rgba(37,211,102,.30),rgba(18,140,126,.18));border-color:rgba(120,255,170,.3)}
+#msg b{font-weight:700}
+#msg .cat{border-radius:10px;padding:0 8px;margin-left:-8px}
+.statut{display:flex;align-items:center;gap:26px;padding:30px 46px;font-size:46px;font-weight:500;white-space:nowrap}
+</style></head><body>
+<div id="bg" class="abs"></div>
+<svg id="streaks" class="abs" viewBox="0 0 1080 1920">
+  <defs>
+    <filter id="f1" filterUnits="userSpaceOnUse" x="-600" y="-600" width="2280" height="3120"><feGaussianBlur stdDeviation="60"/></filter>
+    <filter id="f2" filterUnits="userSpaceOnUse" x="-600" y="-600" width="2280" height="3120"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="f3" filterUnits="userSpaceOnUse" x="-600" y="-600" width="2280" height="3120"><feGaussianBlur stdDeviation="2.5"/></filter>
+    <linearGradient id="gb" x1="0" x2="1"><stop offset="0" stop-color="#0B7BE0" stop-opacity="0"/><stop offset=".45" stop-color="#2f8ff0"/><stop offset="1" stop-color="#7cc0ff"/></linearGradient>
+    <linearGradient id="go" x1="1" x2="0"><stop offset="0" stop-color="#ff6a3d" stop-opacity="0"/><stop offset=".5" stop-color="#ff6a3d"/><stop offset="1" stop-color="#ffb08a"/></linearGradient>
+  </defs>
+  <g id="sB"><path id="b1" filter="url(#f1)" stroke="url(#gb)" stroke-width="220" fill="none" stroke-linecap="round"/>
+    <path id="b2" filter="url(#f2)" stroke="url(#gb)" stroke-width="40" fill="none" stroke-linecap="round"/>
+    <path id="b3" filter="url(#f3)" stroke="#bfe0ff" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+  <g id="sO"><path id="o1" filter="url(#f1)" stroke="url(#go)" stroke-width="200" fill="none" stroke-linecap="round"/>
+    <path id="o2" filter="url(#f2)" stroke="url(#go)" stroke-width="34" fill="none" stroke-linecap="round"/>
+    <path id="o3" filter="url(#f3)" stroke="#ffd9c4" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+</svg>
+
+<!-- S0 : le chaos -->
+<div id="yap" class="abs" style="left:0;right:0;top:250px;text-align:center;font-family:Serif;font-style:italic;font-size:250px;letter-spacing:-.02em;opacity:0;text-shadow:0 0 40px rgba(120,180,255,.55)">Y'a plus ?</div>
+<div id="bulles" class="abs" style="inset:0"></div>
+
+<!-- S1 : le cahier -->
+<div id="t1" class="titre abs" style="top:230px">Tout repose sur<br>un <i>cahier</i>…</div>
+<div id="t1b" class="titre abs" style="top:1560px;font-size:64px;font-weight:400;color:#c9d6f2">que personne n'arrive à <i>relire</i>.</div>
+<div id="cahier" class="abs" style="left:160px;top:560px;perspective:1600px;opacity:0">
+  <div class="page" id="page" style="position:relative">
+    <div class="marge"></div>
+  </div>
+</div>
+
+<!-- S2 : le groupe WhatsApp -->
+<div id="t2" class="titre abs" style="top:230px">…et un groupe<br><span style="display:inline-flex;align-items:center;gap:22px"><img src="assets/whatsapp.png" style="width:92px;height:92px">WhatsApp</span></div>
+<div id="t2b" class="titre abs" style="top:1590px;font-size:64px;font-weight:400;color:#c9d6f2">où les messages se <i>perdent</i>.</div>
+<div id="wa" class="glass wa abs" style="left:220px;top:530px;opacity:0">
+  <div class="tete"><div class="av" style="background:#25D366;color:#063;width:70px;height:70px">B</div><div>Boutique Akwa<div style="font-size:24px;font-weight:400;opacity:.55">Jules, Paul, Martin, Sandrine</div></div></div>
+  <div class="fil" id="fil"></div>
+</div>
+
+<!-- S3 : les conséquences -->
+<div id="t3a" class="abs" style="left:90px;top:520px;font-size:54px;font-weight:400;color:#9fb0d6;opacity:0">Résultat :</div>
+<div id="t3" class="abs" style="left:90px;right:60px;top:610px;font-size:150px;font-weight:500;letter-spacing:-.045em;line-height:.98"></div>
+<div id="v3" class="abs" style="left:90px;top:1120px"></div>
+
+<!-- S4 : logo -->
+<div id="voici" class="abs" style="left:0;right:0;top:760px;text-align:center;font-family:Serif;font-style:italic;font-size:120px;opacity:0">Voici</div>
+<div id="logo" class="abs" style="left:140px;top:820px;width:800px;opacity:0">
+  <svg viewBox="0 0 353 100" width="800" style="overflow:visible">
+    <defs><filter id="glow" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <g id="mark" filter="url(#glow)"><path id="mk" fill="#0B7BE0" stroke="#7cc0ff" stroke-width="1.5" d="M6 6H31L64 58.25V96H40V59.8ZM66.5 6H81.5V19.5H95V34.5H81.5V48H66.5V34.5H53V19.5H66.5Z"/></g>
+    <path id="mot" fill="#fff" d="M139.22 78V54.6L119.4 23.17H131.65L144.6 44.38L157.55 23.17H169.64L149.9 54.13V78Z M186.56 78.78Q181.41 78.78 177.28 76.21Q173.15 73.630 170.81 69.19Q168.47 64.74 168.47 59.2Q168.47 53.59 170.81 49.14Q173.15 44.69 177.28 42.12Q181.41 39.55 186.56 39.55Q190.62 39.55 193.82 41.18Q195.92 42.28 197.48 43.91V40.33H207.62V78H197.48V74.33Q195.92 75.97 193.82 77.06Q190.62 78.78 186.56 78.78ZM188.43 69.34Q192.72 69.34 195.38 66.5Q198.03 63.65 198.03 59.12Q198.03 56.16 196.82 53.86Q195.61 51.56 193.47 50.27Q191.32 48.98 188.43 48.98Q185.63 48.98 183.48 50.27Q181.34 51.56 180.13 53.86Q178.92 56.16 178.92 59.12Q178.92 62.17 180.13 64.47Q181.34 66.77 183.48 68.06Q185.63 69.34 188.43 69.34Z M236.79 78.78Q232.74 78.78 229.46 77.06Q227.51 76.13 226.03 74.65V93.76H215.89V40.33H226.11V43.68Q227.59 42.28 229.54 41.26Q232.74 39.55 236.79 39.55Q242.02 39.55 246.15 42.12Q250.29 44.69 252.67 49.14Q255.05 53.59 255.05 59.2Q255.05 64.74 252.67 69.19Q250.29 73.63 246.15 76.21Q242.02 78.78 236.79 78.78ZM235 69.34Q237.81 69.34 239.99 68.06Q242.18 66.77 243.39 64.47Q244.59 62.17 244.59 59.12Q244.59 56.16 243.39 53.86Q242.18 51.56 239.99 50.27Q237.81 48.98 235 48.98Q232.27 48.98 230.09 50.27Q227.9 51.56 226.69 53.86Q225.48 56.160 225.48 59.12Q225.48 62.17 226.69 64.47Q227.9 66.77 230.05 68.06Q232.19 69.34 235 69.34Z M260.97 78V21.61H271.19V78Z M295.53 78.78Q290.54 78.78 286.67 76.67Q282.81 74.57 280.63 70.82Q278.45 67.08 278.45 62.17V40.33H288.74V61.93Q288.74 64.27 289.52 65.95Q290.3 67.63 291.86 68.48Q293.42 69.34 295.53 69.34Q298.73 69.34 300.52 67.39Q302.31 65.44 302.31 61.93V40.33H312.53V62.17Q312.53 67.16 310.39 70.9Q308.24 74.65 304.38 76.71Q300.52 78.78 295.53 78.78Z M332.81 78.86Q329.61 78.86 326.53 78Q323.45 77.14 320.88 75.62Q318.3 74.1 316.43 71.92L322.52 65.75Q324.47 67.94 327.04 69.03Q329.61 70.12 332.73 70.12Q335.23 70.12 336.52 69.42Q337.8 68.72 337.8 67.31Q337.8 65.75 336.44 64.9Q335.07 64.04 332.89 63.45Q330.71 62.87 328.33 62.13Q325.95 61.39 323.76 60.18Q321.58 58.97 320.21 56.82Q318.85 54.68 318.85 51.25Q318.85 47.66 320.6 45.01Q322.36 42.35 325.64 40.87Q328.91 39.39 333.36 39.39Q338.04 39.39 341.82 41.03Q345.6 42.67 348.1 45.94L341.94 52.1Q340.22 50 338.08 49.06Q335.93 48.13 333.44 48.13Q331.17 48.13 329.96 48.830Q328.76 49.53 328.76 50.78Q328.76 52.18 330.12 52.96Q331.49 53.74 333.67 54.33Q335.85 54.91 338.23 55.65Q340.61 56.39 342.76 57.72Q344.9 59.05 346.27 61.23Q347.63 63.41 347.63 66.85Q347.63 72.38 343.65 75.62Q339.68 78.86 332.81 78.86Z"/>
+  </svg>
+</div>
+<div id="slogan" class="abs" style="left:0;right:0;top:1110px;text-align:center;font-size:58px;font-weight:400;color:#c9d6f2;opacity:0">Y'a plus ? Un tap, <i style="color:#fff">c'est noté.</i></div>
+<div id="anneau" class="abs" style="left:540px;top:930px;width:600px;height:600px;border-radius:50%;opacity:0;background:radial-gradient(circle,transparent 58%,rgba(124,192,255,.25) 64%,rgba(190,225,255,.95) 68%,rgba(47,143,240,.3) 72%,transparent 78%)"></div>
+
+<!-- S5–S9 : le téléphone -->
+<div id="t5" class="titre abs" style="top:150px"></div>
+<div id="scene3d" class="abs">
+  <div id="tel">
+    <div class="cadre"></div>
+    <div class="ecran" id="ecran">
+      <img id="e_accueil" src="assets/accueil.png"><img id="e_avant" src="assets/cat-avant.png"><img id="e_apres" src="assets/cat-apres2.png">
+      <img id="e_racheter" src="assets/racheter.png"><img id="e_envoyer" src="assets/envoyer.png">
+      <div id="surligne" class="abs" style="opacity:0;border:4px solid #7cc0ff;border-radius:22px;box-shadow:0 0 40px rgba(124,192,255,.6)"></div>
+    </div>
+    <div class="reflet"></div>
+    <div id="tap" class="tap abs"></div><div id="onde" class="onde abs"></div>
+  </div>
+</div>
+<div id="flot" class="abs" style="inset:0"></div>
+<div id="msg" class="glass abs" style="left:300px;top:760px">
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;font-size:28px;opacity:.85"><img src="assets/whatsapp.png" style="width:48px;height:48px">Fournisseur · Mokolo</div>
+  <b>Boutique Akwa</b> · À racheter<br><span style="opacity:.7">18/10/2026</span><br><br>
+  <span class="cat" id="c1"><b>Afficheurs</b></span><br>- Itel A100<br>- Infinix Hot 30<br>- KG5 (x3)<br><br>
+  <span class="cat" id="c2"><b>Batteries</b></span><br>- Batterie Itel BL-5CT<br><br>
+  <span class="cat" id="c3"><b>Accessoires</b></span><br>- Écouteurs filaires (urgent)
+  <div style="text-align:right;font-size:24px;opacity:.7;margin-top:6px">14:52 <span style="color:#53bdeb">✓✓</span></div>
+</div>
+<div id="statut" class="glass statut abs" style="left:50%;top:1500px;opacity:0"></div>
+<div id="ligne" class="abs" style="left:110px;top:900px;width:860px;opacity:0"></div>
+
+<!-- S10 : fin -->
+<div id="sign" class="abs" style="left:0;right:0;top:1100px;text-align:center;font-size:76px;font-weight:500;letter-spacing:-.03em;opacity:0">Y a plus ? <i>On le note.</i></div>
+<div id="cta" class="abs" style="left:0;right:0;top:1330px;display:flex;flex-direction:column;align-items:center;gap:30px;opacity:0">
+  <div style="display:flex;align-items:center;gap:26px;padding:28px 52px;border-radius:999px;background:#0B7BE0;font-size:50px;font-weight:600;box-shadow:0 20px 60px rgba(11,123,224,.5)"><img src="assets/app-icon.svg" style="width:70px;height:70px;border-radius:16px;box-shadow:0 0 0 2px rgba(255,255,255,.4)">Essaie-le dès aujourd'hui</div>
+  <div style="font-size:44px;font-weight:400;color:#c9d6f2;letter-spacing:.01em">yaplus-blush.vercel.app</div>
+</div>
+<div id="flash" class="abs" style="inset:0;background:radial-gradient(60% 40% at 50% 50%,rgba(160,210,255,.9),rgba(11,123,224,0) 70%);opacity:0;mix-blend-mode:screen"></div>
+
+<div id="vig" class="abs"></div>
+<div id="grain" class="abs"></div>
+<div id="noir" class="abs" style="inset:0;background:#000;opacity:0"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const io = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;   // easeInOutCubic
+const eo = x => 1 - Math.pow(1 - x, 3);                                          // easeOutCubic
+const eb = x => { const c = 1.4; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }; // léger dépassement
+const prog = (t, a, d) => cl((t - a) / d);
+// enveloppe d'apparition : entre à a (durée fi), sort à b (durée fo)
+const env = (t, a, b, fi = .3, fo = .3) => Math.min(eo(prog(t, a, fi)), 1 - io(prog(t, b - fo, fo)));
+const lerp = (a, b, x) => a + (b - a) * x;
+function kf(t, keys) {   // interpolation de clés {t, ...valeurs}
+  if (t <= keys[0].t) return keys[0];
+  for (let i = 0; i < keys.length - 1; i++) {
+    const A = keys[i], B = keys[i + 1];
+    if (t <= B.t) { const x = io((t - A.t) / (B.t - A.t)), o = {}; for (const k in A) o[k] = lerp(A[k], B[k] ?? A[k], x); return o; }
+  }
+  return keys[keys.length - 1];
+}
+const css = (el, o) => Object.assign(el.style, o);
+
+/* ---------- traits lumineux ---------- */
+function streaks(t) {
+  const lum = kf(t, [{t:0,b:.35,o:.25},{t:5,b:.45,o:.35},{t:18.6,b:.5,o:.4},{t:20.5,b:.08,o:.05},{t:22.6,b:.15,o:.1},{t:22.95,b:1,o:.85},
+    {t:24.5,b:.75,o:.6},{t:49,b:.7,o:.55},{t:50.5,b:.9,o:.7},{t:54.9,b:1,o:.85},{t:57.5,b:.6,o:.45}]);
+  const w = t * .25;
+  const B = `M -300 ${1500 + 120 * Math.sin(w)} C 200 ${1150 + 90 * Math.cos(w * 1.3)}, 700 ${1780 - 120 * Math.sin(w * .8)}, 1400 ${1050 + 80 * Math.sin(w * 1.1)}`;
+  const O = `M 1400 ${380 + 90 * Math.sin(w * .9)} C 900 ${660 + 110 * Math.cos(w)}, 380 ${120 + 90 * Math.sin(w * 1.2)}, -300 ${520 + 70 * Math.cos(w * .7)}`;
+  for (const id of ['b1', 'b2', 'b3']) $(id).setAttribute('d', B);
+  for (const id of ['o1', 'o2', 'o3']) $(id).setAttribute('d', O);
+  $('sB').style.opacity = lum.b; $('sO').style.opacity = lum.o;
+  $('grain').style.transform = `translate(${(t * 7919 % 200) | 0}px,${(t * 6007 % 200) | 0}px)`;
+}
+
+/* ---------- S0 : bulles ---------- */
+const BULLES = [
+  {a: .62, txt: "Patron ! Y'a plus de KG5 !", nom: 'Paul', c: '#ff6a3d', x: 70, y: 760, z: 0},
+  {a: 1.7, txt: "C'est noté où ?", nom: 'Sandrine', c: '#8a6cff', x: 520, y: 600, z: 1},
+  {a: 2.3, txt: 'Photo de la feuille', nom: 'Martin', c: '#2fb7a0', x: 120, y: 1350, z: 1},
+  {a: 3.62, txt: 'Et les batteries Itel,<br>quelqu’un a noté ?', nom: 'Paul', c: '#ff6a3d', x: 230, y: 1010, z: 0},
+  {a: 4.3, txt: 'Y’a plus de chargeurs', nom: 'Sandrine', c: '#8a6cff', x: 470, y: 1560, z: 1},
+  {a: 5.0, txt: 'Patron tu as vu ?', nom: 'Martin', c: '#2fb7a0', x: 60, y: 520, z: 1},
+];
+for (const [i, b] of BULLES.entries()) {
+  const d = document.createElement('div'); d.className = 'glass bulle abs'; d.id = 'bu' + i;
+  d.innerHTML = `<div class="av" style="background:${b.c}">${b.nom[0]}</div><div><div class="nom">${b.nom}</div>${b.txt}</div>`;
+  css(d, {left: b.x + 'px', top: b.y + 'px'}); $('bulles').appendChild(d);
+}
+function s0(t) {
+  css($('yap'), {opacity: env(t, .25, 6.1, .5, .5), transform: `scale(${1 + t * .012}) translateY(${-t * 4}px)`});
+  BULLES.forEach((b, i) => {
+    const e = $('bu' + i), p = prog(t, b.a, .35), o = env(t, b.a, 6.15, .2, .45);
+    const s = (b.z ? .78 : 1) * (.6 + .4 * eb(p));
+    css(e, {opacity: o * (b.z ? .55 : 1), filter: b.z ? 'blur(5px)' : 'none',
+      transform: `translateY(${-(t - b.a) * (b.z ? 22 : 10)}px) scale(${s})`, transformOrigin: 'left bottom'});
+  });
+}
+
+/* ---------- S1 : cahier ---------- */
+const LIGNES = [['KG5 x3', 0, -2], ['batri itel ??', 1, 1.5], ['chargeur 18w', 2, -1], ['pochet A100', 3, 2], ['ecouteur', 4, -2.5], ['KG5 ?', 5, 1], ['Infinx hot 3o', 6, -1.5], ['cable type c', 7, 2.5], ['......', 8, 0]];
+for (const [txt, k, r] of LIGNES) {
+  const d = document.createElement('div'); d.className = 'l'; d.id = 'l' + k; d.textContent = txt;
+  css(d, {top: (18 + k * 76 + (k % 2) * 6) + 'px', transform: `rotate(${r}deg)`}); $('page').appendChild(d);
+}
+for (const k of [1, 5]) { const s = document.createElement('div'); s.className = 'abs'; s.id = 'bar' + k;
+  css(s, {left: '120px', top: (68 + k * 76) + 'px', height: '6px', background: '#273a73', borderRadius: '3px', width: '0px', transform: `rotate(${k == 1 ? -3 : 2}deg)`}); $('page').appendChild(s); }
+function s1(t) {
+  const on = env(t, 6.2, 11.25, .5, .4);
+  css($('t1'), {opacity: env(t, 6.35, 11.2, .4, .35), transform: `translateY(${(1 - eo(prog(t, 6.35, .5))) * 30}px)`});
+  css($('t1b'), {opacity: env(t, 9.85, 11.2, .35, .3)});
+  const fl = cl((t - 9.9) / .8);
+  css($('cahier'), {opacity: on, transform: `translateY(${(1 - eo(prog(t, 6.2, .7))) * 120 - (t - 6.2) * 8}px) rotateX(18deg) rotateZ(${-5 + (t - 6.2) * .6}deg) scale(${.96 + (t - 6.2) * .01})`,
+    filter: `blur(${fl * 5}px)`});
+  LIGNES.forEach(([, k]) => { const p = prog(t, 6.6 + k * .33, .38); $('l' + k).style.clipPath = `inset(0 ${100 - p * 100}% 0 0)`; });
+  $('bar1').style.width = prog(t, 8.1, .25) * 330 + 'px'; $('bar5').style.width = prog(t, 8.9, .25) * 200 + 'px';
+}
+
+/* ---------- S2 : groupe WhatsApp ---------- */
+const MSG = [['Jules', 'Bonjour à tous', 0], ['Martin', 'Le client de ce matin est revenu', 0], ['moi', 'Ok je vois', 1], ['Paul', "Patron, y'a plus de KG5 !", 0, 'k'],
+  ['Sandrine', 'Qui a la clé du magasin ?', 0], ['Martin', 'Photo', 0, 'p'], ['moi', 'Je suis en route', 1], ['Jules', 'Vous avez mangé ?', 0], ['Paul', '???', 0],
+  ['Sandrine', 'La cliente veut une pochette', 0], ['moi', 'Demain', 1], ['Martin', 'Bonne nuit', 0], ['Jules', 'Rappel réunion lundi', 0], ['Paul', 'Ok', 0]];
+let yy = 30;
+MSG.forEach(([n, txt, moi, sp], i) => {
+  const d = document.createElement('div'); d.className = 'm' + (moi ? ' moi' : ''); d.id = 'm' + i;
+  if (sp === 'p') d.innerHTML = `<span class="q">${n}</span><div style="width:300px;height:200px;border-radius:14px;background:#efe8d8 repeating-linear-gradient(#efe8d8 0 30px,#9fb6d4 30px 31px);font-family:Main;color:#273a73;font-size:40px;padding:6px 16px;transform:none">KG5 x3<br>batri..</div>`;
+  else d.innerHTML = (moi ? '' : `<span class="q">${n}</span>`) + txt;
+  css(d, {top: yy + 'px', left: moi ? 'auto' : '26px'}); if (sp === 'k') { d.style.outline = '3px solid rgba(255,106,61,.8)'; }
+  $('fil').appendChild(d); yy += sp === 'p' ? 290 : (moi ? 100 : 130);
+});
+function s2(t) {
+  css($('t2'), {opacity: env(t, 11.35, 14.6, .35, .3), transform: `translateY(${(1 - eo(prog(t, 11.35, .5))) * 30}px)`});
+  css($('t2b'), {opacity: env(t, 13.55, 14.6, .3, .3)});
+  css($('wa'), {opacity: env(t, 11.25, 14.65, .4, .35), transform: `perspective(1800px) rotateY(${-16 + (t - 11.25) * 2}deg) rotateX(6deg) translateY(${(1 - eo(prog(t, 11.25, .6))) * 140}px)`});
+  const sc = 280 * Math.pow(cl((t - 11.6) / 3), 1.6) * 3.2;   // le fil défile de plus en plus vite
+  $('fil').style.transform = `translateY(${-sc}px)`;
+  $('m3').style.opacity = 1 - prog(t, 13.5, .5) * .7;
+}
+
+/* ---------- S3 : conséquences ---------- */
+function s3(t) {
+  css($('t3a'), {opacity: env(t, 14.85, 18.95, .3, .35)});
+  let h = '', v = '';
+  if (t >= 15.9 && t < 16.66) { h = 'on <i>oublie</i>.'; v = `<div class="glass puce" style="opacity:${1 - prog(t, 16.05, .5) * .85}"><span style="color:#FF5C70">●</span>Itel A100</div>`; }
+  else if (t >= 16.66 && t < 17.8) { h = 'on rachète<br><i>deux fois</i>.'; v = `<div style="display:flex;flex-direction:column;gap:20px">${[0, 1].map(k => `<div class="glass puce" style="opacity:${eo(prog(t, 16.8 + k * .3, .25))};transform:translateX(${k * 40}px)">Batterie Itel BL-5CT <span style="opacity:.6">×10</span></div>`).join('')}</div>`; }
+  else if (t >= 17.8) { h = 'le patron<br>n’en sait <i>rien</i>.'; v = `<div class="glass puce" style="opacity:${eo(prog(t, 18, .3))}"><div class="av" style="background:#0B7BE0;width:64px;height:64px;font-size:30px">J</div>Jules · en déplacement</div>`; }
+  const k = t < 16.66 ? 15.9 : t < 17.8 ? 16.66 : 17.8;
+  $('t3').innerHTML = h; $('v3').innerHTML = v;
+  const o = t < 18.95 ? 1 : 1 - prog(t, 18.95, .5);
+  css($('t3'), {opacity: o * eo(prog(t, k, .18)), transform: `translateY(${(1 - eo(prog(t, k, .25))) * 24}px)`});
+  css($('v3'), {opacity: o});
+}
+
+/* ---------- S4 : logo ---------- */
+function s4(t) {
+  css($('voici'), {opacity: env(t, 22.15, 22.92, .25, .12), transform: `scale(${.96 + prog(t, 22.15, .8) * .06})`});
+  const L = env(t, 22.88, 24.15, .08, .35);
+  const p = prog(t, 22.92, 1.2);
+  css($('logo'), {opacity: L, transform: `scale(${1.12 - .12 * eo(p)})`, filter: `blur(${(1 - eo(prog(t, 22.88, .25))) * 10}px)`});
+  css($('slogan'), {opacity: env(t, 23.45, 24.2, .3, .3), transform: `translateY(${(1 - eo(prog(t, 23.45, .4))) * 20}px)`});
+  const r = prog(t, 22.92, 1.1);
+  css($('anneau'), {opacity: (1 - r) * (t > 22.92 ? .9 : 0), transform: `translate(-50%,-50%) scale(${.15 + eo(r) * 2.6})`});
+  // pré-dessin du Y+ pendant le silence
+  const pre = prog(t, 20.6, 1.6);
+  $('mk').style.strokeDasharray = 600; $('mk').style.strokeDashoffset = 600 * (1 - pre);
+  $('mk').style.fillOpacity = t < 22.92 ? 0 : 1; $('mot').style.opacity = t < 22.92 ? 0 : 1;
+  if (t > 20.5 && t < 22.92) css($('logo'), {opacity: Math.max(L, .9 * prog(t, 20.6, .3)), transform: 'scale(1.12)', filter: 'none'});
+}
+
+/* ---------- S5–S9 : téléphone ---------- */
+const TEL = [
+  {t: 24.0, x: 0, y: 260, s: .78, rx: 22, ry: -26, rz: 8, o: 0},
+  {t: 24.6, x: 0, y: 150, s: .9, rx: 10, ry: -14, rz: 3, o: 1},
+  {t: 27.3, x: 0, y: 130, s: .94, rx: 4, ry: -6, rz: 1, o: 1},
+  {t: 29.6, x: -40, y: 160, s: .9, rx: 6, ry: 12, rz: -2, o: 1},
+  {t: 31.0, x: -150, y: 170, s: .86, rx: 6, ry: 16, rz: -3, o: 1},
+  {t: 34.6, x: -150, y: 160, s: .88, rx: 4, ry: 12, rz: -2, o: 1},
+  {t: 35.4, x: 0, y: 140, s: .92, rx: 4, ry: -8, rz: 1, o: 1},
+  {t: 36.9, x: -170, y: 220, s: .82, rx: 10, ry: 22, rz: -4, o: 1},
+  {t: 39.5, x: -170, y: 220, s: .82, rx: 10, ry: 22, rz: -4, o: 1},
+  {t: 40.2, x: 0, y: 40, s: .82, rx: 26, ry: 0, rz: 0, o: .55},
+  {t: 44.2, x: 0, y: 20, s: .84, rx: 20, ry: 0, rz: 0, o: .7},
+  {t: 45.0, x: 0, y: 480, s: 1.45, rx: 8, ry: -6, rz: 2, o: 1},
+  {t: 49.0, x: 0, y: 520, s: 1.5, rx: 6, ry: -10, rz: 3, o: 1},
+  {t: 49.7, x: 0, y: 900, s: 1.2, rx: 40, ry: -10, rz: 3, o: 0},
+];
+const ECRANS = [['e_accueil', 0, 25.95], ['e_avant', 25.95, 27.05], ['e_apres', 27.05, 29.9], ['e_racheter', 29.9, 35.95], ['e_envoyer', 35.95, 39.9], ['e_apres', 39.9, 44.6], ['e_racheter', 44.6, 60]];
+const TAPS = [[25.62, 100, 262], [26.95, 170, 391], [35.7, 102, 744]];   // (instant, x, y) en px de l'écran 390×844
+const F = 620 / 390;
+const SEQ5 = [[24.36, 'Ton employé ouvre<br>sa <i>catégorie</i>,'], [26.7, 'touche le<br>produit <i>fini</i>.'], [27.58, 'Un tap,<br><i>c’est noté.</i>'],
+  [30.1, 'Tu vois la liste<br><i>en direct</i>,'], [32.45, 'même <i>absent</i>.'], [35.5, 'Un bouton,'], [37.0, 'direct chez ton<br><i>fournisseur</i>.'],
+  [40.4, 'Pas de <i>réseau</i> ?'], [41.5, 'Ça marche<br><i>quand même</i>.'], [45.2, 'Ce qui n’a pas<br>été acheté…'], [46.7, '…remonte<br><i>tout seul</i>.'], [48.55, 'Plus rien<br>n’est <i>oublié</i>.']];
+function s5(t) {
+  const k = kf(t, TEL);
+  css($('tel'), {opacity: t < 24 || t > 49.7 ? 0 : k.o, transform: `translate(${k.x}px,${k.y}px) scale(${k.s}) rotateX(${k.rx}deg) rotateY(${k.ry}deg) rotateZ(${k.rz}deg)`});
+  for (const [id] of ECRANS) $(id).style.opacity = 0;
+  for (const [id, a, b] of ECRANS) if (t >= a && t < b) {
+    $(id).style.opacity = Math.min(1, (t - a) / .12 + (a == 0 ? 1 : 0));
+  }
+  // tap
+  let tp = null; for (const T of TAPS) if (t > T[0] - .35 && t < T[0] + .5) tp = T;
+  if (tp) {
+    const d = t - tp[0];
+    css($('tap'), {left: tp[1] * F + 'px', top: tp[2] * F + 'px', opacity: d < 0 ? eo((d + .35) / .2) : 1 - prog(d, 0, .35), transform: `scale(${d < 0 ? 1 : 1 - .25 * Math.sin(Math.min(d, .2) / .2 * Math.PI)})`});
+    css($('onde'), {left: tp[1] * F + 'px', top: tp[2] * F + 'px', opacity: d > 0 ? 1 - prog(d, 0, .45) : 0, transform: `scale(${1 + eo(prog(d, 0, .45)) * 1.8})`});
+  } else { $('tap').style.opacity = 0; $('onde').style.opacity = 0; }
+  // surlignage : « Signalé par Paul » puis « Oublié la dernière fois »
+  let sl = null;
+  if (t > 33.3 && t < 34.9) sl = [64, 300, 300, 62, env(t, 33.3, 34.9, .2, .25)];
+  if (t > 45.5 && t < 49.5) sl = [64, 215, 300, 75, env(t, 45.5, 49.5, .25, .3)];
+  if (sl) css($('surligne'), {left: sl[0] * F + 'px', top: sl[1] * F + 'px', width: sl[2] * F + 'px', height: sl[3] * F + 'px', opacity: sl[4]});
+  else $('surligne').style.opacity = 0;
+  // titres
+  let cur = null; for (const s of SEQ5) if (t >= s[0]) cur = s;
+  const fin = (t > 29.4 && t < 30.1) || (t > 34.9 && t < 35.5) || (t > 39.55 && t < 40.4) || (t > 44.4 && t < 45.2) || t > 49.4 || t < 24.36;
+  if (cur && !fin) {
+    $('t5').innerHTML = cur[1];
+    css($('t5'), {opacity: eo(prog(t, cur[0], .2)), transform: `translateY(${(1 - eo(prog(t, cur[0], .25))) * 22}px)`, top: '150px'});
+  } else $('t5').style.opacity = 0;
+  // cartes flottantes
+  let h = '';
+  if (t > 27.4 && t < 29.6) { const o = env(t, 27.4, 29.6, .25, .3);
+    h += `<div class="glass puce abs" style="left:250px;top:1500px;opacity:${o};transform:translateY(${(1 - eb(prog(t, 27.4, .4))) * 60}px) scale(${.9 + .1 * eb(prog(t, 27.4, .4))})"><span style="width:58px;height:58px;border-radius:50%;background:#FF5C70;display:grid;place-items:center;font-size:34px">✓</span>KG5 ajouté à la liste</div>`; }
+  if (t > 33.3 && t < 34.8) {
+    [['P', '#ff6a3d', 'Paul a signalé', 'Infinix Hot 30', 33.35], ['S', '#8a6cff', 'Sandrine a signalé', 'Écouteurs filaires', 33.8]].forEach(([a, c, q, p, a0], i) => {
+      const o = env(t, a0, 34.8, .25, .3);
+      h += `<div class="glass bulle abs" style="left:${520 - i * 30}px;top:${1050 + i * 210}px;opacity:${o};font-size:38px;transform:translateX(${(1 - eo(prog(t, a0, .35))) * 120}px)"><div class="av" style="background:${c}">${a}</div><div><div class="nom" style="display:flex;align-items:center;gap:10px"><span style="width:14px;height:14px;border-radius:50%;background:#3DBE84"></span>En direct · ${q}</div>${p}</div></div>`;
+    });
+  }
+  $('flot').innerHTML = h;
+  // message WhatsApp
+  const mo = env(t, 37.05, 39.7, .35, .3);
+  css($('msg'), {opacity: mo, transform: `perspective(1800px) rotateY(${-10 + 6 * eo(prog(t, 37.05, .6))}deg) translate(${(1 - eo(prog(t, 37.05, .5))) * -260}px,${(1 - eo(prog(t, 37.05, .5))) * 200}px) scale(${.7 + .3 * eb(prog(t, 37.05, .5))})`});
+  ['c1', 'c2', 'c3'].forEach((id, i) => { const a = 38.75 + i * .22; $(id).style.background = `rgba(255,255,255,${.28 * env(t, a, a + .6, .12, .3)})`; });
+  // statut hors ligne → synchronisé
+  const so = env(t, 40.3, 44.5, .3, .35);
+  const sync = t > 43.05;
+  const rot = t > 42.7 && t < 43.1 ? (t - 42.7) * 900 : 0;
+  $('statut').innerHTML = sync
+    ? `<span style="width:66px;height:66px;border-radius:50%;background:#3DBE84;display:grid;place-items:center;font-size:40px">✓</span>Synchronisé`
+    : `<svg width="62" height="62" viewBox="0 0 24 24" fill="none" stroke="#ffb547" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(${rot}deg)"><path d="m2 2 20 20"/><path d="M5.782 5.782A7 7 0 0 0 9 19h8.5a4.5 4.5 0 0 0 1.307-.193"/><path d="M21.532 16.5A4.5 4.5 0 0 0 17.5 10h-1.79A7.008 7.008 0 0 0 10 5.07"/></svg>Hors ligne · 2 en attente`;
+  css($('statut'), {opacity: so, transform: `translateX(-50%) scale(${(.85 + .15 * eb(prog(t, 40.3, .4))) * (sync ? 1 + .06 * Math.sin(prog(t, 43.05, .3) * Math.PI) : 1)})`,
+    borderColor: sync ? 'rgba(61,190,132,.6)' : 'rgba(255,181,71,.45)'});
+}
+
+/* ---------- S10 : fin ---------- */
+function s10(t) {
+  if (t < 49.6) return;
+  const p = prog(t, 49.8, .9);
+  css($('logo'), {opacity: eo(prog(t, 49.8, .4)), transform: `translateY(${-160 + (1 - eo(p)) * 60}px) scale(${.92 + .08 * eo(p) + (t > 54.92 ? .03 * eo(prog(t, 54.92, 2)) : 0)})`, filter: 'none'});
+  $('mk').style.strokeDashoffset = 0; $('mk').style.fillOpacity = 1; $('mot').style.opacity = 1;
+  css($('sign'), {opacity: eo(prog(t, 51.2, .35)), transform: `translateY(${-160 + (1 - eo(prog(t, 51.2, .4))) * 24}px)`});
+  css($('cta'), {opacity: eo(prog(t, 53.35, .35)), transform: `translateY(${-160 + (1 - eb(prog(t, 53.35, .5))) * 40}px)`});
+  css($('flash'), {opacity: t > 54.92 ? .55 * (1 - prog(t, 54.92, .9)) : 0});
+  css($('noir'), {opacity: prog(t, 57.3, .55)});
+}
+
+window.render = t => {
+  streaks(t); s0(t); s1(t); s2(t); s3(t);
+  for (const id of ['logo', 'slogan', 'voici', 'anneau']) $(id).style.opacity = 0;
+  s4(t); s5(t); s10(t);
+  if (t < 20.5 || (t > 24.2 && t < 49.6)) $('logo').style.opacity = 0;
+};
+window.render(0);
+</script>
+</body></html>
