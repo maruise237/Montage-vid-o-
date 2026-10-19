@@ -39,6 +39,13 @@ Conditions par technique :
 - **Captures / logos** : dès qu'un outil, site ou appli est cité (voir règle 7).
 - Dans le doute : **moins d'effets, mieux choisis**. Un effet doit servir la phrase, pas décorer.
 
+**Un succès n'est pas un modèle** (Mariuse, oct. 2026 : « ce n'est pas parce que j'ai apprécié que ça va être la
+norme, il faut évoluer, ne pas être figé »). Quand une vidéo plaît, on note **pourquoi elle a marché dans SA
+situation**, jamais une recette à recopier. À chaque nouveau projet, repartir de la situation : qui regarde, où
+(statut WhatsApp, TikTok, pub), ce qu'on veut qu'il fasse, quelles images et quels sons on a. Puis choisir le concept,
+le ton et la forme qui collent, même si c'est l'inverse de la vidéo précédente. Tenter des choses neuves est attendu.
+Avant de livrer, se demander : « est-ce que j'ai refait la dernière vidéo qui a plu ? » Si oui, justifier ou changer.
+
 ## 1. Les 12 règles qui séparent le pro du slop
 
 1. **Une idée = un écran.** Chaque phrase clé a sa propre composition. Jamais le même layout plus de ~4 s.

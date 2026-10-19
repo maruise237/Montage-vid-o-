@@ -285,4 +285,5 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
 - **Retour final Mariuse** : « J'ai adoré ton concept, c'était trop bien. » → ce qui a marché : UN mot du quotidien
   (« y'a plus ») transformé en coût visible (tampon + compteur en francs), une histoire avec des personnages, un
   retournement (« on a fait de ce mot un bouton ») et la même mécanique inversée à la fin (« Y'en a ! », +18 000 F).
-  À réutiliser quand il dit « surprends-moi » : partir d'une phrase que la cible prononce tous les jours.
+  Mariuse précise aussitôt : **ce n'est pas une norme**. C'était juste pour CE cas (secteur, cible, mot du
+  quotidien). La prochaine fois, repartir de la situation et oser autre chose (voir règle mère, SKILL.md §0).
