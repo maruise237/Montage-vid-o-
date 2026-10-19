@@ -282,3 +282,7 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   extraits image par image (`photos/marche/`, `rendu.mjs` attend `img.decode()` à chaque frame). Mariuse fournit
   volontiers les images : lui donner une liste précise tôt. Wikimedia renvoie 429 → passer par `i0.wp.com/<url>?w=1000`.
   Autocritique faite sur planche : billets qui cachaient « UN MOT » → ils glissent par la droite sous le texte.
+- **Retour final Mariuse** : « J'ai adoré ton concept, c'était trop bien. » → ce qui a marché : UN mot du quotidien
+  (« y'a plus ») transformé en coût visible (tampon + compteur en francs), une histoire avec des personnages, un
+  retournement (« on a fait de ce mot un bouton ») et la même mécanique inversée à la fin (« Y'en a ! », +18 000 F).
+  À réutiliser quand il dit « surprends-moi » : partir d'une phrase que la cible prononce tous les jours.
