@@ -84,3 +84,5 @@
   (2) « bug à la transition vers Yaplus, un petit temps qui s'écoule » : 1,8 s de silence + 1,5 s de projecteur sur une
   salle vide avant le téléphone = temps mort. Corrigé : silence de la musique raccourci à 0,85 s (on coupe DANS le
   silence de la partition), le téléphone monte dès le drop.
+- **Retour final v3** : « travail impeccable ». Ce qui a compté dans CETTE situation : des preuves réelles
+  (brevets, chiffres sourcés) pour un public large, et la réactivité sur les 2 corrections. Pas une recette.
