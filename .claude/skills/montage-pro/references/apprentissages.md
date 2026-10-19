@@ -1,0 +1,77 @@
+# Apprentissages généraux
+
+Leçons de compétence qui ne dépendent d'aucun client : analyses d'inspirations, retours de Mariuse sur la méthode, techniques construites. Les projets clients sont rangés à part dans `cas/`.
+
+---
+
+## 2026-10 — Retours de Mariuse : contexte, logos, assombrissement, son, abonnés
+- « Toutes les techniques ne vont pas sur toutes les vidéos » → §0 du skill : tableau type de vidéo →
+  techniques à utiliser / à éviter, conditions par technique.
+- « Pas d'usine à gaz pour la zone Instagram » → règle simplifiée (sous le menton), outil optionnel.
+- « L'assombrissement se voit, on voit le détourage » → `FOND` 0,30 → 0,45, flou 5 → 3. Démo re-rendue.
+- « Quand je cite un outil, mettre son VRAI logo » → `outils/logo.py` (Wikimedia → Simple Icons → favicon,
+  cache `assets/logos/`, `coller()` pour le pop). 1er essai : Instagram renvoyait un logo Instagram+Threads
+  → filtrage des titres resserré. Leçon : toujours regarder le logo téléchargé.
+- « Tu n'as rien appris sur les bruitages, la musique, les abonnés » : juste, je n'avais analysé que l'image.
+  Fait : séparation demucs des 14 vidéos + spectrogrammes → §2bis (deux ouvertures selon le type,
+  ponctuation musicale, bruitages sur actions visibles) et stratégie abonnés chiffrée (§3).
+- Leçon : analyser une inspiration = image + **son** + **CTA/légende**, pas seulement l'image.
+
+---
+
+## 2026-10 — 6 nouvelles inspirations (Fabien Faro, Toprak, Mickaël Wu)
+- Livré : créateurs C–E dans `inspirations.md` (14 vidéos au total), règle 11 (look pro au tournage),
+  `outils/zone_securite.py`.
+- Découverte : Faro (144 k likes) n'a qu'une caméra, comme Mariuse. Il fait ses gros plans en
+  **marchant vers son grand-angle**, ce qui confirme la piste des micro-zooms et donne une option au tournage.
+- **Erreur trouvée sur notre démo** grâce à l'astuce de Toprak : sous-titres à y = 1480 (77 %) = dans la
+  zone des boutons Instagram. Corrigé à y = 1300 (sous le menton), démo re-rendue et vérifiée.
+- Outil : quota ElevenLabs épuisé en cours d'analyse (7 crédits restants) → faster-whisper local en secours.
+- Leçon : passer la vérification de zone de sécurité sur CHAQUE rendu, pas seulement le contenu.
+
+---
+
+## 2026-10 — Texte derrière la personne (détourage vidéo)
+- Retour de Mariuse : « on a déjà fait du détourage, ne te limite pas, essaie plusieurs façons ».
+  J'avais écrit « pas encore construit » alors que la pub Valex v2 avait un portrait détouré. Erreur d'oubli.
+- Banc d'essai sur la facecam du podcast (fond tissu à motifs, le pire cas) :
+  - rembg u2net_human_seg : perd la personne sur certaines images. ✗
+  - rembg isnet-general-use : garde parfois seulement le visage. ✗
+  - mediapipe selfie multiclass : masque flou, laisse passer le tissu (besoin de `apt install libegl1`). ✗
+  - BiRefNet portrait : très propre mais 30 s/image et saturation mémoire au 2e passage. ✗
+  - **RVM resnet50 (ONNX) : propre, cheveux OK, 0,1 s/image, stable dans le temps. ✓ retenu**
+  - RVM mobilenet : 0,05 s/image, pour les longues vidéos.
+- Livré : `outils/detourage.py`, `outils/demo_derriere.py`, `demo_texte_derriere.mp4` (10,7 s, hook du podcast).
+- Leçon : relire le journal AVANT de dire qu'une technique manque, et tester plusieurs outils.
+- Retour suivant de Mariuse : la vidéo est tournée sous un seul angle → simuler les changements de caméra
+  par micro-zooms. Fait : 3 caméras virtuelles (large/serré/gros plan), 7 plans en 10,7 s, coupes sur les
+  phrases, titre recalé sur la tête à chaque plan.
+
+---
+
+## 2026-10 — Analyse de 8 vidéos d'inspiration (MedTheDesigner, Loucash)
+- Livré : ce skill + `inspirations.md`.
+- Demande de Mariuse : des vidéos comme les vrais pros, pas du slop IA ; une compétence qui grandit.
+- **Autocritique de nos vidéos passées face à ces références** :
+  - Podcast Claude : layout identique pendant toutes les réponses (logo centré + titre + fenêtre de code)
+    → trop « gabarit ». Les pros changent de composition à chaque idée.
+  - Sous-titres karaoké jaune/corail mot par mot → plus « app auto-sous-titres » que « créateur ».
+    Les pros : 1–3 mots blancs propres, emphase par la taille ou l'italique serif.
+  - Une seule police (Poppins) → pas de contraste typographique. Il faut un duo sans serré + serif italique.
+  - Aucun plan clair : tout était sombre. Il manque l'alternance sombre/clair.
+  - Icônes SVG génériques → remplacer par de vraies captures, des logos réels, ou une DA d'illustration unique.
+  - Ce qui était bien : rythme des coupes, logo qui réagit à la voix, mix à -14 LUFS, hook placé en tête.
+- À construire : détourage de la personne (texte derrière le sujet), kit de polices, cercle loupe sur captures,
+  composant CTA « dossier + MOT ».
+
+---
+
+## 2026-10 — Légendes et hashtags par plateforme (5 vidéos)
+- Livré : `publications/legendes.html` (page avec bouton copier, compteurs de caractères et de hashtags).
+- Règles 2026 vérifiées sur le web (4 oct. 2026) :
+  - Instagram : **5 hashtags max** (limite imposée depuis déc. 2025), dans la légende, CTA en 1re ligne (~125 car. visibles).
+  - TikTok : la légende est lue par la recherche → mots-clés que les gens tapent ; 3–5 hashtags précis, pas #fyp.
+  - YouTube Shorts : titre 60–80 car. sans hashtag ; 3–5 hashtags en fin de description dont #shorts
+    (les 3 premiers s'affichent au-dessus du titre) ; liens de description NON cliquables → « vidéo associée ».
+- Chaque légende reprend le CTA « commente MOT » de la vidéo (ou en ajoute un) ; vérifier dans la timeline que
+  ce qu'on annonce est bien dans la version publiée (ex. la réponse r2 est dans la version courte du podcast).

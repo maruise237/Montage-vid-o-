@@ -11,7 +11,12 @@ Objectif de Mariuse : des vidéos qui ressemblent à celles de vrais créateurs 
 Ce fichier grandit à chaque projet. Ordre de lecture :
 1. Ce fichier (règles).
 2. `references/inspirations.md` : décorticage plan par plan des vidéos que Mariuse adore.
-3. `references/journal.md` : ce qu'on a livré, les retours de Mariuse, ce qu'on a appris.
+3. `references/apprentissages.md` : leçons de méthode qui valent pour tous les projets.
+4. `references/cas/` : projets déjà faits, un fichier par client (index dans `cas/README.md`).
+   À consulter pour un outil ou un piège connu, **jamais comme modèle à recopier**.
+
+Ce fichier ne contient que la compétence générale. Rien ici ne doit dépendre d'un client ou d'un projet précis :
+les détails de projet vont dans `references/cas/`.
 
 ## 0. RÈGLE MÈRE : choisir les techniques selon la vidéo (pas toutes, pas partout)
 
@@ -149,7 +154,7 @@ avec les coupes marquées (`references/inspirations.md`, section Son).
   - **impact grave** sur un mot géant ou un B-roll choc (Faro « habitudes » : 27 impacts).
 - Un bruitage doit coller à une action visible. Pas de bruitage sur une coupe « invisible » (punch-in).
 
-## 2ter. SON HUMAIN — règle anti-pattern IA (retour Mariuse, pubs NGUELEK PRINT, oct. 2026)
+## 2ter. SON HUMAIN — règle anti-pattern IA (retour Mariuse, oct. 2026)
 
 Mariuse : « les bruitages, effets d'apparition, tchou-tchou… sont trop génériques, on détecte que c'est monté par
 Claude ». Ce qui trahissait l'IA dans la v1 :
@@ -160,17 +165,15 @@ Claude ». Ce qui trahissait l'IA dans la v1 :
 - des clichés de bande-annonce (riser → impact avant chaque logo, carillon à la fin) ;
 - une musique synthétisée en boucle, sans structure, coupée par un fondu.
 
-Ce que font les humains (et ce qu'on fait maintenant, `boutique/son_reel.py`) :
+Ce que font les humains (outil réutilisable : `boutique/son_reel.py`) :
 1. **Son direct d'abord** : le vrai bruit de ce qu'on voit (machine, atelier, rue, papier manipulé), tiré des
    vidéos sources et synchrone avec l'image. Vérifier avant (demucs 4 pistes / transcription) que la source n'a
    pas de chanson par-dessus. C'est le son le plus « humain » et le plus propre à la marque.
-2. **Vraie musique** enregistrée, choisie pour la marque et le public (afro pour Yaoundé, guitare chaleureuse
-   pour des cadeaux), **montée sur ses temps** : les coupes tombent sur les beats du morceau (`caler()`), le début
+2. **Vraie musique** enregistrée, choisie pour la marque et le public de CE projet, **montée sur ses temps** : les coupes tombent sur les beats du morceau (`caler()`), le début
    du morceau sur la coupe qui suit le hook, et **sa vraie fin raccordée sur l'écran final** (saut à un temps
    de l'outro), jamais un fondu de sortie. Vérifier qu'elle n'a pas de chant (demucs) sous une voix.
-3. **Bruitages enregistrés** (Mixkit SFX…), **qui ont un sens pour la marque** : imprimerie = feuille qui glisse,
-   page tournée, imprimante matricielle, frappe de machine à écrire ; cadeau = interrupteur de veilleuse, trousseau
-   de clés ; rafale = vrais déclencheurs photo. Pas de « pop » ni de « whoosh » génériques.
+3. **Bruitages enregistrés** (Mixkit SFX…), **tirés du métier montré à l'écran** (le vrai bruit de l'objet ou du
+   geste), à chercher à chaque projet. Pas de « pop » ni de « whoosh » génériques.
 4. **Rares** : seulement sur une action visible qui le mérite (pas sur les étiquettes de texte, pas sur chaque
    morceau du logo). Silence = choix.
 5. **Variés** : jamais deux fois le même échantillon d'affilée, hauteur ± 3 %, gain ± 2 dB, décalage de 10–20 ms
@@ -182,17 +185,18 @@ Ce que font les humains (et ce qu'on fait maintenant, `boutique/son_reel.py`) :
    **Chaque plan rendu au nombre exact d'images** (`-frames:v`), sinon l'image dérive de plusieurs images.
 7. Contrôle : retranscrire la bande son finale et vérifier que chaque phrase finit entière.
 
-**« Surprends-moi » = changer de concept, pas d'habillage** (validé par Mariuse sur la pub 3 NGUELEK, « niveau agence ») :
-un fil narratif unique tenu de bout en bout, une DA tirée du métier du client, deux voix qui se répondent, montage
-sur les mesures, un silence avant le climax, une fin qui récapitule + appel à l'action concret.
+**« Surprends-moi » = changer de concept, pas d'habillage.** Inventer à partir de la situation (le métier du
+client, sa cible, ce qu'elle vit), pas à partir du dernier concept qui a plu. Ce qui rend un concept fort, quel
+qu'il soit : un fil tenu de bout en bout plutôt qu'un catalogue de plans, une DA qui naît du sujet, un rythme calé
+sur la musique, une respiration avant le temps fort, une fin qui sert l'action attendue.
 
 **Voix et musique générées (treg)** — quand Mariuse demande une voix off ou une musique sur mesure :
 voix `gemini-3-8-flash-tts` (Fenrir énergique, Laomedeia féminine), musique `lyria-3-5` (instrumentale, BPM, sections,
 fin franche demandés dans le prompt). La consigne de style est lue à voix haute : la couper au mot près. Détails et
-coûts : `references/journal.md` (pub 3 NGUELEK). Même règle §2ter : vérifier, monter sur les temps, son direct en plus.
+coûts : chercher « treg » dans `references/cas/`. Même règle §2ter : vérifier, monter sur les temps, son direct en plus.
 
 **Règle d'attitude : ne jamais dire « impossible » ou « pas encore construit » sans avoir essayé
-au moins 3 méthodes.** Vérifier d'abord le journal : on l'a peut-être déjà fait.
+au moins 3 méthodes.** Vérifier d'abord `references/cas/` et `apprentissages.md` : on l'a peut-être déjà fait.
 
 ## 3. Structure de script (formule virale en 4 étapes, d'après MedTheDesigner)
 
@@ -246,11 +250,13 @@ Sortir une planche contact (`planche.sh`, 1 image / 1–2 s) et vérifier :
 ## 5. Comment faire grandir ce skill
 
 À la fin de CHAQUE projet vidéo :
-- Ajouter une entrée dans `references/journal.md` (livré, retour de Mariuse, leçon).
+- Projet client ou perso → son fichier dans `references/cas/` (situation, ce qu'on a tenté, retour, pièges)
+  + une ligne dans `cas/README.md`. Les noms de clients, couleurs, voix, concepts restent LÀ, pas dans ce fichier.
+- Leçon de méthode valable partout → `references/apprentissages.md`.
 - Nouvelle vidéo d'inspiration → analyser IMAGE + SON (demucs, spectrogramme) + CTA/légende ; télécharger (`yt-dlp`), transcrire (ElevenLabs Scribe ; si quota épuisé :
   `faster-whisper` modèle `small` en local, `word_timestamps=True`), planche contact,
   mesurer coupes/mots par s/LUFS, ajouter une fiche dans `references/inspirations.md`.
-- Si une leçon devient une règle générale → la promouvoir dans §1 ou §2 ci-dessus.
+- Si une leçon d'un cas devient une règle générale → la promouvoir dans §1 ou §2, **formulée sans le client**.
 - Si une technique de §2 est construite → noter le fichier/fonction réutilisable.
 - Commit + push sur la branche de travail.
 

@@ -18,4 +18,4 @@ Ces 6 sites servent à préparer le tournage et à réussir l'étalonnage et le 
 ## Rappels
 - Vertical 9:16 et zone sûre : vérifier que la référence fonctionne recadrée.
 - Une intention par plan (§0). Le son réel et la voix humaine restent la base (§2ter).
-- Après le projet, noter dans `journal.md` ce qui a vraiment servi.
+- Après le projet, noter dans le fichier du projet (`cas/`) ce qui a vraiment servi.
