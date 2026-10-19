@@ -69,7 +69,6 @@ BRUITS = [  # (instant, son, gain dB / crête voix, durée max)
     (21.50, 166, -12, .7),             # bascule téléphonie
     (23.63, 2182, -4, .8),
     (24.86, 2299, -5, 1.2), (24.90, 1989, -10, 1.0),  # total de la journée
-    (27.25, 1606, -11, 1.5),           # le client part à moto
     (29.52, 2354, -22, .5),            # téléphone du patron : rien
     (30.41, 2300, -9, 2.0),            # « rien »
     (31.48, 2182, -14, .5), (32.20, 2114, -15, .5), (32.85, 2182, -13, .5),

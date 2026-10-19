@@ -24,7 +24,9 @@ i,.serif{font-family:Serif;font-style:italic;font-weight:400}
 .dem{position:absolute;left:80px;top:440px;width:930px;font-size:100px;font-weight:700;line-height:1.04;letter-spacing:-2px}
 .dem span{opacity:0;display:inline-block;margin-right:.22em}
 .dem i{font-size:1.12em;letter-spacing:0}
-.prod{position:absolute;left:190px;top:860px;width:700px;height:700px}
+.prod{position:absolute;left:190px;top:860px;width:700px;height:700px;display:flex;align-items:center;justify-content:center}
+.prod .ph{width:660px;height:690px;object-fit:contain;filter:drop-shadow(0 40px 40px rgba(21,23,28,.28))}
+.billet{position:absolute;width:440px;border-radius:8px;box-shadow:0 24px 50px rgba(21,23,28,.3)}
 .rep{position:absolute;left:84px;top:1660px;font-size:60px;font-weight:600;color:var(--gris)}
 .rep b{color:var(--encre);font-weight:700}
 .tampon{position:absolute;left:150px;top:1040px;width:780px;height:330px;mix-blend-mode:multiply}
@@ -48,9 +50,8 @@ i,.serif{font-family:Serif;font-style:italic;font-weight:400}
   <div class="abs big" id="h3" style="left:70px;top:690px;font-size:245px;line-height:1;white-space:nowrap">UN MOT</div>
   <div class="abs" id="h4" style="left:84px;top:1010px;font-size:76px;font-weight:600">qui te coûte</div>
   <div class="abs serif" id="h5" style="left:80px;top:1080px;font-size:250px;color:var(--rouge);line-height:1">très cher.</div>
-  <svg class="abs" id="etiq" style="left:690px;top:1380px" width="300" height="300" viewBox="0 0 300 300">
-    <g stroke="#15171C" stroke-width="8" fill="#F9E9C9"><path d="M60 40h120l80 110-120 120L40 150z" stroke-linejoin="round"/><circle cx="110" cy="85" r="16" fill="#F4EFE6"/></g>
-    <text x="150" y="190" font-family="Outfit" font-weight="800" font-size="56" fill="#D7263D" text-anchor="middle" transform="rotate(-8 150 180)">FCFA</text></svg>
+  <div class="abs" id="photo0" style="left:0;top:1360px;width:1080px;height:560px;background:url(photos/comptoir.jpg) center 38%/cover;-webkit-mask-image:linear-gradient(transparent,#000 22%)"></div>
+  <img class="billet" id="b1" src="photos/det/billet10000.png"><img class="billet" id="b2" src="photos/det/billet5000.png"><img class="billet" id="b3" src="photos/det/billet1000.png">
 </div>
 
 <!-- Scènes clients (S1..S5, S14) : construites en JS -->
@@ -73,25 +74,19 @@ i,.serif{font-family:Serif;font-style:italic;font-weight:400}
   <div class="abs big" id="tot" style="left:60px;top:390px;font-size:200px;white-space:nowrap;color:var(--rouge);font-variant-numeric:tabular-nums">−81 500 F</div>
   <div class="abs" id="t6a" style="left:84px;top:690px;font-size:72px;font-weight:700;width:920px;line-height:1.1">Chaque « y'a plus »,</div>
   <div class="abs" id="t6b" style="left:84px;top:780px;font-size:72px;font-weight:700;width:920px;line-height:1.1">c'est un client qui part <i style="font-size:96px;color:var(--rouge)">chez le voisin.</i></div>
-  <svg class="abs" style="left:0;top:1160px" width="1080" height="700" viewBox="0 0 1080 700">
-    <g stroke="#15171C" stroke-width="8" stroke-linejoin="round">
-      <rect x="70" y="200" width="400" height="380" fill="#EFE3C8"/><path d="M50 200h440l-30-90H80z" fill="#D7263D"/>
-      <rect x="130" y="330" width="130" height="250" fill="#15171C"/><rect x="300" y="300" width="120" height="120" fill="#F4EFE6"/>
-      <rect x="610" y="200" width="400" height="380" fill="#E3E8EC"/><path d="M590 200h440l-30-90H620z" fill="#6B8BA4"/>
-      <rect x="820" y="330" width="130" height="250" fill="#F4EFE6"/><rect x="660" y="300" width="120" height="120" fill="#F4EFE6"/>
-      <line x1="0" y1="580" x2="1080" y2="580"/></g>
-    <text x="270" y="680" font-family="Outfit" font-weight="700" font-size="34" text-anchor="middle" fill="#15171C" letter-spacing="3">TA BOUTIQUE</text>
-    <text x="810" y="680" font-family="Outfit" font-weight="700" font-size="34" text-anchor="middle" fill="#15171C" letter-spacing="3">LE VOISIN</text>
-    <g id="client" stroke="#15171C" stroke-width="8"><circle cx="0" cy="-200" r="38" fill="#15171C"/><path d="M-50 -150q50-30 100 0v140h-100z" fill="#E0A43A"/><path id="jg" d="M-30 -10v80M30 -10v80" stroke-width="22" stroke-linecap="round"/></g>
-  </svg>
+  <div class="abs" id="rue" style="left:60px;top:1060px;width:960px;height:800px;border-radius:36px;overflow:hidden;background:url(photos/facades.jpg) 50% 30%/cover"></div>
+  <div class="pill" id="lv" style="left:110px;top:1100px;background:var(--encre);color:#fff;font-size:30px;font-weight:700;letter-spacing:3px;padding:14px 26px">LE VOISIN</div>
+  <div class="pill" id="tb" style="left:640px;top:1100px;background:var(--rouge);color:#fff;font-size:30px;font-weight:700;letter-spacing:3px;padding:14px 26px">TA BOUTIQUE</div>
+  <img class="abs" id="client" src="photos/det/client.png" style="height:640px;top:1250px;left:0;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35))">
 </div>
 
 <!-- S7 patron au marché -->
 <div class="sc" id="s7">
-  <div class="auvent" style="left:0;top:0;width:1080px"></div>
-  <div class="abs" id="t7a" style="left:84px;top:430px;font-size:80px;font-weight:700">Et le patron,</div>
-  <div class="abs serif" id="t7b" style="left:80px;top:530px;font-size:180px;line-height:1;white-space:nowrap">au marché…</div>
-  <div class="abs big" id="t7c" style="left:70px;top:1180px;font-size:150px;line-height:1;white-space:nowrap">n'en sait</div>
+  <img class="abs" id="vid7" style="left:0;top:0;width:1080px;height:1920px;object-fit:cover">
+  <div class="abs" style="inset:0;background:linear-gradient(rgba(11,12,15,.72),rgba(11,12,15,.15) 45%,rgba(11,12,15,.8))"></div>
+  <div class="abs" id="t7a" style="left:84px;top:430px;font-size:80px;font-weight:700;color:#F4EFE6">Et le patron,</div>
+  <div class="abs serif" id="t7b" style="left:80px;top:530px;font-size:180px;line-height:1;white-space:nowrap;color:#F4EFE6">au marché…</div>
+  <div class="abs big" id="t7c" style="left:70px;top:1180px;font-size:150px;line-height:1;white-space:nowrap;color:#F4EFE6">n'en sait</div>
   <div class="abs big" id="t7d" style="left:70px;top:1360px;font-size:280px;line-height:1;color:var(--rouge)">rien.</div>
   <div class="phone" id="p7" style="left:730px;top:1080px;width:290px;height:600px;border-radius:50px;padding:12px">
     <div class="ecr" style="border-radius:40px;background:#F7F5F0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px">
@@ -160,35 +155,8 @@ const pop=(el,t,a,d=.28,dy=40)=>{const p=io(t,a,a+d);el.style.opacity=p>0?1:0;el
 const W=k=>MOTS[k]||[];
 const fmt=n=>(n<0?'−':'+')+Math.abs(Math.round(n)).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' F';
 
-// ---------- illustrations produits (trait épais, aplats) ----------
-const S='stroke="#15171C" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"';
-const PROD={
- tuyau:`<svg viewBox="0 0 700 700" width="700" height="700"><g transform="rotate(-24 350 350)" ${S}>
-   <rect x="20" y="270" width="660" height="160" rx="20" fill="#9AA6B2"/><rect x="40" y="292" width="620" height="28" rx="12" fill="#C9D2DA" stroke="none"/>
-   <ellipse cx="680" cy="350" rx="44" ry="80" fill="#9AA6B2"/><ellipse cx="680" cy="350" rx="26" ry="56" fill="#2B2F36"/>
-   <text x="330" y="395" font-family="Outfit" font-weight="800" font-size="56" fill="#15171C" stroke="none" text-anchor="middle" letter-spacing="3">PVC Ø40</text></g></svg>`,
- disj:`<svg viewBox="0 0 700 700" width="700" height="700"><g ${S}>
-   <rect x="230" y="60" width="240" height="580" rx="26" fill="#F7F6F2"/><rect x="262" y="96" width="176" height="70" rx="10" fill="#D9D6CE"/><rect x="262" y="534" width="176" height="70" rx="10" fill="#D9D6CE"/>
-   <circle cx="350" cy="131" r="22" fill="#F7F6F2"/><circle cx="350" cy="569" r="22" fill="#F7F6F2"/>
-   <rect x="300" y="250" width="100" height="160" rx="16" fill="#15171C"/><rect x="316" y="262" width="68" height="70" rx="10" fill="#E0A43A" stroke="none"/>
-   <text x="350" y="480" font-family="Outfit" font-weight="800" font-size="62" fill="#15171C" stroke="none" text-anchor="middle">C20</text></g></svg>`,
- seau:`<svg viewBox="0 0 700 700" width="700" height="700"><g ${S}>
-   <path d="M170 160q180-150 360 0" fill="none" stroke-width="14"/>
-   <path d="M140 200h420l-40 440H180z" fill="#FFFFFF"/><ellipse cx="350" cy="200" rx="210" ry="40" fill="#EDEBE6"/>
-   <rect x="160" y="330" width="380" height="170" fill="#E0A43A"/>
-   <text x="350" y="400" font-family="Outfit" font-weight="800" font-size="62" fill="#15171C" stroke="none" text-anchor="middle">BLANC</text>
-   <text x="350" y="470" font-family="Outfit" font-weight="700" font-size="50" fill="#15171C" stroke="none" text-anchor="middle">20 L</text></g></svg>`,
- riz:`<svg viewBox="0 0 700 700" width="700" height="700"><g ${S}>
-   <path d="M210 150q-90 230-40 460h360q50-230-40-460z" fill="#EADBB8"/><path d="M230 150q120 40 240 0l-20-70q-100 30-200 0z" fill="#EADBB8"/><path d="M240 160q110 30 220 0" fill="none"/>
-   <rect x="200" y="330" width="300" height="190" rx="14" fill="#F7F6F2"/><rect x="200" y="330" width="300" height="34" fill="#4E8A4B" stroke="none"/>
-   <text x="350" y="440" font-family="Outfit" font-weight="800" font-size="76" fill="#15171C" stroke="none" text-anchor="middle">RIZ</text>
-   <text x="350" y="500" font-family="Outfit" font-weight="700" font-size="44" fill="#15171C" stroke="none" text-anchor="middle">25 kg</text></g></svg>`,
- chargeur:`<svg viewBox="0 0 700 700" width="700" height="700"><g ${S}>
-   <rect x="140" y="210" width="230" height="260" rx="40" fill="#F7F6F2"/><rect x="190" y="120" width="34" height="100" rx="8" fill="#B9BDC3"/><rect x="286" y="120" width="34" height="100" rx="8" fill="#B9BDC3"/>
-   <path d="M255 470q0 150 160 120t140-200" fill="none" stroke-width="22"/><path d="M255 470q0 150 160 120t140-200" fill="none" stroke="#F7F6F2" stroke-width="8"/>
-   <rect x="520" y="240" width="70" height="150" rx="18" fill="#F7F6F2"/><rect x="537" y="180" width="36" height="66" rx="12" fill="#B9BDC3"/>
-   <text x="255" y="360" font-family="Outfit" font-weight="800" font-size="48" fill="#15171C" stroke="none" text-anchor="middle">TYPE-C</text></g></svg>`
-};
+// ---------- produits : photos détourées (photos/det) ----------
+const PROD=Object.fromEntries(['tuyau','disj','seau','riz','chargeur'].map(k=>[k,`<img src="photos/det/${k}.png" class="ph">`]));
 
 // ---------- scènes clients ----------
 const CLIENTS=[
@@ -273,7 +241,12 @@ function s0(t){
   const m=io(t,w[7][1]-.05,w[7][1]+.18);$('h3').style.opacity=m>0?1:0;$('h3').style.transform=`scale(${1.4-.4*eo(m)})`;$('h3').style.transformOrigin='0 50%';
   pop($('h4'),t,w[9][1]-.05);
   const c=io(t,w[11][1]-.05,w[11][1]+.25);$('h5').style.opacity=c>0?1:0;$('h5').style.transform=`translateX(${(1-eo(c))*-80}px)`;
-  const e=io(t,w[12][1],w[12][1]+.5);const et=$('etiq');et.style.opacity=e>0?1:0;et.style.transform=`translateY(${(1-eo(e))*-500}px) rotate(${Math.sin(t*6)*8*(1-e*.6)+10}deg)`;
+  pop($('photo0'),t,w[0][1],.5,60);
+  // billets : glissent sur le comptoir sur « très cher », puis tombent hors champ
+  [[$('b1'),580,1430,12],[$('b2'),380,1560,-9],[$('b3'),600,1660,5]].forEach(([el,x,y,r],k)=>{
+    const e=io(t,w[12][1]+k*.09,w[12][1]+k*.09+.45);const f=io(t,3.85,4.2);el.style.opacity=e>0?1:0;
+    el.style.left=x+'px';el.style.top=y+'px';
+    el.style.transform=`translate(${(1-eo(e))*800}px,${(1-eo(e))*-120+f*700}px) rotate(${r+(1-e)*-50+Math.sin(t*5+k)*3+f*30*(k%2?1:-1)}deg)`;});
   // lent zoom de l'ensemble
   $('s0').style.transform=`scale(${1+t*.01})`;
 }
@@ -282,13 +255,19 @@ function s6(t){
   const on=t>=24.85&&t<28.5;show($('s6'),on);if(!on)return;$('fond').style.background='#F4EFE6';
   const a=io(t,24.85,25.1);$('tot').style.transform=`scale(${1.25-.25*eo(a)})`;$('tot').style.transformOrigin='0 50%';$('tot').style.opacity=a>0?1:0;
   pop($('t6a'),t,25.25);pop($('t6b'),t,26.8);
-  const m=eo(io(t,27.1,28.25));const x=270+m*540;
-  $('client').setAttribute('transform',`translate(${x},${560+Math.abs(Math.sin(t*14))*-12})`);
-  $('jg').setAttribute('d',`M-30 -10l${Math.sin(t*14)*30} 80M30 -10l${-Math.sin(t*14)*30} 80`);
+  pop($('rue'),t,25.3,.4,80);pop($('lv'),t,25.6);pop($('tb'),t,25.75);
+  // le client sort de ta boutique (droite) et file chez le voisin (gauche)
+  const m=eo(io(t,27.1,28.3));const pas=t>27.1&&t<28.3?Math.abs(Math.sin(t*11))*-14:0;
+  const cli=$('client');cli.style.opacity=io(t,25.9,26.2);
+  cli.style.transform=`translate(${700-m*560}px,${pas}px) scaleX(${t>27.05?-1:1})`;
 }
 // ---------- S7 ----------
 function s7(t){
   const on=t>=28.5&&t<31.48;show($('s7'),on);if(!on)return;$('fond').style.background='#EFE3C8';
+  // plan drone (images extraites à 30 i/s) : parapluies, puis taxis jaunes sur « n'en sait rien »
+  const v=t<30.4?'a'+String(1+Math.min(57,Math.floor((t-28.5)*30))).padStart(3,'0'):'b'+String(1+Math.min(33,Math.floor((t-30.4)*30))).padStart(3,'0');
+  const src=`photos/marche/${v}.jpg`;if(!$('vid7').src.endsWith(src))$('vid7').src=src;
+  $('vid7').style.transform=`scale(${1.04+.05*io(t,28.5,31.48)})`;
   pop($('t7a'),t,28.57);pop($('t7b'),t,29.29,.35,60);pop($('p7'),t,29.5,.35,120);
   pop($('t7c'),t,30.15,.2);const r=io(t,30.41,30.6);$('t7d').style.opacity=r>0?1:0;$('t7d').style.transform=`scale(${1.5-.5*eo(r)})`;$('t7d').style.transformOrigin='0 50%';
 }

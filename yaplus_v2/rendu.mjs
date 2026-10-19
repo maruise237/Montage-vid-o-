@@ -12,7 +12,7 @@ async function travail(k) {
   await p.goto(url); await p.evaluate(() => document.fonts.ready);
   await p.evaluate(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))));
   for (let i = k; i < temps.length; i += N) {
-    await p.evaluate(t => window.render(t), temps[i]);
+    await p.evaluate(async t => { window.render(t); await Promise.all([...document.images].map(i => i.decode().catch(() => {}))); }, temps[i]);
     const nom = inst.length ? `c${String(i).padStart(2, '0')}.jpg` : `${String(i).padStart(5, '0')}.jpg`;
     await p.screenshot({ path: `${out}/${nom}`, type: 'jpeg', quality: 92 });
   }
