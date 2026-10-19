@@ -244,3 +244,33 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   avec une grande zone ; (2) un élément `#tel` sans `position:absolute` → `left:50%` ignoré, téléphone hors cadre ;
   (3) TTS criée : « Patron ! » entendu « Tintron » par 2 modèles whisper → regénéré avec « en articulant bien chaque mot ».
   Toujours retranscrire la bande finale (small + medium sur les passages douteux).
+
+### Retour de Mariuse sur le lancement Yaplus v1
+- « Tu as bien travaillé, mais ta vidéo manque de bruitages comparée à la référence. » → un lancement motion design
+  vit de ses bruitages (la réf. Luminovo en a un sur presque chaque mouvement). 3 clics, c'était trop peu.
+- En cours de v2 : « ne te focus pas que sur les boutiques tech, prends un secteur où le problème est pire, qui a les
+  moyens et est prêt à payer un petit outil régulièrement ». → toujours se demander QUI paie, pas seulement qui utilise.
+
+## Yaplus v2 « Y'a plus. » (58,6 s, 9:16), concept libre (« surprends-moi »)
+- Concept : « le mot qui coûte le plus cher dans ta boutique ». Des clients demandent, Paul répond « y'a plus »,
+  un tampon rouge s'abat sur le produit et un compteur de ventes perdues monte (−81 500 F). Puis un client part chez
+  le voisin, le patron au marché n'en sait rien, un silence, et « on a fait de ce mot un bouton ». Drop, puis l'appli :
+  Paul tape, le patron voit et coche, le plombier revient et on lui répond « Y'en a ! » (tampon bleu, +18 000 F).
+- Cible choisie : la **quincaillerie** (des milliers de petites références, artisans pressés qui vont chez le voisin,
+  patron souvent chez les grossistes, paniers élevés). L'appli a déjà le modèle « quincaillerie ». Flashs alimentation
+  et téléphonie pour montrer que tout commerce vit la même chose.
+- DA : papier crème + encre noire, illustrations produits au trait épais (tuyau PVC, disjoncteur, seau, sac de riz,
+  chargeur) dessinées en SVG, tampon avec texture d'encre (filtre SVG feTurbulence, `<defs>` dans un svg 0×0 hors des
+  scènes masquées), rouge = « y'a plus », bleu Yaplus = solution. Vrais écrans en mode **clair** pour coller au papier.
+- Écrans : `demo.ts` de Yaplus modifié EN LOCAL (catalogue quincaillerie, boutique « Quincaillerie Ndokoti », session
+  « Paul ») puis restauré avec `git checkout` ; `capture.mjs` (tap sur « Tuyau PVC 40 », toast, À racheter, 3 coches).
+- treg (~0,11 $) : musique Lyria (makossa/afro-pop, intro clairsemée, basse qui entre, roulement, silence, drop, fin
+  franche ; elle a fait 10 s de silence au lieu d'une mesure → on le raccourcit au montage) ; 8 voix : narrateur
+  Sadachbia, Paul = Puck, plombier = Charon, électricien = Fenrir, clientes = Aoede et Leda. Clips coupés sur l'énergie
+  (`decoupe.py`), mots replacés en temps vidéo (`mots_video.js`) pour caler texte et tampons sur la syllabe « plus ».
+- Son : **46 bruitages Mixkit enregistrés** + ambiances rue/marché sous les scènes, chacun sur une action visible
+  (tampon = bois + coup sourd superposés, pièces au compteur, levier du disjoncteur, moto du client qui part, sonnette de
+  comptoir sur le logo, coches, frappe de l'URL), hauteur ±3 %, gain ±1,5 dB, ±12 ms. Les liens envato (« Stamp »,
+  « Cash register ») sont des aperçus filigranés : ne garder que `assets.mixkit.co`.
+- Pièges : (1) grain papier qui bouge à chaque image → HD de 260 Mo ; grain FIXE → 42 Mo (et plus réaliste) ;
+  (2) voix TTS très pointues : loudnorm linéaire bloqué à -15,7 → compresseur doux + limiteur → -14,2 LUFS.
