@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:H;font-weight:500;src:url(assets/HankenGrotesk-Medium.ttf)}
+@font-face{font-family:H;font-weight:600;src:url(assets/HankenGrotesk-SemiBold.ttf)}
+@font-face{font-family:H;font-weight:700;src:url(assets/HankenGrotesk-Bold.ttf)}
+@font-face{font-family:I;src:url(../fonts/InstrumentSerif-Italic.ttf)}
+:root{--ink:#0f1713;--creme:#f4f1ea;--vert:#1e7a4f;--vertf:#14432f;--clair:#8fe3b4}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#scene{position:absolute;inset:0;overflow:hidden;font-family:H;font-weight:700;color:#fff}
+.abs{position:absolute}
+.i{font-family:I;font-weight:400}
+.c{left:0;right:0;text-align:center}
+/* téléphone */
+#tel{position:absolute;left:224px;top:470px;width:632px;height:1330px;border-radius:84px;background:#0b0d0c;padding:16px;
+  box-shadow:0 40px 90px rgba(0,0,0,.35),inset 0 0 0 3px #2a2f2c;transform-origin:50% 40%}
+#ecr{position:relative;width:600px;height:1298px;border-radius:68px;overflow:hidden;background:#000}
+#ecr img.prise{position:absolute;left:0;top:0;width:600px;height:1298px}
+#zoom{position:absolute;inset:0;transform-origin:0 0}
+#verrou{position:absolute;inset:0}
+#verrou .fond{position:absolute;inset:-40px;background:url(photos/motos_nuit.jpg) center/cover;filter:blur(14px) brightness(.55)}
+#heure{position:absolute;top:150px;left:0;right:0;text-align:center;font-size:150px;font-weight:600;color:#fff;letter-spacing:-4px}
+#date{position:absolute;top:340px;left:0;right:0;text-align:center;font-size:30px;font-weight:500;color:#e8ece9}
+.notif{position:absolute;left:14px;right:14px;height:196px;border-radius:30px;background:rgba(250,250,248,.96);color:#111;padding:20px 22px;
+  display:flex;gap:18px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.notif img{width:64px;height:64px;border-radius:15px}
+.notif .a{font-size:25px;font-weight:500;color:#5b625e}
+.notif .t{font-size:29px;font-weight:700;margin-top:4px;line-height:1.15;width:470px}
+.notif .b{font-size:27px;font-weight:500;margin-top:4px;color:#2b302d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:470px}
+.onde{position:absolute;border-radius:50%;border:5px solid #fff;pointer-events:none}
+.doigt{position:absolute;width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.55);border:3px solid rgba(20,67,47,.9)}
+/* tableau */
+#tab{left:70px;top:640px;width:940px;background:#fff;border-radius:22px;overflow:hidden;color:#222;box-shadow:0 18px 50px rgba(0,0,0,.12)}
+#tab .l{display:grid;grid-template-columns:230px 260px 270px 180px;font-size:25px;font-weight:500;height:62px;align-items:center;border-bottom:1px solid #e4e6e8;padding-left:22px}
+#tab .h{background:#eef0f2;font-weight:700;color:#55595d}
+#mails{left:120px;top:1240px;width:840px;background:#fff;border-radius:22px;color:#222;box-shadow:0 24px 60px rgba(0,0,0,.18);overflow:hidden}
+#mails .m{height:92px;border-bottom:1px solid #eceef0;padding:16px 28px;font-size:25px}
+#mails .m b{display:block;font-size:26px}
+#mails .m span{color:#6b7075;font-weight:500}
+.bulle{position:absolute;right:80px;max-width:900px;background:#dfe9e2;color:#1b2420;border-radius:30px 30px 8px 30px;padding:30px 38px 22px;font-size:48px;font-weight:500;line-height:1.2}
+.bulle .h{display:block;text-align:right;font-size:30px;color:#77807b;margin-top:6px}
+/* message WhatsApp */
+#wa{left:90px;top:520px;width:900px;background:#fff;border-radius:8px 34px 34px 34px;color:#111b21;padding:34px 40px 26px;font-size:36px;font-weight:500;line-height:1.38;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+#wa b{font-weight:700}
+#wa .pied{font-style:italic;color:#54656f}
+#wa .heure{text-align:right;font-size:24px;color:#8696a0}
+/* CTA */
+#url{left:90px;right:90px;top:820px;height:150px;border-radius:75px;background:#fff;color:var(--vertf);font-size:62px;display:flex;align-items:center;justify-content:center;letter-spacing:-1px}
+#com{left:90px;right:90px;top:1290px;height:130px;border-radius:65px;background:rgba(255,255,255,.12);border:3px solid rgba(255,255,255,.35);display:flex;align-items:center;padding:0 46px;font-size:54px;font-weight:600;color:rgba(255,255,255,.55)}
+#com .mot{color:#ffd54a;font-weight:700;letter-spacing:2px}
+.car{display:inline-block;width:5px;height:58px;background:#ffd54a;margin-left:6px;vertical-align:middle}
+</style></head>
+<body><div id="scene">
+  <div id="fond" class="abs" style="inset:0"></div>
+
+  <!-- 1-2 : le post marche -->
+  <div id="s1" class="abs" style="inset:0">
+    <div id="s1a" class="abs" style="left:96px;top:600px;font-size:160px;letter-spacing:-5px;line-height:1">Ton post</div>
+    <img id="s1tk" class="abs" src="../assets/logos/tiktok.png" style="left:780px;top:560px;width:150px;height:150px;background:#fff;border-radius:34px;padding:22px">
+    <div id="s1b" class="abs i" style="left:90px;top:760px;font-size:230px;color:var(--clair);line-height:1">marche.</div>
+    <div id="s1s" class="abs" style="left:100px;top:1010px;height:12px;border-radius:6px;background:var(--clair)"></div>
+  </div>
+  <div id="s2" class="abs" style="inset:0">
+    <div id="s2m" class="abs c" style="top:560px;font-size:150px;letter-spacing:-4px">Ils <span class="i" style="color:var(--clair);font-size:180px">cliquent</span></div>
+    <div id="s2p" class="abs" style="left:150px;width:780px;top:900px;height:150px;border-radius:75px;background:#fff;color:var(--ink);font-size:56px;display:flex;align-items:center;justify-content:center;gap:22px">
+      <span style="font-size:60px">🔗</span> lien d'inscription</div>
+    <div id="s2o"></div>
+  </div>
+
+  <!-- 3 : Google Forms, tableau, mails -->
+  <div id="s3" class="abs" style="inset:0;color:#1c2125">
+    <div id="s3t" class="abs" style="left:70px;top:330px;display:flex;align-items:center;gap:30px;font-size:96px;letter-spacing:-3px">
+      <img src="../assets/logos/googleforms.png" style="width:130px;height:130px"> Google Forms</div>
+    <div id="s3x" class="abs" style="left:74px;top:500px;font-size:46px;font-weight:500;color:#5c6268">les inscriptions tombent…</div>
+    <div id="tab" class="abs"></div>
+    <div id="mails" class="abs"></div>
+  </div>
+
+  <!-- 4 : le soir, recopier -->
+  <div id="s4" class="abs" style="inset:0;color:#1c2125">
+    <div id="s4h" class="abs c" style="top:330px;font-size:250px;letter-spacing:-8px;color:#2a3138">21:47</div>
+    <div id="s4s" class="abs c i" style="top:610px;font-size:110px;color:#5c6268">le soir</div>
+    <div id="s4r" class="abs c" style="top:860px;font-size:58px;font-weight:600;color:#5c6268">tu recopies les numéros…</div>
+    <div id="s4n" class="abs" style="left:110px;right:110px;height:640px;top:980px"></div>
+  </div>
+
+  <!-- 5 : pas de réponse -->
+  <div id="s5" class="abs" style="inset:0;color:#1c2125">
+    <div id="s5b"></div>
+    <div id="s5m" class="abs c" style="top:1360px;font-size:104px;letter-spacing:-3px;line-height:1.05">beaucoup<br><span class="i" style="font-size:150px;color:#7c858c">ne répondent plus.</span></div>
+  </div>
+
+  <!-- titres au-dessus du téléphone -->
+  <div id="haut" class="abs" style="left:60px;right:60px;top:110px;height:340px;color:var(--ink)"></div>
+
+  <!-- téléphone -->
+  <div id="tel"><div id="ecr">
+    <div id="zoom">
+      <div id="verrou"><div class="fond"></div><div id="heure">10:14</div><div id="date">lundi 19 octobre</div><div id="notifs"></div></div>
+      <img id="prise" class="prise">
+      <div id="tap"></div>
+    </div>
+  </div></div>
+
+  <!-- 10 : message WhatsApp -->
+  <div id="s10" class="abs" style="inset:0;color:#111b21">
+    <div id="s10t" class="abs" style="left:90px;top:190px;display:flex;align-items:center;gap:26px;font-size:70px;letter-spacing:-2px;line-height:1.05">
+      <img src="../assets/logos/whatsapp.png" style="width:120px;height:120px"><div>Directement dans<br>ta discussion</div></div>
+    <div id="wa" class="abs"></div>
+    <div id="s10m" class="abs i" style="left:90px;top:1500px;font-size:150px;color:var(--vert);line-height:1">déjà écrites.</div>
+  </div>
+
+  <!-- 13-15 : appli + CTA -->
+  <div id="s13" class="abs" style="inset:0">
+    <img id="ico" class="abs" src="assets/icone.png" style="border-radius:22%">
+    <div id="s13n" class="abs c" style="top:1080px;font-size:130px;letter-spacing:-4px">KamForms</div>
+    <div id="s13a" class="abs c" style="top:1240px;font-size:60px;font-weight:500;color:#cfe9da">maintenant une <span class="i" style="font-size:120px;color:var(--clair)">application</span></div>
+    <div id="url" class="abs"></div>
+    <div id="andr" class="abs c" style="top:1000px;font-size:40px;font-weight:500;color:#cfe9da">Android · gratuit pour commencer</div>
+    <div id="s15t" class="abs" style="left:100px;top:1200px;font-size:44px;font-weight:600;color:#cfe9da">ou commente</div>
+    <div id="com" class="abs"></div>
+    <div id="s15e" class="abs c" style="top:1470px;font-size:48px;font-weight:500;color:#cfe9da">et je t'envoie le lien</div>
+  </div>
+</div>
+<script src="prises.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const io = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = x => 1 - Math.pow(1 - x, 3);
+const back = x => { const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2) };
+const prog = (t, a, d) => cl((t - a) / d);
+function vis(el, on) { el.style.display = on ? '' : 'none' }
+function pop(el, t, a, d = .28, from = .6) { const p = prog(t, a, d); el.style.opacity = cl(p * 3); el.style.transform = `scale(${from + (1 - from) * back(p)})`; return p }
+function monte(el, t, a, d = .35, dy = 60) { const p = out(prog(t, a, d)); el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; return p }
+function lerpK(K, t) { // K : [[t, {x,y,s}], ...]
+  if (t <= K[0][0]) return K[0][1];
+  for (let i = 1; i < K.length; i++) if (t <= K[i][0]) { const [a, A] = K[i - 1], [b, B] = K[i]; const p = io((t - a) / (b - a)); const r = {}; for (const k in A) r[k] = A[k] + (B[k] - A[k]) * p; return r }
+  return K.at(-1)[1];
+}
+function image(nom, tt) { const L = PRISES[nom]; let f = L[0][1]; for (const [t, x] of L) { if (t <= tt) f = x; else break } return `prises/${nom}/${f}` }
+function carte(K, t) { // temps vidéo → temps de prise, par morceaux linéaires
+  if (t <= K[0][0]) return K[0][1];
+  for (let i = 1; i < K.length; i++) if (t <= K[i][0]) { const [a, A] = K[i - 1], [b, B] = K[i]; return A + (B - A) * (t - a) / (b - a) }
+  return K.at(-1)[1];
+}
+
+// --- contenus fixes
+const GENS = [['Grâce Nkolo', '+237 691 24 58 03', 'Yaoundé'], ['Koffi Mensah', '+225 07 48 21 65 90', 'Abidjan'], ['Aïcha Ndiaye', '+221 77 512 40 18', 'Dakar'],
+  ['Brice Tchoupo', '+237 677 80 13 42', 'Douala'], ['Sandrine Mvondo', '+237 655 07 92 61', 'Douala'], ['Yves Ondoa', '+241 66 30 75 12', 'Libreville'],
+  ['Carine Abena', '+237 699 41 20 87', 'Yaoundé'], ['Moussa Diop', '+221 76 230 18 44', 'Thiès']];
+const HEURES = ['13:02', '13:05', '13:11', '13:20', '13:26', '13:40', '13:52', '14:07'];
+$('tab').innerHTML = `<div class="l h"><div>Horodateur</div><div>Nom</div><div>Téléphone</div><div>Ville</div></div>` +
+  GENS.map((g, i) => `<div class="l r"><div>19/10 ${HEURES[i]}</div><div>${g[0]}</div><div>${g[1]}</div><div>${g[2]}</div></div>`).join('');
+$('mails').innerHTML = [0, 1, 2, 3].map(i => `<div class="m"><b>Masterclass : 1 nouvelle réponse</b><span>Formulaires · ${HEURES[7 - i]}</span></div>`).join('');
+$('s4n').innerHTML = [0, 1, 2].map(i => `<div class="abs num" style="left:0;right:0;top:${i * 200}px;height:160px;border-radius:30px;background:#fff;display:flex;align-items:center;padding:0 46px;font-size:70px;font-weight:600;color:#1c2125;letter-spacing:1px"></div>`).join('');
+$('s5b').innerHTML = ['Grâce', 'Koffi', 'Aïcha'].map((n, i) => `<div class="bulle" style="top:${330 + i * 300}px">Bonjour ${n}, c'est pour la masterclass 🙂<span class="h">21:52 ✓</span></div>`).join('');
+const NOTIFS = [['#35', 'Aïcha Ndiaye', '+221 77 512 40 18', 14.36], ['#36', 'Koffi Mensah', '+225 07 48 21 65 90', 16.04], ['#37', 'Grâce Nkolo', '+237 691 24 58 03', 16.75]];
+$('notifs').innerHTML = NOTIFS.map(([n, nom, tel]) => `<div class="notif"><img src="assets/icone.png"><div><div class="a">KamForms · maintenant</div>
+  <div class="t">Nouvelle réponse · Masterclass : vendre sur TikTok</div><div class="b">${n} · ${nom} · ${tel}</div></div></div>`).join('');
+const WA = ['📋 <b>Masterclass : vendre sur TikTok</b>', 'Réponse n°37', '&nbsp;', '<b>Nom complet</b> : Grâce Nkolo', '<b>Téléphone WhatsApp</b> : +237 691 24 58 03',
+  '<b>Ville</b> : Yaoundé', '<b>Ton niveau</b> : Je débute', '<b>Session</b> : Samedi 10 h', '&nbsp;', '<span class="pied">Envoyé via Kamforms</span>'];
+$('wa').innerHTML = WA.map(l => `<div class="wl">${l}</div>`).join('') + '<div class="heure">10:21</div>';
+const URL = 'kamforms.com/telecharger';
+
+// titres du haut (scènes téléphone)
+const HAUT = [
+  [14.5, 17.6, `<div style="display:flex;align-items:center;gap:28px;font-size:104px;letter-spacing:-3px"><img src="assets/icone.png" style="width:120px;height:120px;border-radius:26px">KamForms</div>
+     <div class="sous" style="font-size:52px;font-weight:600;margin-top:26px;color:#3b4a42">ça sonne à <span class="i" style="font-size:84px;color:var(--vert)">chaque</span> inscription</div>`],
+  [17.6, 20.5, `<div style="font-size:96px;letter-spacing:-3px">Tu ouvres.</div><div class="sous" style="font-size:58px;font-weight:600;margin-top:20px;color:#3b4a42">WhatsApp <span style="color:#9aa39e">ou</span> Appeler</div>`],
+  [20.5, 22.5, `<div style="font-size:64px;font-weight:600;color:#3b4a42">pendant qu'elle a encore</div><div style="font-size:100px;letter-spacing:-3px;margin-top:6px">ton post <span class="i" style="font-size:150px;color:var(--vert)">en tête.</span></div>`],
+  [22.5, 24.62, `<div style="font-size:92px;letter-spacing:-3px">Option WhatsApp</div><div class="sous" style="display:inline-block;margin-top:24px;font-size:42px;font-weight:600;color:var(--vertf);background:#d9efe2;border-radius:40px;padding:14px 30px">tu l'actives… ou tu la coupes</div>`],
+  [28.75, 31.6, `<div style="display:flex;align-items:center;gap:24px;font-size:84px;letter-spacing:-3px"><img src="../assets/logos/googleforms.png" style="width:110px;height:110px">Ton Google Form ?</div>
+     <div class="sous" style="font-size:66px;margin-top:22px">Colle le lien. <span class="i" style="font-size:100px;color:var(--vert)">Importé.</span></div>`],
+  [31.6, 34.85, `<div style="font-size:84px;letter-spacing:-3px">Décris-le en <span class="i" style="font-size:124px;color:var(--vert)">une phrase.</span></div>
+     <div class="sous" style="font-size:56px;font-weight:600;margin-top:16px;color:#3b4a42">l'IA prépare les questions</div>`],
+];
+$('haut').innerHTML = HAUT.map((h, i) => `<div class="abs hb" style="inset:0">${h[2]}</div>`).join('');
+const SOUS = [16.5, 19.07, null, 22.9, 29.84, 33.08]; // apparition de la 2e ligne
+
+window.render = function (t) {
+  // fonds
+  const F = t < 4.5 ? '#0f1713' : t < 13.95 ? '#e6e8ea' : t < 14.3 ? '#000' : t < 24.62 ? 'var(--creme)' : t < 28.75 ? '#efe7dc' : t < 34.85 ? 'var(--creme)' : 'var(--vertf)';
+  $('fond').style.background = F;
+
+  // 1
+  vis($('s1'), t < 2.35);
+  if (t < 2.35) {
+    monte($('s1a'), t, 0.1, .3); pop($('s1tk'), t, .38, .3, .3); monte($('s1b'), t, 1.45, .3, 80);
+    $('s1s').style.width = 760 * out(prog(t, 1.7, .4)) + 'px';
+  }
+  // 2
+  vis($('s2'), t >= 2.35 && t < 4.5);
+  if (t >= 2.35 && t < 4.5) {
+    pop($('s2p'), t, 2.38, .3, .8); monte($('s2m'), t, 2.75, .25, 50);
+    const taps = [2.85, 3.12, 3.34, 3.5, 3.63, 3.74, 3.84, 3.93, 4.0, 4.07];
+    let h = '';
+    taps.forEach((a, i) => {
+      if (t < a) return; const p = prog(t, a, .5); if (p >= 1) return;
+      const x = 260 + (i * 137) % 560, y = 975;
+      const r = 40 + p * 120;
+      h += `<div class="onde" style="left:${x - r}px;top:${y - r}px;width:${2 * r}px;height:${2 * r}px;opacity:${1 - p};border-color:var(--clair)"></div>`;
+      h += `<div class="abs" style="left:${x - 30}px;top:${y - 120 - p * 140}px;font-size:48px;color:var(--clair);opacity:${1 - p}">+1</div>`;
+    });
+    $('s2o').innerHTML = h;
+    const sc = 1 + .025 * Math.max(0, ...taps.map(a => t >= a ? 1 - prog(t, a, .15) : 0));
+    $('s2p').style.transform = `scale(${sc})`;
+  }
+  // 3
+  vis($('s3'), t >= 4.5 && t < 8.5);
+  if (t >= 4.5 && t < 8.5) {
+    monte($('s3t'), t, 4.62, .3, 40); monte($('s3x'), t, 5.8, .3, 30);
+    const tab = $('tab'); tab.style.opacity = cl((t - 6.2) / .2);
+    [...tab.querySelectorAll('.r')].forEach((r, i) => { const p = out(prog(t, 6.35 + i * .17, .22)); r.style.opacity = p; r.style.transform = `translateY(${(1 - p) * -30}px)` });
+    const m = monte($('mails'), t, 7.9, .3, 120);
+  }
+  // 4
+  vis($('s4'), t >= 8.5 && t < 11.65);
+  if (t >= 8.5 && t < 11.65) {
+    pop($('s4h'), t, 8.5, .3, .85); monte($('s4s'), t, 8.95, .3, 30); monte($('s4r'), t, 9.85, .25, 30);
+    const nums = [...$('s4n').querySelectorAll('.num')];
+    const tels = [GENS[0][1], GENS[1][1], GENS[2][1]];
+    nums.forEach((el, i) => {
+      const a = 9.95 + i * .56, p = prog(t, a, .5);
+      el.style.opacity = t >= a ? 1 : 0;
+      const n = Math.round(p * tels[i].length);
+      el.innerHTML = tels[i].slice(0, n) + (p < 1 ? '<span style="display:inline-block;width:5px;height:70px;background:#1e7a4f;margin-left:6px"></span>' : ' <span style="font-size:40px;color:#9aa39e;margin-left:auto">copié</span>');
+    });
+  }
+  // 5
+  vis($('s5'), t >= 11.65 && t < 13.95);
+  if (t >= 11.65 && t < 13.95) {
+    [...$('s5b').children].forEach((b, i) => { const p = monte(b, t, 11.68 + i * .2, .25, 40); b.style.filter = `grayscale(${prog(t, 12.6, .6)})`; b.style.opacity = p * (1 - .45 * prog(t, 12.6, .6)) });
+    monte($('s5m'), t, 12.5, .3, 50);
+  }
+
+  // téléphone
+  const telOn = (t >= 13.95 && t < 24.62) || (t >= 28.75 && t < 34.85);
+  vis($('tel'), telOn);
+  if (telOn) {
+    const K = [[13.95, { x: 0, y: 40, s: .94 }], [14.3, { x: 0, y: 0, s: 1 }], [17.5, { x: 0, y: 0, s: 1 }],
+      [24.62, { x: 0, y: 0, s: 1 }]];
+    let ph = lerpK(K, t);
+    let rot = 0;
+    for (const a of [16.04, 16.75]) if (t >= a && t < a + .35) rot = Math.sin((t - a) * 60) * 2.2 * (1 - (t - a) / .35);
+    if (t >= 28.75) { const p = out(prog(t, 28.75, .35)); ph = { x: 0, y: 60 * (1 - p), s: 1 } }
+    $('tel').style.opacity = t < 14.3 ? cl((t - 13.95) / .25) : 1;
+    $('tel').style.transform = `translate(${ph.x}px,${ph.y}px) scale(${ph.s}) rotate(${rot}deg)`;
+
+    // contenu de l'écran
+    const verrou = t < 17.95;
+    vis($('verrou'), verrou);
+    const pr = $('prise'); let nom = null, tt = 0;
+    if (t >= 17.95 && t < 22.5) { nom = 'detail'; tt = 1 }
+    else if (t >= 22.5 && t < 24.62) { nom = 'formulaire'; tt = 99 }
+    else if (t >= 28.75 && t < 31.6) { nom = 'importer'; tt = carte([[28.75, 1.2], [29.8, 1.5], [30.4, 3.6], [31.0, 4.9], [31.6, 5.6]], t) }
+    else if (t >= 31.6) { nom = 'creer'; tt = carte([[31.6, 2.4], [32.55, 6.45], [32.8, 8.1], [32.95, 9.6], [33.45, 12.1], [33.9, 12.7], [34.85, 13.4]], t) }
+    vis(pr, !!nom);
+    if (nom) { const s = image(nom, tt); if (pr.getAttribute('src') !== s) pr.setAttribute('src', s) }
+    // notifications sur l'écran verrouillé
+    if (verrou) {
+      const ns = [...$('notifs').children];
+      const vis3 = NOTIFS.map(n => t >= n[3]);
+      const k = vis3.filter(Boolean).length;
+      ns.forEach((el, i) => {
+        if (!vis3[i]) { el.style.opacity = 0; return }
+        const rang = k - 1 - i; // la plus récente en haut
+        const p = out(prog(t, NOTIFS[i][3], .3));
+        el.style.opacity = p * (rang > 1 ? .0 : 1);
+        el.style.top = (420 + rang * 214 - (1 - p) * 60) + 'px';
+        el.style.transform = `scale(${1 - rang * .03})`;
+      });
+    }
+    // zoom et doigt
+    let Z = { s: 1, x: 0, y: 0 };
+    const tap = []; // [x, y, t0]
+    if (t >= 17.6 && t < 17.95) tap.push([300, 520, 17.78]);
+    if (t >= 17.95 && t < 22.5) {
+      Z = lerpK([[18.7, { s: 1, x: 300, y: 339 }], [19.0, { s: 1.45, x: 300, y: 339 }], [19.5, { s: 1.45, x: 300, y: 339 }], [19.75, { s: 1.45, x: 300, y: 427 }], [20.35, { s: 1.45, x: 300, y: 427 }], [20.7, { s: 1, x: 300, y: 427 }]], t);
+      tap.push([300, 339, 19.07], [300, 427, 20.0]);
+    }
+    if (t >= 22.5 && t < 24.62) { Z = lerpK([[22.6, { s: 1, x: 520, y: 252 }], [23.0, { s: 1.75, x: 520, y: 252 }]], t); tap.push([520, 252, 23.15]) }
+    $('zoom').style.transformOrigin = `${Z.x}px ${Z.y}px`; $('zoom').style.transform = `scale(${Z.s})`;
+    let h = '';
+    for (const [x, y, a] of tap) {
+      if (t < a - .25 || t > a + .55) continue;
+      const pin = t < a ? 1 - (a - t) / .25 : 1;
+      const p = prog(t, a, .5);
+      h += `<div class="doigt" style="left:${x - 32}px;top:${y - 32}px;opacity:${cl(pin) * (1 - p)};transform:scale(${t < a ? 1.2 - .2 * pin : .9})"></div>`;
+      if (t >= a) { const r = 30 + p * 90; h += `<div class="onde" style="left:${x - r}px;top:${y - r}px;width:${2 * r}px;height:${2 * r}px;opacity:${1 - p};border-color:#1e7a4f"></div>` }
+    }
+    $('tap').innerHTML = h;
+  }
+
+  // titres du haut
+  const hb = [...document.querySelectorAll('#haut .hb')];
+  HAUT.forEach(([a, b], i) => {
+    const on = t >= a && t < b; vis(hb[i], on); if (!on) return;
+    monte(hb[i], t, a, .3, 40);
+    const s = hb[i].querySelector('.sous'); if (s && SOUS[i] != null) monte(s, t, SOUS[i], .3, 30);
+  });
+
+  // 10 : message
+  vis($('s10'), t >= 24.62 && t < 28.75);
+  if (t >= 24.62 && t < 28.75) {
+    monte($('s10t'), t, 24.66, .3, 40);
+    const w = $('wa'); pop(w, t, 25.0, .3, .85); w.style.transformOrigin = '10% 0';
+    [...w.querySelectorAll('.wl')].forEach((l, i) => { l.style.opacity = i < 2 ? 1 : cl((t - (25.35 + (i - 2) * .16)) / .14) });
+    w.querySelector('.heure').style.opacity = cl((t - 26.7) / .2);
+    if (t >= 27.7) { const q = prog(t, 27.7, .5); [...w.querySelectorAll('.wl')].slice(3, 8).forEach(l => l.style.background = `rgba(37,211,102,${.18 * Math.sin(q * Math.PI)})`) }
+    monte($('s10m'), t, 27.75, .3, 50);
+  }
+
+  // 13-15
+  vis($('s13'), t >= 34.85);
+  if (t >= 34.85) {
+    const ico = $('ico');
+    const p1 = back(prog(t, 34.9, .35)), p2 = io(prog(t, 37.1, .45));
+    const taille = 340 * Math.min(1, .3 + .7 * p1) * (1 - p2) + 170 * p2;
+    const y = 640 * (1 - p2) + 330 * p2;
+    ico.style.width = ico.style.height = taille + 'px';
+    ico.style.left = (540 - taille / 2) + 'px'; ico.style.top = (y + (340 - taille) / 2 * (1 - p2)) + 'px';
+    ico.style.opacity = cl((t - 34.88) / .1);
+    const n = $('s13n'), a = $('s13a');
+    monte(n, t, 35.1, .3, 40); monte(a, t, 35.7, .3, 40);
+    if (t >= 37.1) { const q = 1 - p2; n.style.opacity = q; a.style.opacity = q }
+    // URL
+    const u = $('url'); const pu = monte(u, t, 37.6, .3, 40);
+    vis(u, t >= 37.6);
+    const nc = t < 38.0 ? 0 : t < 38.6 ? Math.round(8 * prog(t, 38.0, .5)) : t < 39.2 ? 8 + Math.round(4 * prog(t, 38.6, .4)) : 12 + Math.round(12 * prog(t, 39.2, .6));
+    u.innerHTML = `<span>${URL.slice(0, nc)}</span>` + (nc < URL.length ? '<span style="display:inline-block;width:5px;height:64px;background:#14432f;margin-left:4px"></span>' : '');
+    monte($('andr'), t, 40.0, .3, 20);
+    monte($('s15t'), t, 40.85, .3, 30);
+    const c = $('com'); monte(c, t, 40.95, .3, 40);
+    const k = Math.round(5 * prog(t, 41.5, .35));
+    c.innerHTML = k ? `<span class="mot">${'APPLI'.slice(0, k)}</span><span class="car"></span>` : 'Ajouter un commentaire…';
+    monte($('s15e'), t, 42.2, .3, 30);
+  }
+};
+window.render(0);
+</script>
+</body></html>

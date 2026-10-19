@@ -5,7 +5,7 @@ import { createServer } from 'node:http'
 import { readFile, mkdir, writeFile } from 'node:fs/promises'
 import { extname, join } from 'node:path'
 const KF = '/home/user/kamforms/mobile'
-const data = await import(KF + '/screenshots/fixtures.mjs')
+const data = await import(process.env.DONNEES ?? KF + '/screenshots/fixtures.mjs')
 const [dist, out, ...seules] = process.argv.slice(2)
 const types = { '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.ttf': 'font/ttf', '.html': 'text/html', '.json': 'application/json' }
 const server = createServer(async (req, res) => {
@@ -31,6 +31,7 @@ function api(route) {
   if (/^\/api\/forms\/[^/]+$/.test(p)) return json(data.formDetail)
   if (p === '/api/submissions') return json({ submissions: data.inbox, nextCursor: null })
   if (/^\/api\/submissions\/[^/]+$/.test(p)) return json({ ...data.submissions[0], form: { title: data.formDetail.title, schema: data.formDetail.schema } })
+  if (p === '/api/import') return json(data.imported)
   if (p === '/api/templates') return json({ templates: data.templates })
   if (p === '/api/dashboard') return json(data.homeStats)
   if (p === '/api/user') return json(data.user)
@@ -75,27 +76,21 @@ async function prise(nom, { path = '/', signedIn = true, intro = true, act }) {
   await ctx.close()
 }
 
+const ecrire = async (p, texte) => { const box = p.getByRole('textbox').last(); await box.click(); await p.keyboard.type(texte, { delay: 36 }); await p.waitForTimeout(350); await p.getByLabel('Envoyer').last().click() }
 await prise('creer', { path: '/create', act: async p => {
   await p.waitForTimeout(700); await tap(p, 'Le décrire'); await p.waitForTimeout(900)
-  const box = p.getByRole('textbox').last(); await box.click()
-  await p.keyboard.type('Prise de commande : nom, téléphone, produit, quantité, quartier de livraison', { delay: 38 })
-  await p.waitForTimeout(400); await p.getByLabel('Envoyer').last().click()
+  await ecrire(p, 'Inscription à ma masterclass vendre sur TikTok : nom, WhatsApp, ville, niveau, session samedi ou dimanche')
   await p.waitForTimeout(1500)
   if (await p.getByText('Une seule page', { exact: true }).count()) { await tap(p, 'Une seule page') }
   await p.waitForTimeout(IA + 1800); await glisse(p, 700); await p.waitForTimeout(1500)
 } })
-await prise('apercu', { path: '/', signedIn: false, intro: false, act: async p => {
-  const steps = [() => tap(p, 'Commencer'), async () => { await tap(p, 'Des commandes'); await tap(p, 'Continuer') },
-    async () => { await tap(p, 'Il manque toujours une info'); await tap(p, 'Continuer') }, () => tap(p, 'Continuer'),
-    () => tap(p, 'Préparer mon formulaire'), async () => { await tap(p, 'Mode'); await tap(p, 'Continuer'); await p.waitForTimeout(1300) }]
-  // on avance sans filmer l'utile : seule la dernière étape compte
-  for (const s of steps) { await s(); await p.waitForTimeout(450) }
-  await p.waitForTimeout(800); await tap(p, 'Voir ce que je vais recevoir'); await p.waitForTimeout(2500)
+await prise('importer', { path: '/create', act: async p => {
+  await p.waitForTimeout(700); await tap(p, 'Importer un formulaire'); await p.waitForTimeout(900)
+  await ecrire(p, 'https://forms.gle/masterclassTikTok')
+  await p.waitForTimeout(IA + 2000); await glisse(p, 700); await p.waitForTimeout(1500)
 } })
-await prise('reponses', { path: '/inbox', act: async p => { await p.waitForTimeout(900); await tap(p, 'Toutes'); await p.waitForTimeout(1600); await glisse(p, 500); await p.waitForTimeout(1200) } })
-await prise('detail', { path: '/submission/s1', act: async p => { await p.waitForTimeout(2500) } })
-await prise('formulaire', { path: '/form/f1', act: async p => { await p.waitForTimeout(1600); await glisse(p, 300); await p.waitForTimeout(1500) } })
-await prise('accueil', { path: '/', act: async p => { await p.waitForTimeout(2000); await glisse(p, 500); await p.waitForTimeout(1500) } })
-await prise('voir', { path: '/form/f1', act: async p => { await p.waitForTimeout(1200); await tap(p, 'Voir'); await p.waitForTimeout(3000); await glisse(p, 400); await p.waitForTimeout(1500) } })
+await prise('reponses', { path: '/inbox', act: async p => { await p.waitForTimeout(900); await tap(p, 'Toutes'); await p.waitForTimeout(2500) } })
+await prise('detail', { path: '/submission/s1', act: async p => { await p.waitForTimeout(3000) } })
+await prise('formulaire', { path: '/form/f1', act: async p => { await p.waitForTimeout(1500); await glisse(p, 420); await p.waitForTimeout(2000) } })
 await prise('perso', { path: '/customize/f1', act: async p => { await p.waitForTimeout(2500) } })
 await browser.close(); server.close()

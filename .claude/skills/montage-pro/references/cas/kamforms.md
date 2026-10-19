@@ -49,3 +49,24 @@
   (0,74 s) alors que la voix démarre à 0,13 s (« Tchat-dji-pi-ti » dure ~1 s). **Leçon : le point de coupe
   d'entrée se cale sur l'ÉNERGIE du signal (RMS par 50 ms), jamais sur le premier mot de whisper**, et on
   réécoute/retranscrit les 3 premières secondes du rendu avant de livrer.
+
+## Vidéo « KamForms est maintenant une application » (oct. 2026)
+- **Erreur de départ (retour de Mariuse)** : j'avais écrit l'histoire d'une vendeuse de pagnes au marché, recopiée des
+  données de démo de l'appli. Mariuse : « c'est rare qu'une femme qui vend au marché utilise Google Forms », « cherche qui
+  utilise vraiment les formulaires », « je ne dois pas toujours te dire de faire les recherches web ». Il a aussi rappelé
+  la vraie fonction : notification en temps réel dans l'appli à chaque réponse (même sans passer par WhatsApp), et la
+  redirection WhatsApp n'est qu'une **option qu'on active ou coupe**.
+- Recherche faite : Google Forms sert surtout aux enquêtes et aux **inscriptions** (formations, événements), utilisé par
+  petites structures, formateurs, associations, écoles. Cible retenue avec Mariuse : **le formateur qui remplit sa
+  masterclass via ses réseaux sociaux** (« sur les réseaux sociaux c'est comme ça que ça fonctionne »).
+- Concept : avant (Google Forms : tableau, mails, numéros recopiés le soir, inscrits refroidis) → avec KamForms
+  (notification qui sonne, WhatsApp/Appeler en un geste, option WhatsApp, import du Google Form, création en une phrase).
+  Honnêteté : Google Forms envoie aussi des emails, donc on dit « dans un tableau ou dans tes mails », pas « tu ne vois rien ».
+- Images : vraies prises de l'appli filmées par `kamforms_appli/filmer.mjs` (export web Expo + données de démo
+  `donnees.mjs`, capture CDP 2× ≈ 20 i/s ; le screencast CDP sort en 390 px, inutilisable). Prénom du compte de démo changé
+  localement dans `mobile/screenshots/mocks/clerk.tsx` le temps de l'export (non commité dans le repo kamforms).
+- Son : musique étouffée (passe-bas 420 Hz) sur le problème, ~0,45 s de silence, elle tombe pleine sur « Avec KamForms »
+  avec le **vrai son de notification de l'appli** ; vraie fin du morceau sur l'écran final.
+- treg vide (0,04 $, estimation 0,05 $) → voix via vidIQ (ElevenLabs, 14 crédits). `alimiter` : mettre `level=disabled`,
+  sinon il renormalise et le pic remonte à 0 dBFS.
+- Fichiers : `kamforms_appli/` → `KamForms_appli.mp4`, `KamForms_appli_partage.mp4`.

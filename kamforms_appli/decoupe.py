@@ -4,7 +4,7 @@ import json, numpy as np, librosa, soundfile as sf
 SR = 24000
 y, _ = librosa.load('voix/narr.wav', sr=SR)
 W = json.load(open('voix/narr.mots.json'))
-DEBUT, FIN = 13.89, 55.03          # « Il est vingt-trois heures » … « le lien. » (calés sur l'énergie)
+DEBUT, FIN = 0.03, 48.95           # « Ton post » … « le lien. » (calés sur l'énergie)
 hop = 240
 rms = librosa.feature.rms(y=y, frame_length=960, hop_length=hop)[0]
 db = 20 * np.log10(rms / rms.max() + 1e-9); q = db < -38; t = np.arange(len(db)) * hop / SR
@@ -14,16 +14,16 @@ while i < len(q):
         j = i
         while j < len(q) and q[j]: j += 1
         a, b = t[i], t[min(j, len(t) - 1)]
-        if b - a > .25 and a > DEBUT + .1 and b < FIN: gaps.append([a, b])
+        if b - a > .22 and a > DEBUT + .1 and b < FIN: gaps.append([a, b])
         i = j
     else: i += 1
 # respirations voulues : début du silence source → durée gardée
-GARDE = {14.96: .55, 16.47: .50, 19.91: .60, 22.69: .55, 24.76: .90, 31.32: .45, 36.24: .80, 39.07: .55, 45.45: .55, 48.57: .45}
-VOIX0 = 0.55  # la voix entre après le premier plan (ambiance nuit seule)
+GARDE = {4.42: .35, 13.03: .55, 15.57: .75, 32.26: .45, 39.24: .45, 42.24: .35}
+VOIX0 = 0.15
 out = []; carte = []; pos = VOIX0; src = DEBUT
 for a, b in gaps:
     a, b = float(a), float(b)
-    garde = next((v for k, v in GARDE.items() if abs(k - a) < .06), min(b - a, .32))
+    garde = next((v for k, v in GARDE.items() if abs(k - a) < .06), min(b - a, .26))
     reel = min(garde, b - a); fin = a + reel / 2
     carte.append((src, fin, pos)); out.append((pos, y[int(src * SR):int(fin * SR)]))
     pos += fin - src + (garde - reel); src = b - reel / 2
@@ -45,4 +45,4 @@ MV = [[w, v(s), v(e)] for w, s, e in W if s >= DEBUT - .1]
 json.dump({'carte': carte, 'fin_voix': total}, open('timeline.json', 'w'))
 open('mots_video.js', 'w').write('const MOTS=' + json.dumps(MV, ensure_ascii=False) + ';\n')
 print('voix montée', round(total, 2), 's')
-for w, s, e in MV: print(f'{s:6.2f} {e:6.2f} {w}')
+print(' '.join(f'{w}@{s:.2f}' for w, s, e in MV))

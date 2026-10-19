@@ -75,3 +75,11 @@ Leçons de compétence qui ne dépendent d'aucun client : analyses d'inspiration
     (les 3 premiers s'affichent au-dessus du titre) ; liens de description NON cliquables → « vidéo associée ».
 - Chaque légende reprend le CTA « commente MOT » de la vidéo (ou en ajoute un) ; vérifier dans la timeline que
   ce qu'on annonce est bien dans la version publiée (ex. la réponse r2 est dans la version courte du podcast).
+
+---
+
+## 2026-10 — Chercher la VRAIE cible avant d'écrire l'histoire (retour Mariuse, KamForms)
+- Erreur : histoire inventée à partir des données de démo d'un produit (une vendeuse au marché pour un outil de formulaires).
+- Règle : avant tout script de pub produit, **recherche web sur qui utilise réellement ce type d'outil et pour quoi faire**,
+  puis relire le code / la doc du produit pour décrire ses fonctions exactement (options facultatives = dites facultatives).
+  Ne pas attendre que Mariuse le demande. Une histoire réaliste vaut mieux qu'une histoire touchante.
