@@ -61,3 +61,20 @@
   retournement (« on a fait de ce mot un bouton ») et la même mécanique inversée à la fin (« Y'en a ! », +18 000 F).
   Mariuse précise aussitôt : **ce n'est pas une norme**. C'était juste pour CE cas (secteur, cible, mot du
   quotidien). La prochaine fois, repartir de la situation et oser autre chose (voir règle mère, SKILL.md §0).
+
+## Yaplus v3 « La machine qui manquait » (82 s, 9:16), grand public, « surprends-moi » + recherches web
+- Situation : grand public (pas seulement les quincailliers), il faut faire comprendre POURQUOI l'outil change la façon
+  de travailler. Concept volontairement différent de la v2 (pas de tampon ni de papier crème) : un **musée des
+  inventions du commerce**. Salle 1 : la caisse enregistreuse (Ritty, 1879, « savoir ce qui se vend sans être là »).
+  Salle 2 : le premier code-barres scanné (26 juin 1974, 8 h 01, chewing-gum Juicy Fruit). Chez nous : 86,6 %
+  d'informel (INS), 1 produit sur 12 en rupture et 31 % des clients qui partent (étude 2002). Phrase : « le problème
+  n'a jamais été de vendre, c'est de savoir ». Salle 3 : Yaplus. Récap des trois machines, CTA « commente YAPLUS ».
+- Preuves réelles : dessins de brevets originaux (Google Patents, domaine public, PDF → pdftoppm 300 dpi, teintés
+  papier), photo CC0 de la caisse, sources affichées en petit sous chaque chiffre. Détourage rembg de la caisse raté
+  (touches perdues) → photo entière dans un cadre doré, ce qui colle au musée.
+- treg (~0,10 $) : narratrice Gacrux (voix mûre, très expressive) en UNE prise de 85 s, resserrée à 77,8 s en
+  raccourcissant les pauses (`decoupe.py`). Piège : une pause allongée plus longue que le silence source dupliquait
+  la phrase suivante → n'ajouter que du vide au-delà du silence réel. Whisper small se trompe sur les noms (Ritzy,
+  Oio, « la formelle ») : vérifier au modèle medium avant de regénérer. Musique Lyria avec 2 mesures de silence
+  demandées : silence posé juste après « savoir », drop sur « Salle trois », 6 mesures retirées pour le coup final.
+- Mixkit : les titres suivent l'URL de prévisualisation dans le HTML (pas l'inverse).

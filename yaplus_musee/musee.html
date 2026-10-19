@@ -1,0 +1,396 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Outfit;font-weight:400;src:url(assets/outfit-400.woff)}
+@font-face{font-family:Outfit;font-weight:500;src:url(assets/outfit-500.woff)}
+@font-face{font-family:Outfit;font-weight:600;src:url(assets/outfit-600.woff)}
+@font-face{font-family:Outfit;font-weight:700;src:url(assets/outfit-700.woff)}
+@font-face{font-family:Outfit;font-weight:800;src:url(assets/outfit-800.woff)}
+@font-face{font-family:Serif;font-style:italic;src:url(assets/InstrumentSerif-Italic.ttf)}
+@font-face{font-family:SerifR;src:url(assets/InstrumentSerif-Regular.ttf)}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--mur:#14110E;--creme:#F1EADC;--papier:#ECE2CD;--encre:#34261C;--laiton:#C8B07E;--rouge:#D93A2B;--bleu:#0B7BE0;--gris:#8D8579}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--mur);font-family:Outfit;color:var(--creme)}
+#cadre{position:absolute;inset:0;overflow:hidden;background:var(--mur)}
+.sc{position:absolute;inset:0;display:none;overflow:hidden}
+.abs{position:absolute}
+i,.it{font-family:Serif;font-style:italic;font-weight:400}
+.rom{font-family:SerifR}
+.mur{background:radial-gradient(ellipse 900px 1300px at 50% 18%,#2A231C 0%,#191510 55%,#0F0D0A 100%)}
+.cone{position:absolute;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(ellipse at 50% 0%,rgba(255,226,170,.42) 0%,rgba(255,214,150,.16) 38%,rgba(255,210,140,0) 70%);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%)}
+.flaque{position:absolute;pointer-events:none;mix-blend-mode:screen;border-radius:50%;background:radial-gradient(ellipse,rgba(255,226,170,.28),rgba(255,226,170,0) 70%)}
+.plaque{position:absolute;left:80px;top:150px;font-size:30px;font-weight:600;letter-spacing:10px;color:var(--laiton)}
+.plaque:before{content:"";display:inline-block;width:70px;height:3px;background:var(--laiton);vertical-align:middle;margin-right:22px}
+.plaque.ink{color:var(--encre)} .plaque.ink:before{background:var(--encre)}
+.cartel{position:absolute;background:#F4EFE4;color:#2A2119;padding:30px 34px 32px;box-shadow:0 18px 40px rgba(0,0,0,.45);border-radius:3px}
+.cartel .t{font-family:SerifR;font-size:46px;line-height:1.05;margin-bottom:10px}
+.cartel .m{font-size:28px;font-weight:500;line-height:1.38;color:#5B5146}
+.cartel .c{margin-top:14px;padding-top:12px;border-top:2px solid #D9CFBE;font-size:31px;font-weight:600;line-height:1.3;color:#2A2119}
+.cadre-or{position:absolute;padding:16px;background:linear-gradient(135deg,#6B5530,#C9AE72 40%,#7A6238 60%,#BFA266);box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.cadre-or .in{position:relative;width:100%;height:100%;overflow:hidden;background:#0c0b09}
+.cadre-or img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.archive{position:absolute;inset:0;overflow:hidden;background:var(--papier)}
+.archive img{position:absolute;transform-origin:0 0}
+.bande{position:absolute;left:0;width:1080px;background:rgba(236,226,205,.94)}
+.phone{position:absolute;border-radius:70px;background:#0F1012;padding:15px;box-shadow:0 50px 110px rgba(0,0,0,.55),0 0 0 3px #2c2e33 inset}
+.phone .ecr{position:relative;width:100%;height:100%;border-radius:56px;overflow:hidden;background:#F7F5F0}
+.phone img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}
+.doigt{position:absolute;width:104px;height:104px;border-radius:50%;background:rgba(21,23,28,.16);border:5px solid rgba(255,255,255,.95);box-shadow:0 8px 30px rgba(0,0,0,.3);transform:translate(-50%,-50%)}
+.onde{position:absolute;border-radius:50%;border:6px solid var(--rouge);transform:translate(-50%,-50%)}
+.barre{position:absolute;height:10px;background:var(--rouge);transform-origin:0 50%;border-radius:5px}
+.src{position:absolute;left:80px;font-size:24px;font-weight:500;letter-spacing:1px;color:var(--gris)}
+.pill{position:absolute;padding:20px 34px;border-radius:60px;font-size:38px;font-weight:700}
+.full{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#grain{position:absolute;inset:-200px;background:url(assets/grain.png);opacity:.10;mix-blend-mode:overlay;pointer-events:none}
+.ph{object-fit:contain;filter:drop-shadow(0 26px 26px rgba(40,30,20,.3))}
+.slot{position:absolute;width:250px;height:300px;display:flex;align-items:center;justify-content:center}
+.slot img{max-width:220px;max-height:260px}
+.vide{position:absolute;border:5px dashed var(--rouge);border-radius:18px}
+</style></head><body><div id="cadre">
+
+<!-- A · la galerie : deux machines, une place vide -->
+<div class="sc mur" id="A">
+  <div class="abs" id="a1" style="left:80px;top:250px;font-size:58px;font-weight:600;letter-spacing:1px;color:var(--laiton)">Deux machines</div>
+  <div class="abs" id="a2" style="left:76px;top:320px;width:960px;font-size:136px;line-height:1;font-family:Serif;font-style:italic">ont changé le commerce.</div>
+  <div class="abs" id="a3" style="left:76px;top:320px;width:960px;font-size:136px;line-height:1;font-family:Serif;font-style:italic">Il en manque une.</div>
+  <div class="abs" id="a4" style="left:76px;top:320px;width:960px;font-size:136px;line-height:1;font-family:Serif;font-style:italic">Et elle est née <span style="color:var(--bleu)">ici.</span></div>
+  <div id="galA"></div>
+</div>
+
+<!-- B/C · salle 1 : le brevet de 1879 -->
+<div class="sc" id="B">
+  <div class="archive"><img id="bImg" src="photos/archives/brevet_ritty.jpg"></div>
+  <div class="abs" id="bVoile" style="inset:0;background:linear-gradient(180deg,rgba(236,226,205,.0) 40%,rgba(236,226,205,.0) 100%)"></div>
+  <div class="bande" id="bBande" style="top:1180px;height:560px"></div>
+  <div class="plaque ink" id="bPlaque" style="top:1230px">SALLE 1 · DAYTON, OHIO</div>
+  <div class="abs rom" id="b1879" style="left:60px;top:1290px;font-size:380px;line-height:1;color:var(--encre);letter-spacing:-6px">1879</div>
+  <div class="abs" id="cNom" style="left:80px;top:1240px;font-size:100px;font-weight:800;color:var(--encre);letter-spacing:-2px">James Ritty</div>
+  <div class="abs" id="cBar" style="left:84px;top:1360px;font-size:48px;font-weight:500;color:#6E5E4C">tient un bar.</div>
+  <div class="abs" id="cServent" style="left:80px;top:1460px;width:940px;font-size:84px;line-height:1.05;color:var(--encre);font-weight:700">Ses employés <i style="font-size:1.15em;color:var(--rouge)">se servent</i> dans la caisse.</div>
+</div>
+
+<!-- D · la caisse en vitrine -->
+<div class="sc mur" id="D">
+  <div class="cone" style="left:90px;top:-40px;width:900px;height:1250px"></div>
+  <div class="abs" id="d1" style="left:80px;top:200px;width:940px;font-size:66px;font-weight:600;line-height:1.1">une machine qui <i style="font-size:1.35em;color:var(--laiton)">enregistre</i></div>
+  <div class="abs" id="d2" style="left:80px;top:290px;font-size:66px;font-weight:600">chaque vente.</div>
+  <div class="cadre-or" id="dCadre" style="left:150px;top:470px;width:780px;height:705px"><div class="in"><img src="photos/cand/ritty_dial.jpg"></div></div>
+  <div class="cartel" id="dCartel" style="left:200px;top:1290px;width:780px">
+    <div class="t">Caisse enregistreuse « Ritty Dial »</div>
+    <div class="m">James et John Ritty · Dayton, Ohio<br>Brevet n° 221 360 du 4 novembre 1879<br>Reproduction, Carillon Historical Park</div>
+    <div class="c">Ce qu'elle a changé : le patron sait ce qui se vend.</div>
+  </div>
+</div>
+
+<!-- E · la thèse -->
+<div class="sc" id="E" style="background:var(--creme);color:#1B1712">
+  <div class="abs" id="e1" style="left:80px;top:560px;font-size:56px;font-weight:500;color:#7B6F60">Pour la première fois,</div>
+  <div class="abs" id="e2" style="left:76px;top:640px;font-size:150px;font-weight:800;letter-spacing:-4px;line-height:1">le patron sait</div>
+  <div class="abs" id="e3" style="left:80px;top:800px;font-size:70px;font-weight:600">ce qui se vend…</div>
+  <div class="abs" id="e4" style="left:72px;top:960px;width:960px;font-size:168px;line-height:.95"><i>même quand il n'est <span style="color:var(--rouge)">pas là.</span></i></div>
+</div>
+
+<!-- F · salle 2 : la date -->
+<div class="sc mur" id="F">
+  <div class="plaque" id="fPlaque">SALLE 2 · TROY, OHIO</div>
+  <div class="abs" id="f26" style="left:72px;top:420px;font-size:250px;line-height:1"><i>26 juin</i></div>
+  <div class="abs" id="f1974" style="left:80px;top:670px;font-size:200px;font-weight:800;letter-spacing:-6px;line-height:1;color:var(--laiton)">1974</div>
+  <div class="abs" id="fHorloge" style="left:80px;top:960px;width:920px;height:360px;display:flex;gap:24px"></div>
+  <div class="abs" id="fSuper" style="left:80px;top:1400px;width:920px;font-size:58px;font-weight:500;color:#CFC6B6">dans un supermarché de l'Ohio.</div>
+</div>
+
+<!-- G · le brevet du code-barres + le laser -->
+<div class="sc" id="G">
+  <div class="archive"><img id="gImg" src="photos/archives/brevet_woodland.jpg"></div>
+  <div class="abs" id="gLaser" style="top:0;width:6px;height:1920px;background:#ff2a1a;box-shadow:0 0 18px 6px rgba(255,40,20,.75),0 0 60px 20px rgba(255,40,20,.35)"></div>
+  <div class="bande" id="gBande" style="top:1300px;height:620px"></div>
+  <div class="abs" id="g1" style="left:80px;top:1350px;width:940px;font-size:66px;font-weight:600;color:var(--encre);line-height:1.1">un paquet de <i style="font-size:1.3em;color:var(--rouge)">chewing-gum</i><br>devant un laser.</div>
+  <div class="cartel" id="gCartel" style="left:80px;top:1250px;width:920px">
+    <div class="t">Premier code-barres scanné de l'histoire</div>
+    <div class="m">Brevet de N. J. Woodland et B. Silver, 1952<br>26 juin 1974, 8 h 01, supermarché Marsh, Troy (Ohio) :<br>un paquet de chewing-gum Wrigley's Juicy Fruit</div>
+    <div class="c">Ce qu'il a changé : le magasin sait ce qui part.</div>
+  </div>
+</div>
+
+<!-- H · ce qui part, ce qui manque -->
+<div class="sc mur" id="H">
+  <div class="abs" id="h0" style="left:80px;top:560px;font-size:56px;font-weight:500;color:#CFC6B6">Désormais, le magasin sait</div>
+  <div class="abs" id="h1" style="left:76px;top:660px;font-size:150px;font-weight:800;letter-spacing:-4px">ce qui part.</div>
+  <div class="abs" id="h2" style="left:70px;top:860px;font-size:190px;line-height:1"><i>et ce qui <span style="color:var(--rouge)">manque.</span></i></div>
+</div>
+
+<!-- I · chez nous : le marché -->
+<div class="sc" id="I">
+  <img class="full" id="iImg" src="photos/marche/a001.jpg">
+  <div class="abs" style="inset:0;background:linear-gradient(180deg,rgba(15,13,10,.72) 0%,rgba(15,13,10,.15) 40%,rgba(15,13,10,.2) 60%,rgba(15,13,10,.85) 100%)"></div>
+  <div class="abs" id="i1" style="left:80px;top:180px;font-size:120px;font-weight:800;letter-spacing:-3px">Et chez <i style="font-size:1.2em">nous ?</i></div>
+  <div class="abs" id="iPct" style="left:70px;top:1180px;font-size:300px;font-weight:800;letter-spacing:-10px;line-height:1;font-variant-numeric:tabular-nums">0 %</div>
+  <div class="abs" id="i2" style="left:80px;top:1500px;width:920px;font-size:50px;font-weight:600;line-height:1.2">des travailleurs camerounais<br>sont dans <i style="font-size:1.3em;color:var(--laiton)">l'informel.</i></div>
+  <div class="src" id="iSrc" style="top:1690px;color:#BDB4A6">Source : INS Cameroun, enquête EESI 3 (2021)</div>
+</div>
+
+<!-- J/K · le comptoir -->
+<div class="sc" id="J">
+  <img class="full" id="jImg" src="photos/comptoir.jpg" style="transform-origin:62% 30%">
+  <div class="abs" id="jVoile" style="inset:0;background:linear-gradient(180deg,rgba(15,13,10,.1) 30%,rgba(15,13,10,.88) 100%)"></div>
+  <div class="abs" id="jS" style="left:80px;top:1230px;font-size:130px;font-weight:800;letter-spacing:4px">SCANNER</div>
+  <div class="barre" id="jSb" style="left:70px;top:1300px;width:720px"></div>
+  <div class="abs" id="jC" style="left:80px;top:1420px;font-size:130px;font-weight:800;letter-spacing:4px">CAISSE</div>
+  <div class="barre" id="jCb" style="left:70px;top:1490px;width:560px"></div>
+  <div class="abs" id="k1" style="left:80px;top:1180px;width:940px;font-size:62px;font-weight:600">Ce qui manque ?</div>
+  <div class="abs" id="k2" style="left:76px;top:1270px;width:960px;font-size:120px;line-height:1"><i>dans la tête du vendeur.</i></div>
+  <div class="abs" id="k3" style="left:80px;top:1530px;width:940px;font-size:62px;font-weight:600;line-height:1.15">ou dans un <i style="font-size:1.35em;color:var(--laiton)">cahier</i><br>qui reste au comptoir.</div>
+</div>
+
+<!-- L · 1 produit sur 12 -->
+<div class="sc" id="L" style="background:var(--creme);color:#1B1712">
+  <div class="abs" id="l0" style="left:80px;top:170px;font-size:52px;font-weight:600;color:#7B6F60">Partout dans le monde,</div>
+  <div class="abs" id="lBig" style="left:76px;top:240px;white-space:nowrap;font-size:150px;font-weight:800;letter-spacing:-5px;line-height:1">1 produit <i style="font-weight:400;color:var(--rouge)">sur 12</i></div>
+  <div class="abs" id="l2" style="left:80px;top:430px;font-size:60px;font-weight:600">manque en rayon.</div>
+  <div id="etagere" class="abs" style="left:40px;top:600px;width:1000px;height:1000px"></div>
+  <div class="src" style="top:1700px;color:#8A7F70">Étude Gruen, Corsten et Bharadwaj (2002) · 71 000 clients, 29 pays</div>
+</div>
+
+<!-- M · 1 client sur 3 -->
+<div class="sc" id="M" style="background:var(--creme);color:#1B1712">
+  <div class="abs" id="mBig" style="left:76px;top:240px;white-space:nowrap;font-size:150px;font-weight:800;letter-spacing:-5px;line-height:1">1 client <i style="font-weight:400;color:var(--rouge)">sur 3</i></div>
+  <div class="abs" id="m2" style="left:80px;top:430px;font-size:60px;font-weight:600">part acheter <i style="font-size:1.3em">ailleurs.</i></div>
+  <img class="abs ph" id="mc3" src="photos/client.png" style="left:330px;top:620px;height:1040px">
+  <div class="src" style="top:1700px;color:#8A7F70">Même étude : 31 % des clients vont dans un autre magasin</div>
+</div>
+
+<!-- N · la phrase -->
+<div class="sc" id="N" style="background:#0B0A08">
+  <div class="abs" id="n0" style="left:80px;top:620px;font-size:60px;font-weight:500;color:#BDB4A6">Le problème n'a jamais été de</div>
+  <div class="abs" id="nV" style="left:72px;top:700px;font-size:190px;font-weight:800;letter-spacing:-5px">vendre.</div>
+  <div class="barre" id="nVb" style="left:66px;top:810px;width:700px;height:14px"></div>
+  <div class="abs" id="nS" style="left:72px;top:960px;width:980px;font-size:250px;line-height:1"><i>C'est de <span style="color:var(--laiton)">savoir.</span></i></div>
+</div>
+
+<!-- O/P · salle 3 -->
+<div class="sc mur" id="O">
+  <div class="cone" id="oCone" style="left:90px;top:-40px;width:900px;height:1500px"></div>
+  <div class="flaque" id="oFlaque" style="left:200px;top:1330px;width:680px;height:120px"></div>
+  <div class="plaque" id="oPlaque">SALLE 3 · YAOUNDÉ</div>
+  <div class="abs" id="o1" style="left:76px;top:210px;width:960px;font-size:104px;line-height:1"><i>la machine qui manquait.</i></div>
+  <div class="phone" id="oTel" style="transform-origin:50% 0;left:310px;top:430px;width:460px;height:995px"><div class="ecr"><img src="assets/accueil.jpg"></div></div>
+  <div class="cartel" id="oCartel" style="left:120px;top:1490px;width:840px">
+    <div class="t">Yaplus</div>
+    <div class="m">Yaoundé, 2026 · le téléphone de la boutique</div>
+    <div class="c">Ce qu'elle change : le patron sait ce qui <span style="color:var(--rouge)">manque</span>, même absent.</div>
+  </div>
+  <div class="abs" id="p1" style="left:80px;top:200px;width:940px;font-size:60px;font-weight:600;color:#CFC6B6">Pas un scanner à</div>
+  <div class="abs" id="p2" style="left:76px;top:270px;font-size:150px;font-weight:800;letter-spacing:-4px">1 000 000 F</div>
+  <div class="barre" id="p2b" style="left:66px;top:355px;width:900px;height:14px"></div>
+  <div class="abs" id="p3" style="left:76px;top:200px;width:960px;font-size:104px;line-height:1"><i>le téléphone que <span style="color:var(--laiton)">t'as déjà.</span></i></div>
+</div>
+
+<!-- Q/R · le geste -->
+<div class="sc" id="Q" style="background:var(--creme);color:#1B1712">
+  <div class="abs" id="q1" style="left:80px;top:150px;font-size:66px;font-weight:600">Ton vendeur appuie :</div>
+  <div class="abs" id="q2" style="left:76px;top:225px;font-size:150px;line-height:1"><i style="color:var(--rouge)">y'a plus.</i></div>
+  <div class="abs" id="r1" style="left:80px;top:150px;font-size:66px;font-weight:600">Toi,</div>
+  <div class="abs" id="r2" style="left:76px;top:225px;font-size:150px;line-height:1"><i>tu le sais.</i></div>
+  <div class="phone" id="qTel" style="left:250px;top:470px;width:580px;height:1255px"><div class="ecr">
+    <img id="qE1" src="assets/cat-avant.jpg"><img id="qE2" src="assets/cat-apres.jpg"><img id="qE3" src="assets/racheter.jpg">
+  </div></div>
+  <div class="doigt" id="qDoigt"></div><div class="onde" id="qOnde"></div>
+</div>
+
+<!-- S · au marché -->
+<div class="sc" id="S">
+  <img class="full" id="sImg" src="photos/marche/b001.jpg">
+  <div class="abs" style="inset:0;background:linear-gradient(180deg,rgba(15,13,10,.7) 0%,rgba(15,13,10,.1) 35%,rgba(15,13,10,.1) 60%,rgba(15,13,10,.6) 100%)"></div>
+  <div class="abs" id="s1" style="left:80px;top:170px;font-size:110px;font-weight:800;letter-spacing:-3px">Au marché,</div>
+  <div class="abs" id="s2" style="left:76px;top:290px;font-size:120px;line-height:1"><i>chez le grossiste.</i></div>
+  <div class="phone" id="sTel" style="left:560px;top:820px;width:420px;height:910px"><div class="ecr"><img src="assets/coche2.jpg"></div></div>
+  <div class="pill" id="sPill" style="left:80px;top:1560px;background:#F4EFE4;color:#1B1712">même sans réseau ✓</div>
+</div>
+
+<!-- T · la galerie complète -->
+<div class="sc mur" id="T">
+  <div class="plaque" id="tPlaque">TROIS MACHINES</div>
+  <div id="galT"></div>
+</div>
+
+<!-- U · appel à l'action -->
+<div class="sc mur" id="U">
+  <div class="cone" style="left:90px;top:-40px;width:900px;height:1300px"></div>
+  <img class="abs" id="uLogo" src="assets/logo-horizontal-on-dark.svg" style="left:290px;top:360px;width:500px">
+  <div class="abs" id="u1" style="left:80px;top:700px;width:920px;text-align:center;font-size:66px;font-weight:600">Commente</div>
+  <div class="abs" id="uChamp" style="left:110px;top:800px;width:860px;height:150px;border-radius:80px;background:#F4EFE4;color:#1B1712;display:flex;align-items:center;padding:0 50px;font-size:72px;font-weight:800;letter-spacing:4px"><span id="uTxt"></span><span id="uCurs" style="font-weight:400;color:var(--bleu)">|</span></div>
+  <div class="abs" id="u2" style="left:80px;top:1010px;width:920px;text-align:center;font-size:96px;line-height:1"><i>je t'envoie le lien.</i></div>
+  <div class="abs" id="u3" style="left:80px;top:1240px;width:920px;text-align:center;font-size:38px;font-weight:500;color:var(--gris)">yaplus-blush.vercel.app</div>
+</div>
+
+<div id="grain"></div>
+</div>
+<script src="mots_video.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const io=(t,a,b)=>cl((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3);
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const back=x=>{const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+// apparition : opacité + petite montée ; disparition optionnelle
+function pop(el,t,a,d=.3,dy=36,fin=null){const p=io(t,a,a+d);let o=p>0?eo(p):0;if(fin!==null)o*=1-io(t,fin,fin+.2);el.style.opacity=o;el.style.transform=`translateY(${(1-eo(p))*dy}px)`}
+function barre(el,t,a,d=.22){el.style.transform=`scaleX(${eo(io(t,a,a+d))})`;el.style.opacity=t>=a?1:0}
+// mot n (index dans MOTS) → début
+const M=i=>MOTS[i][1];
+
+// ---------- galerie (intro A et récap T) ----------
+function galerie(id,avecTel){
+  const X=[40,385,730],W=310,H=440,Y=860;
+  const img=['photos/cand/ritty_dial.jpg','photos/archives/brevet_woodland.jpg',avecTel?'assets/accueil.jpg':''];
+  const lab=['1879','1974',avecTel?'2026':'?'];
+  const tx=['ce qui se vend','ce qui part','ce qui manque'];
+  let h='';
+  for(let k=0;k<3;k++){
+    h+=`<div class="cone" id="${id}c${k}" style="left:${X[k]-120}px;top:200px;width:${W+240}px;height:1250px"></div>`;
+    h+=`<div class="cadre-or" id="${id}f${k}" style="left:${X[k]}px;top:${Y}px;width:${W}px;height:${H}px;${!img[k]?'background:none;box-shadow:none;border:4px dashed rgba(200,176,126,.6);padding:0':''}"><div class="in" style="${!img[k]?'background:transparent':''}">${img[k]?`<img src="${img[k]}" style="${k==1?'object-position:50% 12%':''}${k==2?';object-position:50% 0':''}">`:`<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Serif;font-style:italic;font-size:220px;color:var(--laiton)">?</div>`}</div></div>`;
+    h+=`<div class="abs" id="${id}l${k}" style="left:${X[k]}px;top:${Y+H+40}px;width:${W}px;text-align:center;font-family:SerifR;font-size:64px;color:var(--laiton)">${lab[k]}</div>`;
+    h+=`<div class="abs" id="${id}t${k}" style="left:${X[k]-10}px;top:${Y+H+130}px;width:${W+20}px;text-align:center;font-size:40px;font-weight:700;line-height:1.1;color:${k==2?'var(--creme)':'var(--creme)'}">${tx[k].replace('manque','<span style="color:var(--rouge)">manque</span>')}</div>`;
+  }
+  $(id).innerHTML=h;
+}
+galerie('galA',false);galerie('galT',true);
+function lumiere(id,k,t,a){const p=t>=a?(t<a+.06?.55:1):0; $(id+'c'+k).style.opacity=p; $(id+'f'+k).style.filter=`brightness(${.12+.88*p})`; $(id+'l'+k).style.opacity=.15+.85*p}
+
+// ---------- étagère (L) ----------
+const PRODS=['tuyau','seau','riz','chargeur','disj','tuyau','riz','seau','chargeur','disj','seau','riz'];
+$('etagere').innerHTML=PRODS.map((p,k)=>`<div class="slot" id="sl${k}" style="left:${(k%4)*250}px;top:${Math.floor(k/4)*330}px"><img class="ph" src="photos/${p}.png"></div>`).join('')+
+  `<div class="vide" id="slVide" style="left:${2*250+25}px;top:${1*330+20}px;width:200px;height:260px"></div>`+
+  [0,1,2].map(r=>`<div class="abs" style="left:0;top:${r*330+300}px;width:1000px;height:14px;background:#CDBFA6;border-radius:7px"></div>`).join('');
+
+// ---------- horloge (F) ----------
+$('fHorloge').innerHTML=['0','8',':','0','1'].map((c,k)=>c==':'?`<div style="width:60px;font-size:220px;font-weight:800;color:var(--laiton);line-height:330px;text-align:center">:</div>`:
+  `<div id="hc${k}" style="position:relative;width:190px;height:340px;border-radius:22px;background:#221D17;box-shadow:0 20px 40px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:250px;font-weight:800;color:var(--creme);font-variant-numeric:tabular-nums"><span>${c}</span><div style="position:absolute;left:0;right:0;top:169px;height:3px;background:#0F0D0A"></div></div>`).join('');
+
+const SC=['A','B','D','E','F','G','H','I','J','L','M','N','O','Q','S','T','U'];
+const FEN={A:[0,6.55],B:[6.55,14.42],D:[14.42,18.86],E:[18.86,23.38],F:[23.38,28.86],G:[28.86,34.22],H:[34.22,37.62],I:[37.62,41.62],J:[41.62,48.12],L:[48.12,52.06],M:[52.06,54.4],N:[54.4,58.85],O:[58.85,64.62],Q:[64.62,68.0],S:[68.0,70.76],T:[70.76,75.7],U:[75.7,99]};
+
+window.render=function(t){
+  for(const s of SC){$(s).style.display=(t>=FEN[s][0]&&t<FEN[s][1])?'block':'none'}
+
+  // A · galerie
+  if(t<6.55){
+    pop($('a1'),t,.45,.3); pop($('a2'),t,M(1),.35,30,M(6)-.32); pop($('a3'),t,M(6)-.1,.3,30,M(11)-.32); pop($('a4'),t,M(11),.3);
+    lumiere('galA',0,t,.55); lumiere('galA',1,t,1.05); lumiere('galA',2,t,M(10)-.1);
+    for(let k=0;k<3;k++)$('galAt'+k).style.opacity=0;
+  }
+  // B/C · brevet Ritty
+  if(t>=6.55&&t<14.42){
+    const im=$('bImg'); // plan large puis gros plan sur la rangée de touches
+    const z1=io(t,6.55,10.9), z2=eio(io(t,10.9,14.4));
+    const s=1080/1400*(1.02+.06*z1)*(1+.9*z2);
+    const fx=.5+(.45-.5)*z2, fy=.33+(.585-.33)*z2; // point visé (fraction de l'image)
+    im.style.width='1400px'; im.style.transform=`translate(${540-fx*1400*s}px,${600+140*z2-fy*2147*s}px) scale(${s})`;
+    pop($('bBande'),t,6.6,.35,60); pop($('bPlaque'),t,M(16),.3,20,10.85); pop($('b1879'),t,M(20)-.05,.35,40,10.85);
+    pop($('cNom'),t,M(21),.3,30); pop($('cBar'),t,M(23),.3,20); pop($('cServent'),t,M(26),.3,30);
+  }
+  // D · la caisse en vitrine
+  if(t>=14.42&&t<18.86){
+    pop($('d1'),t,14.45,.3,30); pop($('d2'),t,M(40),.3,20);
+    const z=io(t,14.42,18.86); $('dCadre').style.transform=`scale(${1+.05*z})`; $('dCadre').style.opacity=eo(io(t,14.42,14.8));
+    pop($('dCartel'),t,M(42),.35,50);
+  }
+  // E · thèse
+  if(t>=18.86&&t<23.38){pop($('e1'),t,M(45),.3);pop($('e2'),t,M(49),.3,40);pop($('e3'),t,M(52),.3);pop($('e4'),t,M(56),.35,40)}
+  // F · date + horloge
+  if(t>=23.38&&t<28.86){
+    pop($('fPlaque'),t,M(63),.3,20); pop($('f26'),t,M(65),.3,40); pop($('f1974'),t,M(67),.3,40);
+    $('fHorloge').style.opacity=t>=M(68)-.1?1:0;
+    ['hc0','hc1','hc3','hc4'].forEach((id,k)=>{const a=M(68)-.1+k*.07,p=io(t,a,a+.18);$(id).style.transform=`rotateX(${(1-eo(p))*90}deg)`;$(id).style.opacity=p>0?1:0});
+    pop($('fSuper'),t,M(69),.3,20);
+  }
+  // G · brevet du code-barres + laser
+  if(t>=28.86&&t<34.22){
+    const im=$('gImg'); const zo=eio(io(t,31.85,32.6));
+    const s=1080/1400*(2.6-1.6*zo); const fx=.43+(.5-.43)*zo, fy=.135+(.40-.135)*zo;
+    im.style.width='1400px'; im.style.transform=`translate(${540-fx*1400*s}px,${640-fy*2147*s}px) scale(${s+.04*io(t,28.86,31.8)})`;
+    const lp=io(t,M(85)-.02,M(85)+.42); $('gLaser').style.left=(150+lp*780)+'px'; $('gLaser').style.opacity=(lp>0&&lp<1)?1:0;
+    pop($('gBande'),t,28.9,.3,60,M(86)-.2); pop($('g1'),t,M(76)-.05,.3,30,M(86)-.2); pop($('gCartel'),t,M(86),.35,50);
+  }
+  // H
+  if(t>=34.22&&t<37.62){pop($('h0'),t,M(93),.3);pop($('h1'),t,M(98),.3,40);pop($('h2'),t,M(100)+.1,.35,40)}
+  // I · marché + 86,6 %
+  if(t>=37.62&&t<41.62){
+    const f=1+Math.min(57,Math.floor((t-37.62)*15)); $('iImg').src=`photos/marche/a${String(f).padStart(3,'0')}.jpg`;
+    pop($('i1'),t,M(104),.3,30);
+    const p=eo(io(t,M(109),M(109)+1.0)); $('iPct').textContent=(86.6*p).toFixed(1).replace('.',',')+' %'; $('iPct').style.opacity=t>=M(109)?1:0;
+    pop($('i2'),t,M(112),.3,20); pop($('iSrc'),t,M(112)+.2,.3,10);
+  }
+  // J/K · comptoir
+  if(t>=41.62&&t<48.12){
+    const z=io(t,41.62,48.12); $('jImg').style.transform=`scale(${1.04+.22*eio(io(t,43.5,46.4))+.03*z})`;
+    $('jVoile').style.opacity=1;
+    pop($('jS'),t,M(119),.25,20,43.45); barre($('jSb'),t,M(121)+.05); $('jSb').style.opacity*=t<43.45?1:0;
+    pop($('jC'),t,M(122),.25,20,43.45); barre($('jCb'),t,M(124)+.05); $('jCb').style.opacity*=t<43.45?1:0;
+    pop($('k1'),t,M(125),.3,20,46.1); pop($('k2'),t,M(133),.35,30,46.1); pop($('k3'),t,M(138),.3,30);
+  }
+  // L · étagère
+  if(t>=48.12&&t<52.06){
+    pop($('l0'),t,M(146),.3); pop($('lBig'),t,M(151),.3,40); pop($('l2'),t,M(155),.3);
+    for(let k=0;k<12;k++){const a=48.3+k*.09;const p=io(t,a,a+.25);$('sl'+k).style.opacity=p;$('sl'+k).style.transform=`translateY(${(1-eo(p))*40}px)`}
+    const m=io(t,M(155),M(155)+.3); $('sl6').style.opacity=Math.min(+$('sl6').style.opacity,1-m); $('slVide').style.opacity=m;
+  }
+  // M · trois clients
+  if(t>=52.06&&t<54.4){
+    pop($('mBig'),t,52.1,.3,40); pop($('m2'),t,M(164),.3);
+    const d=eio(io(t,M(164),M(164)+1.1)); $('mc3').style.opacity=eo(io(t,52.1,52.4))*(1-d);
+    $('mc3').style.transform=`translateX(${d*560}px)`;
+  }
+  // N · la phrase (la musique se tait à 57,2)
+  if(t>=54.4&&t<58.85){
+    pop($('n0'),t,M(167),.3); pop($('nV'),t,M(171),.3,30); barre($('nVb'),t,M(174)+.35);
+    pop($('nS'),t,M(175),.35,40);
+    const noir=io(t,57.08,57.14); $('n0').style.opacity*=1-noir; $('nV').style.opacity*=1-noir; $('nVb').style.opacity*=1-noir;
+    $('nS').style.filter=`brightness(${1-.55*noir})`;
+  }
+  // O/P · salle 3
+  if(t>=58.85&&t<64.62){
+    const on=t>=58.85?(t<58.91?.5:1):0; $('oCone').style.opacity=on; $('oFlaque').style.opacity=on;
+    pop($('oPlaque'),t,M(179),.3,20);
+    pop($('o1'),t,M(181),.3,30,M(185)-.15);
+    const r=eo(io(t,M(181)-.1,M(181)+.6)); $('oTel').style.opacity=r;
+    const zz=eio(io(t,M(191),M(191)+.6)); $('oTel').style.transform=`translateY(${(1-r)*120+60*zz}px) scale(${1+.12*zz})`;
+    pop($('oCartel'),t,M(182)+.2,.35,40,M(191)-.1);
+    pop($('p1'),t,M(185),.25,20,M(191)-.15); pop($('p2'),t,M(187),.3,30,M(191)-.15); barre($('p2b'),t,M(190)); if(t>=M(191)-.15)$('p2b').style.opacity=0;
+    pop($('p3'),t,M(191),.3,30);
+  }
+  // Q/R · le geste
+  if(t>=64.62&&t<68.0){
+    pop($('q1'),t,64.65,.3,20,M(203)-.1); pop($('q2'),t,M(200),.25,30,M(203)-.1);
+    pop($('r1'),t,M(203),.25,20); pop($('r2'),t,M(204),.3,30);
+    const tap=M(199)+.05; // « appuie »
+    $('qE2').style.opacity=t>=tap+.08?1:0; $('qE3').style.opacity=t>=M(203)-.05?1:0;
+    const T=$('qTel').getBoundingClientRect?null:null;
+    const px=250+15+550*.36, py=470+15+1225*.515;
+    const dp=io(t,tap-.5,tap); $('qDoigt').style.left=px+'px'; $('qDoigt').style.top=(py+(1-eo(dp))*260)+'px';
+    $('qDoigt').style.opacity=(t>=tap-.5&&t<tap+.45)?1:0; $('qDoigt').style.transform=`translate(-50%,-50%) scale(${t>=tap&&t<tap+.12?.85:1})`;
+    const op=io(t,tap,tap+.5); $('qOnde').style.left=px+'px'; $('qOnde').style.top=py+'px'; $('qOnde').style.width=$('qOnde').style.height=(60+op*260)+'px'; $('qOnde').style.opacity=op>0&&op<1?1-op:0;
+    $('qTel').style.transform=`scale(${1+.03*io(t,64.62,68)})`;
+  }
+  // S · marché vu du ciel
+  if(t>=68.0&&t<70.76){
+    const f=1+Math.min(33,Math.floor((t-68)*12.5)); $('sImg').src=`photos/marche/b${String(f).padStart(3,'0')}.jpg`;
+    pop($('s1'),t,M(207),.3,30); pop($('s2'),t,M(209),.3,30); pop($('sTel'),t,68.1,.4,80); pop($('sPill'),t,M(212),.3,30);
+  }
+  // T · récap
+  if(t>=70.76&&t<75.7){
+    pop($('tPlaque'),t,70.8,.3,20);
+    const A=[M(215),M(225),M(231)];
+    for(let k=0;k<3;k++){lumiere('galT',k,t,A[k]-.08); pop($('galTt'+k),t,A[k]+.1,.3,20)}
+  }
+  // U · appel à l'action
+  if(t>=75.7){
+    pop($('uLogo'),t,75.75,.4,30); pop($('u1'),t,M(239),.3,20);
+    $('uChamp').style.opacity=eo(io(t,M(239)-.05,M(239)+.25));
+    const w='YAPLUS',n=Math.floor(cl((t-M(240))/.42)*w.length); $('uTxt').textContent=w.slice(0,n);
+    $('uCurs').style.opacity=(Math.floor(t*2.2)%2==0||n<w.length)?1:0;
+    pop($('u2'),t,M(243),.35,30); pop($('u3'),t,M(247)+.3,.4,10);
+    const fin=io(t,79.45,79.8); $('uLogo').style.transform=`scale(${1+.06*Math.sin(Math.PI*fin)})`;
+  }
+};
+window.render(0);
+</script></body></html>

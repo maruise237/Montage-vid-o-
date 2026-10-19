@@ -55,3 +55,9 @@ boutique/pub3/*.wav
 boutique/pub3/voix/*.raw
 boutique/pub3/rendu.log
 yaplus_v2/recus/*.mp4
+yaplus_musee/frames/
+yaplus_musee/planche/
+yaplus_musee/pl2/
+yaplus_musee/pl3/
+yaplus_musee/verif/
+yaplus_musee/rendu.log
