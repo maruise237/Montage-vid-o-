@@ -78,3 +78,9 @@
   Oio, « la formelle ») : vérifier au modèle medium avant de regénérer. Musique Lyria avec 2 mesures de silence
   demandées : silence posé juste après « savoir », drop sur « Salle trois », 6 mesures retirées pour le coup final.
 - Mixkit : les titres suivent l'URL de prévisualisation dans le HTML (pas l'inverse).
+- **Retour Mariuse (v3)** : (1) « dis chez nous, en Afrique » : Yaplus est un outil pour les Africains, pas seulement
+  pour le Cameroun → phrase régénérée seule (même voix, phrases voisines dans le prompt pour garder l'intonation, puis
+  on ne garde que la phrase) et chiffre continental sourcé (OIT 2018 : 85,8 % d'emploi informel en Afrique).
+  (2) « bug à la transition vers Yaplus, un petit temps qui s'écoule » : 1,8 s de silence + 1,5 s de projecteur sur une
+  salle vide avant le téléphone = temps mort. Corrigé : silence de la musique raccourci à 0,85 s (on coupe DANS le
+  silence de la partition), le téléphone monte dès le drop.

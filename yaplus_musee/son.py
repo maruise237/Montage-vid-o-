@@ -1,7 +1,7 @@
 """Bande son « La machine qui manquait » : musique Lyria montée sur ses mesures, narration treg resserrée,
 ambiances et bruitages Mixkit enregistrés, chacun sur une action visible."""
 import json, numpy as np, librosa, soundfile as sf
-SR, DUREE = 48000, 82.2
+SR, DUREE = 48000, 81.3
 n = int(DUREE * SR)
 ch = lambda f: librosa.load(f, sr=SR, mono=True)[0]
 rng = np.random.default_rng(7)
@@ -18,15 +18,17 @@ def poser(piste, x, t, g=1.0):
 
 # ---------- musique : le silence de la partition tombe juste après « savoir », le drop sur la salle 3 ----------
 m = ch('musique.mp3')
-OFF1 = 4.26                 # vidéo = musique − OFF1 (silence 61,34 → 57,08 ; drop 63,115 → 58,855)
+OFF1 = 4.09                 # vidéo = musique − OFF1 : le silence de la partition (61,34) commence à 57,25, juste après « savoir »
+OFFB = 63.115 - 58.10       # le drop (63,115) tombe à 58,10, 0,25 s avant « Salle trois »
 MES = 4 * .5341             # une mesure du groove (112,3 BPM)
 A = 63.163 + 4 * MES        # après 4 mesures de groove…
-B = A + 6 * MES             # … on saute 6 mesures pour que le coup final (96,4) tombe à ~79,3 s
-OFF2 = OFF1 + 6 * MES
+B = A + 6 * MES             # … on saute 6 mesures : le coup final (96,4) tombe à ~78,6 s
+OFFC = OFFB + 6 * MES
 mus = np.zeros(n)
-poser(mus, fondu(m[int(4.26 * SR):int(A * SR)], .01, .02), 0)
-poser(mus, fondu(m[int(B * SR):], .02, .01), B - OFF2)
-mus[int(81.6 * SR):] *= np.linspace(1, 0, n - int(81.6 * SR))
+poser(mus, fondu(m[int(4.26 * SR):int(61.74 * SR)], .01, .02), 4.26 - OFF1)   # silence raccourci : 1,8 s → 0,85 s
+poser(mus, fondu(m[int(62.715 * SR):int(A * SR)], .01, .02), 62.715 - OFFB)
+poser(mus, fondu(m[int(B * SR):], .02, .01), B - OFFC)
+mus[int(80.7 * SR):] *= np.linspace(1, 0, n - int(80.7 * SR))
 
 # ---------- voix ----------
 voix = np.zeros(n); poser(voix, ch('voix/narr_montee.wav'), 0)
@@ -35,8 +37,8 @@ env = np.convolve(np.abs(voix), np.ones(int(.05 * SR)) / int(.05 * SR), 'same')
 parle = np.convolve((env > .01).astype(float), np.ones(int(.35 * SR)) / int(.35 * SR), 'same').clip(0, 1)
 gm = np.sqrt(np.mean(mus[np.abs(mus) > 1e-3] ** 2))
 tt = np.arange(n) / SR
-sous = np.where(tt < 6.4, -12, np.where(tt < 58.85, -18, -14))   # hook porté par la musique, corps plus bas
-mus_g = (gv / gm) * (10 ** (sous / 20) * parle + 10 ** ((sous + np.where(tt > 58.8, 11, 8)) / 20) * (1 - parle))
+sous = np.where(tt < 6.4, -12, np.where(tt < 58.1, -18, -14))   # hook porté par la musique, corps plus bas
+mus_g = (gv / gm) * (10 ** (sous / 20) * parle + 10 ** ((sous + np.where(tt > 58.05, 11, 8)) / 20) * (1 - parle))
 
 # ---------- ambiances ----------
 amb = np.zeros(n)
@@ -47,11 +49,11 @@ ambiance(3080, 0, 6.55, -30)          # salle du musée
 ambiance(3080, 14.42, 18.86, -31, 8)
 ambiance(3080, 23.38, 28.86, -31, 15)
 ambiance(352, 28.86, 31.95, -27, 5)   # supermarché
-ambiance(361, 37.62, 41.62, -23, 20)  # marché
-ambiance(375, 41.62, 48.12, -29, 10)  # rue derrière le comptoir
-ambiance(3080, 58.85, 64.62, -31, 22)
-ambiance(361, 68.0, 70.76, -24, 45)
-ambiance(3080, 70.76, 82.2, -32, 30)
+ambiance(361, 37.62, 41.88, -23, 20)  # marché
+ambiance(375, 41.88, 48.38, -29, 10)  # rue derrière le comptoir
+ambiance(3080, 58.1, 63.9, -31, 22)
+ambiance(361, 67.1, 69.9, -24, 45)
+ambiance(3080, 69.9, 81.3, -32, 30)
 
 # ---------- bruitages enregistrés ----------
 def sfx(id_, dmax=None):
@@ -76,8 +78,8 @@ BRUITS = [  # (instant, son, gain dB / crête voix, durée max)
     (M(155), 2299, -15, .6),                     # le produit disparaît du rayon
     (M(164) + .05, 461, -20, 1.0),               # le client s'en va
     (M(174) + .35, 2383, -13, .4),               # « vendre » barré
-    (57.08, 2579, -7, .4),                       # lumière coupée : silence
-    (58.83, 2585, -6, .4),                       # projecteur de la salle 3 sur le drop
+    (57.25, 2579, -7, .4),                       # lumière coupée : silence
+    (58.08, 2585, -6, .4),                       # projecteur de la salle 3 sur le drop
     (M(190), 2383, -14, .4),                     # le million barré
     (M(199) + .05, 2573, -10, .4), (M(199) + .2, 2354, -14, .6),   # tap + bandeau « ajouté »
     (M(203) - .05, 2354, -13, .6),               # chez le patron

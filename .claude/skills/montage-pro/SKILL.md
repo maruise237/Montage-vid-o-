@@ -139,6 +139,8 @@ avec les coupes marquées (`references/inspirations.md`, section Son).
   - juste après avoir nommé le concept clé, **2–4 s de musique seule** (montée/drop) sur la carte-titre (Faro) ;
   - **couper net la musique 1,5–2 s sur la punchline** (« Travaille bien », « une anomalie » chez Wu) :
     le silence met la phrase en valeur ;
+    mais **l'écran ne reste jamais vide** pendant ce silence, et ce qu'on annonce apparaît PILE sur la reprise :
+    silence + écran vide + attente au-delà d'environ 1 s = perçu comme un bug (retour Mariuse, oct. 2026) ;
   - changer de musique/texture au changement de chapitre ou d'étape (Toprak à l'étape 2, Faro après le hook).
 - Musique : **vraie musique enregistrée** d'une bibliothèque dont la licence couvre l'usage (Mixkit « Stock Music
   Free » : pubs en ligne + réseaux OK, vérifier la licence à chaque fois). Jamais de morceau commercial, **jamais de

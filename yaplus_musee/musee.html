@@ -122,10 +122,10 @@ i,.it{font-family:Serif;font-style:italic;font-weight:400}
 <div class="sc" id="I">
   <img class="full" id="iImg" src="photos/marche/a001.jpg">
   <div class="abs" style="inset:0;background:linear-gradient(180deg,rgba(15,13,10,.72) 0%,rgba(15,13,10,.15) 40%,rgba(15,13,10,.2) 60%,rgba(15,13,10,.85) 100%)"></div>
-  <div class="abs" id="i1" style="left:80px;top:180px;font-size:120px;font-weight:800;letter-spacing:-3px">Et chez <i style="font-size:1.2em">nous ?</i></div>
+  <div class="abs" id="i1" style="left:80px;top:180px;font-size:120px;font-weight:800;letter-spacing:-3px">Et chez nous,<br><i style="font-size:1.2em">en Afrique ?</i></div>
   <div class="abs" id="iPct" style="left:70px;top:1180px;font-size:300px;font-weight:800;letter-spacing:-10px;line-height:1;font-variant-numeric:tabular-nums">0 %</div>
-  <div class="abs" id="i2" style="left:80px;top:1500px;width:920px;font-size:50px;font-weight:600;line-height:1.2">des travailleurs camerounais<br>sont dans <i style="font-size:1.3em;color:var(--laiton)">l'informel.</i></div>
-  <div class="src" id="iSrc" style="top:1690px;color:#BDB4A6">Source : INS Cameroun, enquête EESI 3 (2021)</div>
+  <div class="abs" id="i2" style="left:80px;top:1500px;width:920px;font-size:50px;font-weight:600;line-height:1.2">des travailleurs africains<br>sont dans <i style="font-size:1.3em;color:var(--laiton)">l'informel.</i></div>
+  <div class="src" id="iSrc" style="top:1690px;color:#BDB4A6">Source : OIT, « Femmes et hommes dans l'économie informelle » (2018)</div>
 </div>
 
 <!-- J/K · le comptoir -->
@@ -175,7 +175,7 @@ i,.it{font-family:Serif;font-style:italic;font-weight:400}
   <div class="phone" id="oTel" style="transform-origin:50% 0;left:310px;top:430px;width:460px;height:995px"><div class="ecr"><img src="assets/accueil.jpg"></div></div>
   <div class="cartel" id="oCartel" style="left:120px;top:1490px;width:840px">
     <div class="t">Yaplus</div>
-    <div class="m">Yaoundé, 2026 · le téléphone de la boutique</div>
+    <div class="m">Née à Yaoundé, 2026 · pour les boutiques d'Afrique</div>
     <div class="c">Ce qu'elle change : le patron sait ce qui <span style="color:var(--rouge)">manque</span>, même absent.</div>
   </div>
   <div class="abs" id="p1" style="left:80px;top:200px;width:940px;font-size:60px;font-weight:600;color:#CFC6B6">Pas un scanner à</div>
@@ -267,7 +267,7 @@ $('fHorloge').innerHTML=['0','8',':','0','1'].map((c,k)=>c==':'?`<div style="wid
   `<div id="hc${k}" style="position:relative;width:190px;height:340px;border-radius:22px;background:#221D17;box-shadow:0 20px 40px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:250px;font-weight:800;color:var(--creme);font-variant-numeric:tabular-nums"><span>${c}</span><div style="position:absolute;left:0;right:0;top:169px;height:3px;background:#0F0D0A"></div></div>`).join('');
 
 const SC=['A','B','D','E','F','G','H','I','J','L','M','N','O','Q','S','T','U'];
-const FEN={A:[0,6.55],B:[6.55,14.42],D:[14.42,18.86],E:[18.86,23.38],F:[23.38,28.86],G:[28.86,34.22],H:[34.22,37.62],I:[37.62,41.62],J:[41.62,48.12],L:[48.12,52.06],M:[52.06,54.4],N:[54.4,58.85],O:[58.85,64.62],Q:[64.62,68.0],S:[68.0,70.76],T:[70.76,75.7],U:[75.7,99]};
+const FEN={A:[0,6.55],B:[6.55,14.42],D:[14.42,18.86],E:[18.86,23.38],F:[23.38,28.86],G:[28.86,34.22],H:[34.22,37.62],I:[37.62,41.88],J:[41.88,48.38],L:[48.38,52.32],M:[52.32,54.66],N:[54.66,58.1],O:[58.1,63.9],Q:[63.9,67.1],S:[67.1,69.9],T:[69.9,75.0],U:[75.0,99]};
 
 window.render=function(t){
   for(const s of SC){$(s).style.display=(t>=FEN[s][0]&&t<FEN[s][1])?'block':'none'}
@@ -314,53 +314,53 @@ window.render=function(t){
   // H
   if(t>=34.22&&t<37.62){pop($('h0'),t,M(93),.3);pop($('h1'),t,M(98),.3,40);pop($('h2'),t,M(100)+.1,.35,40)}
   // I · marché + 86,6 %
-  if(t>=37.62&&t<41.62){
+  if(t>=37.62&&t<41.88){
     const f=1+Math.min(57,Math.floor((t-37.62)*15)); $('iImg').src=`photos/marche/a${String(f).padStart(3,'0')}.jpg`;
     pop($('i1'),t,M(104),.3,30);
-    const p=eo(io(t,M(109),M(109)+1.0)); $('iPct').textContent=(86.6*p).toFixed(1).replace('.',',')+' %'; $('iPct').style.opacity=t>=M(109)?1:0;
+    const p=eo(io(t,M(109),M(109)+1.0)); $('iPct').textContent=(85.8*p).toFixed(1).replace('.',',')+' %'; $('iPct').style.opacity=t>=M(109)?1:0;
     pop($('i2'),t,M(112),.3,20); pop($('iSrc'),t,M(112)+.2,.3,10);
   }
   // J/K · comptoir
-  if(t>=41.62&&t<48.12){
-    const z=io(t,41.62,48.12); $('jImg').style.transform=`scale(${1.04+.22*eio(io(t,43.5,46.4))+.03*z})`;
+  if(t>=41.88&&t<48.38){
+    const z=io(t,41.88,48.38); $('jImg').style.transform=`scale(${1.04+.22*eio(io(t,43.76,46.66))+.03*z})`;
     $('jVoile').style.opacity=1;
-    pop($('jS'),t,M(119),.25,20,43.45); barre($('jSb'),t,M(121)+.05); $('jSb').style.opacity*=t<43.45?1:0;
-    pop($('jC'),t,M(122),.25,20,43.45); barre($('jCb'),t,M(124)+.05); $('jCb').style.opacity*=t<43.45?1:0;
-    pop($('k1'),t,M(125),.3,20,46.1); pop($('k2'),t,M(133),.35,30,46.1); pop($('k3'),t,M(138),.3,30);
+    pop($('jS'),t,M(119),.25,20,43.71); barre($('jSb'),t,M(121)+.05); $('jSb').style.opacity*=t<43.71?1:0;
+    pop($('jC'),t,M(122),.25,20,43.71); barre($('jCb'),t,M(124)+.05); $('jCb').style.opacity*=t<43.71?1:0;
+    pop($('k1'),t,M(125),.3,20,46.36); pop($('k2'),t,M(133),.35,30,46.36); pop($('k3'),t,M(138),.3,30);
   }
   // L · étagère
-  if(t>=48.12&&t<52.06){
+  if(t>=48.38&&t<52.32){
     pop($('l0'),t,M(146),.3); pop($('lBig'),t,M(151),.3,40); pop($('l2'),t,M(155),.3);
-    for(let k=0;k<12;k++){const a=48.3+k*.09;const p=io(t,a,a+.25);$('sl'+k).style.opacity=p;$('sl'+k).style.transform=`translateY(${(1-eo(p))*40}px)`}
+    for(let k=0;k<12;k++){const a=48.56+k*.09;const p=io(t,a,a+.25);$('sl'+k).style.opacity=p;$('sl'+k).style.transform=`translateY(${(1-eo(p))*40}px)`}
     const m=io(t,M(155),M(155)+.3); $('sl6').style.opacity=Math.min(+$('sl6').style.opacity,1-m); $('slVide').style.opacity=m;
   }
   // M · trois clients
-  if(t>=52.06&&t<54.4){
-    pop($('mBig'),t,52.1,.3,40); pop($('m2'),t,M(164),.3);
-    const d=eio(io(t,M(164),M(164)+1.1)); $('mc3').style.opacity=eo(io(t,52.1,52.4))*(1-d);
+  if(t>=52.32&&t<54.66){
+    pop($('mBig'),t,52.36,.3,40); pop($('m2'),t,M(164),.3);
+    const d=eio(io(t,M(164),M(164)+1.1)); $('mc3').style.opacity=eo(io(t,52.36,52.66))*(1-d);
     $('mc3').style.transform=`translateX(${d*560}px)`;
   }
   // N · la phrase (la musique se tait à 57,2)
-  if(t>=54.4&&t<58.85){
+  if(t>=54.66&&t<58.1){
     pop($('n0'),t,M(167),.3); pop($('nV'),t,M(171),.3,30); barre($('nVb'),t,M(174)+.35);
     pop($('nS'),t,M(175),.35,40);
-    const noir=io(t,57.08,57.14); $('n0').style.opacity*=1-noir; $('nV').style.opacity*=1-noir; $('nVb').style.opacity*=1-noir;
+    const noir=io(t,57.25,57.31); $('n0').style.opacity*=1-noir; $('nV').style.opacity*=1-noir; $('nVb').style.opacity*=1-noir;
     $('nS').style.filter=`brightness(${1-.55*noir})`;
   }
   // O/P · salle 3
-  if(t>=58.85&&t<64.62){
-    const on=t>=58.85?(t<58.91?.5:1):0; $('oCone').style.opacity=on; $('oFlaque').style.opacity=on;
+  if(t>=58.1&&t<63.9){
+    const on=t>=58.1?(t<58.16?.5:1):0; $('oCone').style.opacity=on; $('oFlaque').style.opacity=on;
     pop($('oPlaque'),t,M(179),.3,20);
     pop($('o1'),t,M(181),.3,30,M(185)-.15);
-    const r=eo(io(t,M(181)-.1,M(181)+.6)); $('oTel').style.opacity=r;
+    const r=eo(io(t,58.1,58.55)); $('oTel').style.opacity=r;
     const zz=eio(io(t,M(191),M(191)+.6)); $('oTel').style.transform=`translateY(${(1-r)*120+60*zz}px) scale(${1+.12*zz})`;
     pop($('oCartel'),t,M(182)+.2,.35,40,M(191)-.1);
     pop($('p1'),t,M(185),.25,20,M(191)-.15); pop($('p2'),t,M(187),.3,30,M(191)-.15); barre($('p2b'),t,M(190)); if(t>=M(191)-.15)$('p2b').style.opacity=0;
     pop($('p3'),t,M(191),.3,30);
   }
   // Q/R · le geste
-  if(t>=64.62&&t<68.0){
-    pop($('q1'),t,64.65,.3,20,M(203)-.1); pop($('q2'),t,M(200),.25,30,M(203)-.1);
+  if(t>=63.9&&t<67.1){
+    pop($('q1'),t,63.95,.3,20,M(203)-.1); pop($('q2'),t,M(200),.25,30,M(203)-.1);
     pop($('r1'),t,M(203),.25,20); pop($('r2'),t,M(204),.3,30);
     const tap=M(199)+.05; // « appuie »
     $('qE2').style.opacity=t>=tap+.08?1:0; $('qE3').style.opacity=t>=M(203)-.05?1:0;
@@ -369,27 +369,27 @@ window.render=function(t){
     const dp=io(t,tap-.5,tap); $('qDoigt').style.left=px+'px'; $('qDoigt').style.top=(py+(1-eo(dp))*260)+'px';
     $('qDoigt').style.opacity=(t>=tap-.5&&t<tap+.45)?1:0; $('qDoigt').style.transform=`translate(-50%,-50%) scale(${t>=tap&&t<tap+.12?.85:1})`;
     const op=io(t,tap,tap+.5); $('qOnde').style.left=px+'px'; $('qOnde').style.top=py+'px'; $('qOnde').style.width=$('qOnde').style.height=(60+op*260)+'px'; $('qOnde').style.opacity=op>0&&op<1?1-op:0;
-    $('qTel').style.transform=`scale(${1+.03*io(t,64.62,68)})`;
+    $('qTel').style.transform=`scale(${1+.03*io(t,63.9,67.1)})`;
   }
   // S · marché vu du ciel
-  if(t>=68.0&&t<70.76){
-    const f=1+Math.min(33,Math.floor((t-68)*12.5)); $('sImg').src=`photos/marche/b${String(f).padStart(3,'0')}.jpg`;
-    pop($('s1'),t,M(207),.3,30); pop($('s2'),t,M(209),.3,30); pop($('sTel'),t,68.1,.4,80); pop($('sPill'),t,M(212),.3,30);
+  if(t>=67.1&&t<69.9){
+    const f=1+Math.min(33,Math.floor((t-67.1)*12.5)); $('sImg').src=`photos/marche/b${String(f).padStart(3,'0')}.jpg`;
+    pop($('s1'),t,M(207),.3,30); pop($('s2'),t,M(209),.3,30); pop($('sTel'),t,67.2,.4,80); pop($('sPill'),t,M(212),.3,30);
   }
   // T · récap
-  if(t>=70.76&&t<75.7){
-    pop($('tPlaque'),t,70.8,.3,20);
+  if(t>=69.9&&t<75.0){
+    pop($('tPlaque'),t,69.95,.3,20);
     const A=[M(215),M(225),M(231)];
     for(let k=0;k<3;k++){lumiere('galT',k,t,A[k]-.08); pop($('galTt'+k),t,A[k]+.1,.3,20)}
   }
   // U · appel à l'action
-  if(t>=75.7){
-    pop($('uLogo'),t,75.75,.4,30); pop($('u1'),t,M(239),.3,20);
+  if(t>=75.0){
+    pop($('uLogo'),t,75.05,.4,30); pop($('u1'),t,M(239),.3,20);
     $('uChamp').style.opacity=eo(io(t,M(239)-.05,M(239)+.25));
     const w='YAPLUS',n=Math.floor(cl((t-M(240))/.42)*w.length); $('uTxt').textContent=w.slice(0,n);
     $('uCurs').style.opacity=(Math.floor(t*2.2)%2==0||n<w.length)?1:0;
     pop($('u2'),t,M(243),.35,30); pop($('u3'),t,M(247)+.3,.4,10);
-    const fin=io(t,79.45,79.8); $('uLogo').style.transform=`scale(${1+.06*Math.sin(Math.PI*fin)})`;
+    const fin=io(t,78.5,78.85); $('uLogo').style.transform=`scale(${1+.06*Math.sin(Math.PI*fin)})`;
   }
 };
 window.render(0);

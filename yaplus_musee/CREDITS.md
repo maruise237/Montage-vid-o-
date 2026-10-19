@@ -9,7 +9,8 @@
 - Écrans : application Yaplus en mode démo.
 
 ## Chiffres cités
-- 86,6 % des emplois dans le secteur informel au Cameroun : INS, 3e Enquête sur l'emploi et le secteur informel (EESI 3, 2021).
+- 85,8 % de l'emploi en Afrique est informel : OIT, « Women and men in the informal economy: A statistical picture » (2018).
+  (Pour le Cameroun seul : 86,6 %, INS, EESI 3, 2021.)
 - 8,3 % de produits en rupture en moyenne (≈ 1 sur 12) et 31 % des clients qui vont dans un autre magasin :
   Gruen, Corsten et Bharadwaj, « Retail Out-of-Stocks: A Worldwide Examination » (2002), 71 000 clients, 29 pays.
 - Premier scan d'un code-barres : 26 juin 1974, 8 h 01, supermarché Marsh, Troy (Ohio), paquet de Wrigley's Juicy Fruit.

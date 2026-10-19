@@ -2,7 +2,7 @@
 import { chromium } from '/home/user/Montage-vid-o-/node_modules/playwright-core/index.mjs';
 import fs from 'fs'; import path from 'path';
 const [out, ...inst] = process.argv.slice(2);
-const FPS = 30, DUREE = 82.2, N = 6;
+const FPS = 30, DUREE = 81.3, N = 6;
 fs.mkdirSync(out, { recursive: true });
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
 const url = 'file://' + path.resolve('musee.html');

@@ -2,7 +2,8 @@
 Sortie : voix/narr_montee.wav (24 kHz), timeline.json (décalage source→vidéo), mots_video.js (mots en temps vidéo)."""
 import json, numpy as np, librosa, soundfile as sf
 SR = 24000
-y, _ = librosa.load('voix/narr.wav', sr=SR)
+y, _ = librosa.load('voix/narr2.wav', sr=SR)  # narr.wav + phrase « en Afrique » régénérée
+COUPE, DELTA = map(float, open('voix/narr2_delta.txt').read().split())
 W = json.load(open('voix/narr.mots.json'))
 hop = 240
 rms = librosa.feature.rms(y=y, frame_length=960, hop_length=hop)[0]
@@ -16,7 +17,8 @@ while i < len(q):
         i = j
     else: i += 1
 # respirations voulues (début du silence source → durée gardée)
-GARDE = {5.40: .95, 7.00: .55, 24.07: .85, 25.20: .55, 40.28: .85, 61.58: .55, 62.78: 2.25, 64.13: .60, 82.71: .70}
+GARDE = {5.40: .95, 7.00: .55, 24.07: .85, 25.20: .55, 40.28: .85, 61.58: .55, 62.78: 1.15, 64.13: .60, 82.71: .70}
+GARDE = {(k + DELTA if k > COUPE else k): v for k, v in GARDE.items()}
 VOIX0 = 0.35  # la voix démarre à 0,35 s de la vidéo (le projecteur s'allume d'abord)
 out = []; carte = []  # carte : (début source, fin source, début vidéo)
 pos = VOIX0; src = 0.0
