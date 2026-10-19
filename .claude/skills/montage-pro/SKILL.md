@@ -216,6 +216,8 @@ Débit de parole des pros : **3,5 à 4,5 mots/s**. Durée : 26–65 s, jusqu'à 
 Sortir une planche contact (`planche.sh`, 1 image / 1–2 s) et vérifier :
 - [ ] Le type de vidéo est identifié et les techniques viennent de SA ligne du tableau §0.
 - [ ] Chaque outil cité a son vrai logo (vérifié à l'œil).
+- [ ] Objets réels (produits, billets, lieux) = **photos détourées ou vraies vidéos**, jamais un dessin SVG maison.
+- [ ] Aucun visuel ne passe sur le mot géant de la phrase (vérifier aussi les images EN MOUVEMENT, pas seulement au repos).
 - [ ] Aucune séquence de >4 s sans changement visuel (plan, zoom, typo, visuel).
 - [ ] Au moins 3 ambiances différentes (sombre / clair / capture / illustration).
 - [ ] Les 3 premières secondes : parole + texte + visuel forts en même temps.

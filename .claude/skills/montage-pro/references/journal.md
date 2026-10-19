@@ -274,3 +274,11 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   « Cash register ») sont des aperçus filigranés : ne garder que `assets.mixkit.co`.
 - Pièges : (1) grain papier qui bouge à chaque image → HD de 260 Mo ; grain FIXE → 42 Mo (et plus réaliste) ;
   (2) voix TTS très pointues : loudnorm linéaire bloqué à -15,7 → compresseur doux + limiteur → -14,2 LUFS.
+- **Retour Mariuse (v2 → v2 photos)** : « tu as dessiné des trucs bizarres alors que tu pouvais chercher les vraies
+  images et les détourer, où est ton autocritique ? » → les objets réels (produits, billets, boutiques, marché) se
+  montrent en **photo détourée**, jamais en dessin SVG fait main. Remplacés : produits (rembg `isnet-general-use`,
+  `u2net` si halo, `u2net_human_seg` pour une personne + garder la plus grande composante), billets CFA (rectangles :
+  recadrage manuel + coins arrondis, pas rembg), façades réelles + client détouré qui marche, plans drone du marché
+  extraits image par image (`photos/marche/`, `rendu.mjs` attend `img.decode()` à chaque frame). Mariuse fournit
+  volontiers les images : lui donner une liste précise tôt. Wikimedia renvoie 429 → passer par `i0.wp.com/<url>?w=1000`.
+  Autocritique faite sur planche : billets qui cachaient « UN MOT » → ils glissent par la droite sous le texte.
