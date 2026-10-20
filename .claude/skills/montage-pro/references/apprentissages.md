@@ -83,3 +83,19 @@ Leçons de compétence qui ne dépendent d'aucun client : analyses d'inspiration
 - Règle : avant tout script de pub produit, **recherche web sur qui utilise réellement ce type d'outil et pour quoi faire**,
   puis relire le code / la doc du produit pour décrire ses fonctions exactement (options facultatives = dites facultatives).
   Ne pas attendre que Mariuse le demande. Une histoire réaliste vaut mieux qu'une histoire touchante.
+
+## 2026-10 — « Prédiction vidéo » de Loucash : ce qu'on garde, ce qu'on laisse
+- Source : guide Loucash « Prediction Video, tes Reels lus seconde par seconde ». Outil perso (Codex) qui scanne un
+  Reel (coupes PySceneDetect, visages MediaPipe, texte RapidOCR, voix faster-whisper) puis simule un « cerveau moyen »
+  avec le modèle open source de Meta (TRIBE v2, IRM de 720 personnes), et compare ensuite aux stats Instagram.
+- Ce que dit l'auteur lui-même : le cerveau simulé **ne prédit ni la rétention ni la viralité** (aucun signal sur
+  ses 15 premiers Reels) ; sa note vient des stats Instagram (perdus à 3 s, part regardée, partages, enregistrements),
+  et il faut ~30 Reels pour qu'elle veuille dire quelque chose.
+- Gardé : la partie mesurable → `outils/lecture_reel.py` (temps morts visuels, silences, texte nouveau, début et fin)
+  + `--stats` pour comparer un Reel publié à la médiane des nôtres. Laissé : le cerveau simulé (lourd, licence
+  non commerciale, et ne prédit rien d'utile au montage d'après l'auteur).
+- Pièges rencontrés : l'OCR lit aussi les écrans d'appli filmés → ne compter que le gros texte (> 2,5 % de la
+  hauteur) et seulement le texte NOUVEAU ; OpenCV 5 n'a plus les cascades de visage (copie dans `outils/modeles/`) ;
+  faster-whisper : passer un tableau numpy (PyAV récent).
+- Premier test sur `KamForms_appli` : 2 alertes, vraies toutes les deux : carte de fin immobile 7 s (0:39 → 0:45,
+  là où le guide montre que les gens partent) et blanc de 0,7 s à 0:13 (voulu, avant le drop).

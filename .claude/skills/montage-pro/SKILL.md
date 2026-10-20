@@ -250,6 +250,9 @@ Sortir une planche contact (`planche.sh`, 1 image / 1–2 s) et vérifier :
 - [ ] **Voix** : coupes recalées sur les silences (`affiner()`), bande son retranscrite : aucune phrase tronquée,
       lèvres synchro (plans au nombre exact d'images).
 - [ ] CTA « commente MOT » + ressource liée à la vidéo (sauf vidéo émotion/preuve).
+- [ ] **Lecture seconde par seconde** : `python3 outils/lecture_reel.py video.mp4` (coupes, mouvement, texte à
+      l'écran, voix, silences → « Quoi modifier » + rapport HTML). Regarder l'image à chaque alerte avant de corriger :
+      c'est une mesure, pas un juge (un silence voulu avant un drop reste).
 - [ ] Je me demande : « Est-ce que MedTheDesigner, Loucash ou Fabien Faro posterait ça ? » Si non, itérer.
 
 ## 5. Comment faire grandir ce skill

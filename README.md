@@ -39,7 +39,7 @@ sons sont dans le `CREDITS.md` de chaque dossier quand il y en a un.
 | `.claude/skills/video-avatar/` | Skill Claude : vidéos avec l'avatar 3D de Mariuse |
 | `kit-montage-pro/` (+ `.zip`) | Kit de montage à partager : la skill, le journal des projets et les outils |
 | `assets/` | Logos, polices, avatar et images communes |
-| `outils/` | Scripts réutilisables (logos, etc.) |
+| `outils/` | Scripts réutilisables (logos, etc.). `outils/lecture_reel.py` lit un Reel seconde par seconde avant publication et liste quoi modifier |
 | `publications/` | Légendes et hashtags pour TikTok, Instagram et YouTube Shorts |
 | `rendu.mjs`, `render.js`, `planche.sh` | Rendu image par image et planche de contrôle |
 
