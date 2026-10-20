@@ -70,3 +70,110 @@
 - treg vide (0,04 $, estimation 0,05 $) → voix via vidIQ (ElevenLabs, 14 crédits). `alimiter` : mettre `level=disabled`,
   sinon il renormalise et le pic remonte à 0 dBFS.
 - Fichiers : `kamforms_appli/` → `KamForms_appli.mp4`, `KamForms_appli_partage.mp4`.
+
+## 2026-10 — Mème « Jerry a choisi son parfum » → KamForms vs Google Forms
+- Brief : reprendre un mème viral (Jerry hésite entre deux flacons Acqua di Giò puis en serre un dans
+  ses bras) et remplacer les produits par les logos Google Forms et KamForms, nom écrit dessous.
+  « Pour la suite, surprends-moi. » Mariuse a demandé en cours de route d'enlever le petit logo du
+  compte d'origine en haut à gauche.
+- Fait (`meme_jerry/montage.py` → `meme_jerry/meme_kamforms_jerry.mp4`, 7 s, -13,3 LUFS) :
+  - Plan fixe → fond propre = médiane temporelle + interpolation ligne par ligne à travers les flacons
+    et le filigrane ; ombres au sol refaites depuis une ligne propre décalée (sinon la médiane reprend
+    les pieds de Jerry → traînée orange).
+  - Jerry détouré par couleur (R−B > 55, + contour noir dans un voisinage, + trous bouchés), pas besoin
+    de RVM pour un dessin animé sur fond gris.
+  - **KamForms à GAUCHE parce que Jerry choisit le flacon de gauche** : regarder la fin du mème avant
+    de placer les marques.
+  - Logos debout sur la table : ombre de contact, reflet sur la table vernie, nom en Inter Tight dessous.
+  - Surprise : légende qui reprend la légende d'origine (« Jerry a choisi son outil de formulaires. »)
+    + « *Et toi ?* » en serif italique et un cœur qui pop sur KamForms au moment du choix (6,2 s), avec un pop sonore.
+- Leçon : `outils/logo.py "Google Forms"` renvoie le favicon Google (faux) → logo pris sur Wikimedia
+  (`Google_Forms_2020_Logo.svg`), rangé dans `assets/logos/googleforms.png`. Toujours regarder le PNG.
+
+## 2026-10 — Série de 6 mèmes marketing KamForms
+- Brief : « cherche des vidéos de mème, plusieurs variantes, fais-moi des mèmes marketing viraux pour
+  KamForms, surprends-moi ».
+- Source des clips : **YouTube bloqué depuis le conteneur** (403 / « confirm you're not a bot », tous
+  les player_client essayés). **Tenor marche** : page `tenor.com/search/<mots>-gifs`, puis remplacer le
+  suffixe d'ID par `AAAPo` pour avoir le MP4 (≈ 500–640 px, sans son). Toujours regarder les images :
+  beaucoup ont du texte incrusté ou un filigrane → choisir les versions propres ou recadrer.
+- Livré (`memes/memes.py` → `memes/meme_kamforms_*.mp4`, 5,5–6,5 s, ≈ -13,5 LUFS) :
+  Drake (Google Forms non / KamForms dans les groupes WhatsApp oui), Leonardo DiCaprio qui pointe,
+  Panik → Kalm (le client veut un formulaire pour ce soir → l'IA de KamForms crée les questions),
+  supporter de cricket déçu (« Réponses : 3 »), Bernie (« je vous demande encore une fois de remplir
+  mon formulaire » dans le groupe de la famille), The Rock sourcil levé.
+- Format « page mème » : légende noire alignée à gauche sur fond blanc, mème pleine largeur, signature
+  logo + kamforms.com ; bloc centré verticalement (mesuré sur la dernière image). Les arguments viennent
+  du site (WhatsApp, réponses en privé, l'IA crée les questions), rien d'inventé.
+- Son : boucle synthétisée + pops. Conseil donné : en publiant, mettre un son tendance de l'appli.
+- Leçon Drake : le clip Tenor « hotline bling » est la danse, pas les deux poses du mème ; Drake refuse
+  à gauche du cadre (0,8–1,1 s) et sourit à droite (2,2–2,6 s) → recadrages différents par case.
+- Retour de Mariuse sur le mème Jerry : « à la fin, quand Jerry saute, une version de lui reste sur
+  place ». Cause : fond propre = médiane temporelle, or Jerry est au centre presque tout le temps →
+  il s'imprime dans le fond. Correction : au centre, médiane des seules images où le pixel n'est pas
+  couvert par Jerry (masque élargi de 10 px, `np.nanmedian`). **Règle : un fond propre par médiane
+  n'est valable que si le sujet bouge beaucoup ; sinon exclure ses pixels avant la médiane.**
+
+## 2026-10 — 10 pubs KamForms tirées des hooks de @theo.vizuals
+- Brief : prendre les 10 reels les plus vus de @theo.vizuals (compte qui classe les hooks viraux),
+  extraire les hooks, faire 10 vidéos publicitaires KamForms.
+- Récupération : `vidiq_ig_profile_reels` (12 reels max, vues incluses, 5 crédits) pour le classement ;
+  vidéos via treg `tikhub.x.instagram-v1-fetch-post-by-url` (0,001 $ l'appel, champ `video_url`) —
+  yt-dlp sur instagram.com renvoie 429. Réponse JSON énorme → déléguer les appels à un sous-agent.
+- Theo ne fait que nommer des hooks sur des extraits d'autres créateurs → on reprend les MÉCANIQUES
+  (anticipation, visuel, stitch, danger, stress, illusion, avant/après, question, valeur, coulisses),
+  pas les images. Relevé dans `pubs_hooks/hooks_theo.md`.
+- Livré : `pubs_hooks/pubs.py` → `pubs_hooks/pub_kamforms_01…10_*.mp4` (10–12 s, motion design, sans voix).
+  Chaque pub : hook 2–4 s → vraie démo du téléphone kamforms.com (`kamforms2/tel`, cycle 7,6–17,0 s,
+  vitesse adaptée à la durée) → carte de fin commune (logo, « La *façon simple* de créer des
+  formulaires. » comme sur le site, pastille kamforms.com, « 10 formulaires gratuits · Réponses illimitées »).
+- DA KamForms mesurée sur le site : vert **#0F6F3C**, ciel (129,189,217) → crème, serif Instrument.
+- Illusion : le gros plan ne doit pas montrer l'en-tête « Nouveau formulaire » (ça casse la surprise)
+  → bandeau crème opaque au-dessus et centre du zoom calé pour que l'en-tête passe dessous.
+- Piège PIL : une taille de police animée qui part de 0 plante (`font size must be > 0`) → ne rien
+  dessiner tant que l'échelle < 0,02.
+- **Retours de Mariuse sur la v1 (2 corrections importantes)** :
+  1. « Tu devais utiliser ces hooks avec une bonne transition vers le contenu de KamForms » → il voulait
+     les VRAIS extraits viraux en ouverture (pratique courante, Theo fait pareil), pas seulement la mécanique.
+     v3 : `pubs_hooks/pubs_v2.py` (extraction des passages + transitions) + `pubs_v3.py` (contenu) →
+     `pubs_hooks/v3/pub_kamforms_hookNN_*.mp4`. Transition calée sur l'action de l'extrait : flash + secousse
+     sur un impact (immeuble, collision, pastèque), whip sur un mouvement (mât, train), zoom avant
+     (enclos, rivière), carte qui s'envole (illusion, avant/après), glitch (hamac). Le passage de Theo
+     « THIS is a … hook » est toujours exclu ; une légende incrustée dans l'extrait se cache sous la nôtre.
+  2. **KamForms n'est PAS un outil de commandes WhatsApp.** C'est un outil de formulaires pour tout
+     (inscriptions, événements, formations, avis, dons, sondages, institutions), créé depuis le téléphone.
+     Sa seule vraie différence : **les réponses arrivent sur WhatsApp** (option « Redirection WhatsApp » :
+     le répondant arrive sur ton WhatsApp avec ses réponses) **+ notification push** pour qui a l'appli.
+     Pas d'appli ni de compte pour répondre, import de Google Forms, export CSV, 10 formulaires gratuits.
+     → Les « commandes » ne sont qu'UN exemple (celui des captures du site), jamais le message principal.
+- Vraies captures de l'appli téléchargées depuis kamforms.com (`pubs_hooks/site/` : création IA, détail
+  d'un formulaire avec « Redirection WhatsApp », réponse avec « Répondre sur WhatsApp », boîte de réception,
+  import Google Forms, statistiques, 4 mascottes d'usages). Pour lister les images d'un site : Playwright
+  + `document.querySelectorAll('img')` (les sections « apparaissent au défilement » sont vides en capture
+  pleine page → défiler par pas de 700 px avec 1,6 s d'attente, ou télécharger les images directement).
+
+## 2026-10 — Pub motion design « KamForms disponible sur APKPure » (46 s)
+- Demande : annoncer que l'appli Android KamForms est publiée et vérifiée sur APKPure (« Apple » dans la dictée
+  vocale = **APKPure**), avec captures, clics, bruitages, voix off Fish Audio, « surprends-moi ».
+- Type (§0) : **pub / motion design** → typo animée, couleurs de la marque, la voix dicte le rythme, pas de sous-titres
+  continus (le titre cinétique de chaque scène EST le sous-titre).
+- Sources :
+  - APKPure : `apkpure.com/p/…` renvoie le défi Cloudflare (curl ET Chromium headless) ; **`apkpure.com/<nom>/<paquet>`
+    passe** (curl avec UA mobile, Playwright avec proxy). Captures du store en 1080x1920 sur `image.winudf.com/…/screen-N.jpg`
+    **avec `?fakeurl=1&type=.jpg`** (sans ces paramètres → 404). Capture de la page en ×3 → en-tête + carte « Security Check
+    Completed / No Virus / VERIFIED by APKPURE » = la preuve à montrer.
+  - Les 8 visuels du store ont déjà des titres : on les **découpe en calques** (`prep.py` : téléphone, bulle de lien,
+    notification, carte WhatsApp…) et on remet NOTRE typo par-dessus, fond = couleur échantillonnée + grille CSS,
+    bords des découpes en fondu (`mask-image`).
+- Voix : Fish Audio direct = 0 crédit API (402). **Passer par treg `fishaudio.tts.s2-1-pro`** (`call_media`, fichier
+  sauvé dans tool-results) : ~0,013 $ pour tout le script. Voix « africain » `b4d249c2468940f791068ffbc3fe446b`
+  (claire, persuasive, faite pour la pub), `prosody.speed 1.1`, une requête par phrase, même voix. Horodatage des mots :
+  faster-whisper `small` sur chaque phrase.
+- Moteur (`animation.html`) : x/y des animations = **décalages** autour de `def.x/def.y` (base). Pièges vus :
+  - un `div` absolu sans largeur est limité à 1080 px → une capture plus large est rognée : `.crop{width:max-content}` ;
+  - une animation de sortie `s:[1,…]` impose s=1 AVANT de démarrer → partir de l'échelle réelle de l'élément ;
+  - les bruitages sont émis par l'animation (`son(t,'clic')`) → `sons.json` → `son.py` : chaque bruit colle à un geste.
+- Ponctuation : pad seul sous le hook, riser, **drop** sur « Le principe est simple », musique **coupée 0,3 s** avant
+  « GRATUIT » + boom + tremblement, carillon sur la carte finale.
+- Fichiers : `kamforms3/` (`prep.py`, `construire.py`, `animation.html`, `rendu.mjs`, `son.py`, `finir.sh`)
+  → `reel_kamforms_apkpure.mp4` (+ `_partage`).
