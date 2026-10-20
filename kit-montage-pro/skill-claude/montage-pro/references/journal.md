@@ -220,3 +220,82 @@ Une entrée par projet : ce qui a été livré, le retour de Mariuse, la leçon.
   silence de 0,45 s avant le grand « C'EST FAIT ! » + petite foule enregistrée.
 - Piège : `mask-image: url(fichier.png)` est bloqué par Chromium en file:// (CORS) → le tampon était invisible.
   Mettre les textures de masque en data URI.
+## 2026-10 — Doublage FR d'un reel anglais (motion design « Dots vs Muse vs Grok Bot », 50 s)
+- Demande : « je veux cette vidéo en français » : voix off FR + tous les textes à l'écran traduits « en temps réel ».
+- Livré : `reel_doublage_fr.mp4` (1080x1920, 60 i/s) + `reel_doublage_fr_partage.mp4`. Pipeline : `doublage/`.
+- Méthode (réutilisable pour tout reel motion design sans personne à l'écran) :
+  1. `yt-dlp` → `demucs --two-stems=vocals` : on garde `no_vocals` (musique + bruitages d'origine), vérifié sans
+     anglais résiduel (whisper sur la piste musique à +15 dB → rien).
+  2. Transcription faster-whisper `small.en` (horodatage des mots) → script FR en **morceaux ancrés** sur le mot
+     anglais correspondant (`script_fr.py`) : le visuel de chaque mot clé arrive au même moment en FR.
+  3. Voix : ElevenLabs à sec (1 crédit) → **Edge TTS `fr-FR-RemyMultilingualNeural`** (gratuit, horodatage des
+     mots ; patch `certifi.where` vers le CA du proxy). Une vitesse par phrase (max ×1,18), jamais par morceau
+     (sinon voix hachée) ; pauses ajoutées aux virgules quand on est en avance. Écrire « I.A. » pour que le TTS
+     épelle (« IA » est lu « ya »). Le texte FR doit être **plus court** que l'anglais (~15 %) : réécrire, pas accélérer.
+  4. Textes à l'écran (`elements.py` + `doubler.py`) : effacement = écart à un **fond médian** (k = 61, ou 13–31
+     pour les petits textes / pastilles) puis remplissage par ce fond ; la taille de police FR est **calibrée sur la
+     largeur du texte anglais**, alignement sur la **ligne de base** anglaise, opacité = contraste mesuré (suit les
+     fondus), couleur échantillonnée (suit les surlignages), « frappe » révélée selon la largeur tapée. Position de
+     référence = **médiane** des boîtes (sinon on prend une image au milieu de l'animation d'entrée → texte trop bas).
+  5. Rangées de puces (« Bookings… ») : on efface les puces (interpolation verticale du fond) et on **redessine des
+     puces à la taille du mot FR** avec la couleur échantillonnée image par image (la puce bleue active suit).
+  6. Sous-titres : bande effacée entièrement, sous-titres FR redessinés sur la voix FR (mots clés en dégradé arc-en-ciel
+     / bleu / orange comme l'original).
+- Pièges : `pkill -f motif` tue aussi le shell qui le lance ; les polices Instrument Serif + Inter collent au style
+  « éditorial » de ces reels ; les petits statuts (THINKING/WORKING ~10 px) et les textes DANS les vidéos filmées
+  sont laissés en anglais.
+- Droits : la vidéo est de @sanjai.builds ; doubler pour un test OK, mais pour publier il faut l'accord / créditer
+  et avoir SON propre guide derrière « Commente AGENT ».
+
+## 2026-10 — Pub motion design « KamForms disponible sur APKPure » (46 s)
+- Demande : annoncer que l'appli Android KamForms est publiée et vérifiée sur APKPure (« Apple » dans la dictée
+  vocale = **APKPure**), avec captures, clics, bruitages, voix off Fish Audio, « surprends-moi ».
+- Type (§0) : **pub / motion design** → typo animée, couleurs de la marque, la voix dicte le rythme, pas de sous-titres
+  continus (le titre cinétique de chaque scène EST le sous-titre).
+- Sources :
+  - APKPure : `apkpure.com/p/…` renvoie le défi Cloudflare (curl ET Chromium headless) ; **`apkpure.com/<nom>/<paquet>`
+    passe** (curl avec UA mobile, Playwright avec proxy). Captures du store en 1080x1920 sur `image.winudf.com/…/screen-N.jpg`
+    **avec `?fakeurl=1&type=.jpg`** (sans ces paramètres → 404). Capture de la page en ×3 → en-tête + carte « Security Check
+    Completed / No Virus / VERIFIED by APKPURE » = la preuve à montrer.
+  - Les 8 visuels du store ont déjà des titres : on les **découpe en calques** (`prep.py` : téléphone, bulle de lien,
+    notification, carte WhatsApp…) et on remet NOTRE typo par-dessus, fond = couleur échantillonnée + grille CSS,
+    bords des découpes en fondu (`mask-image`).
+- Voix : Fish Audio direct = 0 crédit API (402). **Passer par treg `fishaudio.tts.s2-1-pro`** (`call_media`, fichier
+  sauvé dans tool-results) : ~0,013 $ pour tout le script. Voix « africain » `b4d249c2468940f791068ffbc3fe446b`
+  (claire, persuasive, faite pour la pub), `prosody.speed 1.1`, une requête par phrase, même voix. Horodatage des mots :
+  faster-whisper `small` sur chaque phrase.
+- Moteur (`animation.html`) : x/y des animations = **décalages** autour de `def.x/def.y` (base). Pièges vus :
+  - un `div` absolu sans largeur est limité à 1080 px → une capture plus large est rognée : `.crop{width:max-content}` ;
+  - une animation de sortie `s:[1,…]` impose s=1 AVANT de démarrer → partir de l'échelle réelle de l'élément ;
+  - les bruitages sont émis par l'animation (`son(t,'clic')`) → `sons.json` → `son.py` : chaque bruit colle à un geste.
+- Ponctuation : pad seul sous le hook, riser, **drop** sur « Le principe est simple », musique **coupée 0,3 s** avant
+  « GRATUIT » + boom + tremblement, carillon sur la carte finale.
+- Fichiers : `kamforms3/` (`prep.py`, `construire.py`, `animation.html`, `rendu.mjs`, `son.py`, `finir.sh`)
+  → `reel_kamforms_apkpure.mp4` (+ `_partage`).
+
+## 2026-10 — Pub Facebook Ads « Excel sans apprendre les formules » (e-book Chariow, 39 s)
+- Demande : vidéo publicitaire dynamique avec voix off pour le produit Chariow
+  `kamtech.mychariow.com/excel-sans-formules`, « tu gères tout, surprends-moi » ; puis précisé en cours de route :
+  **optimisée pour Facebook Ads** (« Vango » en dictée = Facebook Ads), voix via **treg** (« Track »), bonne voix au choix.
+- Retour de Mariuse : le visuel noir / bleu / rose de la fiche est son **ANCIEN logo** → ne jamais l'utiliser
+  (supprimé de `dl/img`). Logo actuel : « K » dans un carré + KAMTECH, vert sapin.
+- Sources : le MCP chariow ne trouve pas le produit par slug (autre boutique liée) → `curl` de la page suffit
+  (texte, prix dans le JSON : `price 13,2 $` / `sale_price 4,4 $` = −67 %, 2 500 F ; images `assets.chariowcdn.com`,
+  icônes de paiement `assets.orqexcdn.com/icons/methods/*.svg`). Les maquettes de téléphone du store se découpent
+  automatiquement (contour noir de la moitié droite, `prep.py`).
+- Charte reprise de la fiche : vert sapin #06331c, citron #c8f05a, menthe #f4f8f2 ; typo Inter Tight + Instrument Serif.
+- Spécial Facebook Ads (appliqué) :
+  - hook visible **dès l'image 0** (mot « Excel » + tableur en #N/A), lisible **sans le son** (chaque phrase a son titre) ;
+  - tout le contenu utile entre y ≈ 400 et 1500 (`DY = 120` dans le moteur) → bandeau du haut et légende/CTA de Reels
+    libres, et **recadrage 4:5 centré** (`crop=1080:1350:0:330`) pour le fil sans rien perdre ;
+  - CTA d'achat (« Clique sur le bouton, télécharge-le maintenant ») au lieu de « commente MOT » (une pub payante a un bouton) ;
+  - preuve concrète tirée du livre (la vraie erreur de ChatGPT 427 500 000 au lieu de 15 000) + prix barré −67 %.
+- Voix treg Fish Audio « africain » `b4d2…` (persuasive, faite pour la pub) : ~0,01 $ pour tout. Pièges de prononciation
+  vérifiés à whisper **medium** : « prompts » → « pondes » (dire « messages »), « tontine » → « comptine »
+  (écrire « tonne-tine » + articles « le stock, la paie… »), « pour l'IA » → « polya » (éviter « l'IA » en fin de groupe).
+- faster-whisper : `av.open(... metadata_errors)` plante avec la version d'av installée → décoder avec ffmpeg en
+  float32 16 kHz et passer le tableau numpy (`voix/mots.py`).
+- Piège moteur : un élément avec une seule animation `o:[.75,0]` est visible AVANT t0 (valeur de départ) → mettre
+  d'abord `A(o,0,.01,{o:[0,0]})` (le flash rouge couvrait toute la scène 6).
+- Fichiers : `chariow_excel/` (`prep.py`, `voix/mots.py`, `construire.py`, `animation.html`, `son.py`, `finir.sh`)
+  → `pub_excel_sans_formules.mp4` (9:16) + `_4x5.mp4` (fil) + `_partage.mp4` (720p).

@@ -1,0 +1,11 @@
+import { chromium } from 'playwright-core';
+import fs from 'fs';
+const b = await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome',args:['--ignore-certificate-errors','--no-sandbox'], proxy:{server:process.env.HTTPS_PROXY}});
+const ctx = await b.newContext({viewport:{width:430,height:932}, deviceScaleFactor:3, isMobile:true, hasTouch:true, userAgent:'Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Mobile Safari/537.36'});
+const p = await ctx.newPage();
+await p.goto(process.argv[2], {waitUntil:'domcontentloaded', timeout:60000});
+await p.waitForTimeout(12000);
+console.log(await p.title());
+await p.screenshot({path: process.argv[3]+'_top.png'});
+await p.screenshot({path: process.argv[3]+'_full.png', fullPage:true});
+await b.close();

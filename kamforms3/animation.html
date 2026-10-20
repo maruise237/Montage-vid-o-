@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>KamForms disponible sur APKPure — motion 9:16</title>
+<style>
+@font-face{font-family:T;src:url(../fonts/InterTight-ExtraBold.ttf)}
+@font-face{font-family:S;font-style:italic;src:url(../fonts/InstrumentSerif-Italic.ttf)}
+@font-face{font-family:I;font-weight:500;src:url(../fonts/Inter-Medium.woff)}
+@font-face{font-family:I;font-weight:600;src:url(../fonts/Inter-SemiBold.woff)}
+@font-face{font-family:I;font-weight:700;src:url(../fonts/Inter-Bold.woff)}
+:root{--vert:#17a34a;--wa:#25D366;--jaune:#FFD43B;--violet:#5c4cf5;--bleu:#1e63ee;--orange:#ea5a0c;--nuit:#0b0a0f}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000;font-family:I,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden}
+.sc{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;will-change:transform,clip-path}
+.grille{position:absolute;inset:-80px;background-image:linear-gradient(var(--g) 1.5px,transparent 1.5px),linear-gradient(90deg,var(--g) 1.5px,transparent 1.5px);background-size:72px 72px}
+.abs{position:absolute;left:0;top:0;will-change:transform,opacity;transform-origin:50% 50%}
+.T{font-family:T;letter-spacing:-.035em;line-height:.92}
+.S{font-family:S;font-style:italic;letter-spacing:-.01em;line-height:.9}
+.c{width:1080px;text-align:center}
+.crop{position:absolute;left:0;top:0;width:max-content}
+.crop>img{display:block}
+.fondu{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 9%,#000 100%)}
+.fondu2{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 93%,transparent 100%),linear-gradient(to right,transparent 0,#000 6%,#000 94%,transparent 100%);-webkit-mask-composite:source-in}
+.carte{border-radius:44px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.35),0 0 0 2px rgba(0,0,0,.05)}
+.pill{display:inline-flex;align-items:center;gap:22px;border-radius:999px;padding:22px 44px;font-family:T;letter-spacing:-.02em}
+.chk{display:inline-grid;place-items:center;width:84px;height:84px;border-radius:50%;background:var(--wa);color:#fff}
+.surl{position:absolute;border-radius:14px;background:rgba(255,212,59,.55);mix-blend-mode:multiply;transform-origin:0 50%}
+.loupe{position:absolute;border:6px solid #fff;border-radius:50%;box-shadow:0 0 0 3000px rgba(0,0,0,.0),0 10px 40px rgba(0,0,0,.35)}
+</style></head>
+<body><div id="stage"></div>
+<script src="timeline.js"></script>
+<script>
+const W=1080,H=1920,stage=document.getElementById('stage');
+const P=TL.phrases;
+const w=(p,k)=>P[p-1].mots[k][1];             /* début du k-ième mot de la phrase p */
+const deb=p=>P[p-1].debut, fin=p=>P[p-1].fin;
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const E={lin:x=>x,out:x=>1-Math.pow(1-x,3),expo:x=>x>=1?1:1-Math.pow(2,-11*x),in:x=>x*x*x,
+ inOut:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,
+ back:x=>{const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)},
+ elas:x=>x<=0?0:x>=1?1:Math.pow(2,-10*x)*Math.sin((x*10-.75)*(2*Math.PI)/3)+1};
+const SONS=[]; const son=(t,k,x=0)=>SONS.push([+t.toFixed(3),k,x]);
+const els=[];
+function mk(par,html,cls='',style='',def={}){const d=document.createElement('div');d.className='abs '+cls;d.style.cssText=style;d.innerHTML=html;(par.el||par).appendChild(d);
+ const o={el:d,anims:[],def:Object.assign({x:0,y:0,s:1,r:0,o:1,b:0,sx:1,cr:-1},def)};els.push(o);return o}
+function A(o,t0,dur,props,ease='out'){o.anims.push({t0,dur,props,ease});return o}
+/* apparition « pro » : montée + flou qui se dissipe */
+function entre(o,t0,dy=70,d=.45){o.def.o=0;return A(o,t0,d,{o:[0,1],y:[dy,0],b:[14,0]},'out')}
+function pop(o,t0,d=.42,s0=0){o.def.o=0;A(o,t0,.12,{o:[0,1]},'lin');return A(o,t0,d,{s:[s0,1]},'back')}
+function sort(o,t0,d=.25,dy=-60){return A(o,t0,d,{o:[1,0],y:[0,dy],b:[0,10]},'in')}
+function render(t){
+ for(const o of els){
+  const st={...o.def,x:0,y:0},set={};
+  for(const a of o.anims)for(const k in a.props){
+   const [f,to]=a.props[k];
+   if(t>=a.t0){st[k]=f+(to-f)*E[a.ease](clamp((t-a.t0)/a.dur));set[k]=1}
+   else if(!set[k]){st[k]=f;set[k]=1}
+  }
+  const e=o.el,op=clamp(st.o);
+  if(o.fen){const vis=t>=o.fen[0]&&t<o.fen[1];e.style.display=vis?'block':'none';if(!vis)continue}
+  e.style.opacity=op;e.style.visibility=op<=.002?'hidden':'visible';
+  e.style.transform=`translate3d(${o.def.x+st.x}px,${o.def.y+st.y}px,0) rotate(${st.r}deg) scale(${st.s*st.sx},${st.s})`;
+  e.style.filter=st.b>.2?`blur(${st.b.toFixed(1)}px)`:'none';
+  if(st.cr>=0)e.style.clipPath=`circle(${st.cr}px at ${o.cx||540}px ${o.cy||960}px)`;
+  if(o.tick)o.tick(t,e,st);
+ }
+}
+/* scène : fond + grille, visible sur [a,b] */
+function scene(a,b,fond,grille='rgba(255,255,255,.07)',z=0){
+ const s=mk(stage,`<div class="grille" style="--g:${grille}"></div>`,'sc',`background:${fond};z-index:${z}`);
+ s.fen=[a,b];const g=s.el.firstChild;s.tick=(t)=>{g.style.transform=`translate(${(-(t*14)%72).toFixed(1)}px,${(-(t*9)%72).toFixed(1)}px)`};return s}
+function img(par,src,x,y,s=1,cls='',style=''){const o=mk(par,`<img src="${src}">`,'crop '+cls,style);o.def.x=x;o.def.y=y;o.def.s=s;return o}
+/* texte qui se tape */
+function tape(o,txt,t0,t1,curseur=true){const n=o.el.querySelector('.tape');o.tick=(t)=>{const k=Math.round(clamp((t-t0)/(t1-t0))*txt.length);
+ n.textContent=txt.slice(0,k);const c=o.el.querySelector('.car');if(c)c.style.opacity=(curseur&&(t<t1+.6?Math.floor(t*3)%2===0||t<t1:false))?1:0}}
+/* compteur */
+function compte(o,sel,v0,v1,t0,d,fmt=v=>Math.round(v)){const n=o.el.querySelector(sel);const old=o.tick;o.tick=(t,e,st)=>{old&&old(t,e,st);n.textContent=fmt(v0+(v1-v0)*E.out(clamp((t-t0)/d)))}}
+/* curseur (main) */
+const MAIN=`<svg width="92" height="92" viewBox="0 0 24 24"><path d="M9 2.5c.8 0 1.5.7 1.5 1.5v6.3l.9-.2c.9-.1 1.6.5 1.7 1.3l.1.6.8-.1c.9-.1 1.6.5 1.7 1.3l.1.5.6-.1c.9-.1 1.7.5 1.7 1.4v3.6c0 2.6-2.1 4.9-4.8 4.9h-2.6c-1.6 0-3-.8-3.9-2.1L3.4 15c-.5-.7-.3-1.6.4-2.1.6-.4 1.4-.3 1.9.2l1.8 1.9V4c0-.8.7-1.5 1.5-1.5z" fill="#fff" stroke="#111" stroke-width="1.1" stroke-linejoin="round"/></svg>`;
+function curseur(par,pts,clics){ /* pts: [[t,x,y],...] ; clics: [t,...] */
+ const o=mk(par,MAIN+'<div class="onde" style="position:absolute;left:-30px;top:-34px;width:80px;height:80px;border-radius:50%;border:5px solid #fff;opacity:0"></div>','', 'z-index:50;filter:drop-shadow(0 8px 14px rgba(0,0,0,.4))');
+ o.def.o=0;A(o,pts[0][0]-.15,.2,{o:[0,1]},'lin');
+ const X0=pts[0][1],Y0=pts[0][2];for(let i=1;i<pts.length;i++)A(o,pts[i-1][0],pts[i][0]-pts[i-1][0],{x:[pts[i-1][1]-X0,pts[i][1]-X0],y:[pts[i-1][2]-Y0,pts[i][2]-Y0]},'inOut');
+ o.def.x=X0-35;o.def.y=Y0-10;
+ for(const c of clics){A(o,c-.08,.08,{s:[1,.82]},'out');A(o,c,.18,{s:[.82,1]},'out');son(c,'clic')}
+ const onde=o.el.querySelector('.onde');
+ o.tick=(t)=>{let k=-1;for(const c of clics)if(t>=c&&t<c+.45)k=(t-c)/.45;onde.style.opacity=k<0?0:1-k;onde.style.transform=`scale(${k<0?0:.5+k*1.6})`};
+ return o}
+/* surligneur qui balaie */
+function surl(par,x,y,wd,h,t0,r=0){const o=mk(par,'','surl',`width:${wd}px;height:${h}px`);o.def.x=x;o.def.y=y;o.def.r=r;o.def.sx=0;o.el.style.transformOrigin='0 50%';A(o,t0,.35,{sx:[0,1]},'out');return o}
+const ANDROID=`<svg viewBox="0 0 24 24" width="86" height="86"><path fill="#fff" d="M18.4395 5.5586c-.675 1.1664-1.352 2.3318-2.0274 3.498-.0366-.0155-.0742-.0286-.1113-.043-1.8249-.6957-3.484-.8-4.42-.787-1.8551.0185-3.3544.4643-4.2597.8203-.084-.1494-1.7526-3.021-2.0215-3.4864a1.1451 1.1451 0 0 0-.1406-.1914c-.3312-.364-.9054-.4859-1.379-.203-.475.282-.7136.9361-.3886 1.5019 1.9466 3.3696-.0966-.2158 1.9473 3.3593.0172.031-.4946.2642-1.3926 1.0177C2.8987 12.176.452 14.772 0 18.9902h24c-.119-1.1108-.3686-2.099-.7461-3.0683-.7438-1.9118-1.8435-3.2928-2.7402-4.1836a12.1048 12.1048 0 0 0-2.1309-1.6875c.6594-1.122 1.312-2.2559 1.9649-3.3848.2077-.3615.1886-.7956-.0079-1.1191a1.1001 1.1001 0 0 0-.8515-.5332c-.5225-.0536-.9392.3128-1.0488.5449zm-.0391 8.461c.3944.5926.324 1.3306-.1563 1.6503-.4799.3197-1.188.0985-1.582-.4941-.3944-.5927-.324-1.3307.1563-1.6504.4727-.315 1.1812-.1086 1.582.4941zM7.207 13.5273c.4803.3197.5506 1.0577.1563 1.6504-.394.5926-1.1038.8138-1.584.4941-.48-.3197-.5503-1.0577-.1563-1.6504.4008-.6021 1.1087-.8106 1.584-.4941z"/></svg>`;
+const CHECK=`<svg viewBox="0 0 24 24" width="52" height="52"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const KF='../assets/logos/kamforms.png', WA='../assets/logos/whatsapp.png', APK='../assets/logos/apkpure.png';
+
+/* =============== 1. C'EST OFFICIEL (0 → fin phrase 1) =============== */
+const T2=deb(2)-.12;
+{const s=scene(0,T2+.5,'radial-gradient(120% 70% at 50% 40%,#123d27 0%,#0b0a0f 62%)','rgba(255,255,255,.045)',1);
+ const cest=mk(s,'<div class="T c" style="font-size:96px;color:rgba(255,255,255,.75)">C’EST</div>','', '');cest.def.y=650;entre(cest,.1,50,.35);
+ const off=mk(s,'<div class="T c" style="font-size:196px">OFFICIEL</div>');off.def.y=760;off.def.o=0;
+ A(off,w(1,2)-.06,.1,{o:[0,1]},'lin');A(off,w(1,2)-.06,.38,{s:[1.6,1],b:[24,0]},'expo');son(w(1,2)-.04,'impact');
+ const trait=mk(s,'','', 'width:640px;height:22px;border-radius:11px;background:var(--wa)');trait.def.x=220;trait.def.y=960;trait.def.sx=0;trait.el.style.transformOrigin='0 50%';A(trait,w(1,2)+.12,.4,{sx:[0,1]},'expo');
+ /* KamForms */
+ const tk=w(1,3)-.05;
+ for(const o of [cest,off,trait])A(o,tk-.08,.3,{y:[0,-520],o:[1,0],b:[0,12]},'in');
+ // le "y" relatif : on décale via un parent → plus simple : on anime y absolu
+ const ic=img(s,KF,412,560,1,'', 'filter:drop-shadow(0 30px 60px rgba(37,211,102,.45))');ic.el.firstChild.style.cssText='width:256px;border-radius:56px';pop(ic,tk,.55);son(tk,'pop',700);
+ A(ic,tk,2.4,{r:[-8,0]},'out');
+ const nom=mk(s,'<div class="T c" style="font-size:150px">Kam<span style="color:var(--wa)">Forms</span></div>');nom.def.y=880;entre(nom,tk+.12,80,.4);
+ const dispo=mk(s,'<div class="S c" style="font-size:100px;color:rgba(255,255,255,.85)">disponible sur</div>');dispo.def.y=1110;entre(dispo,w(1,5)-.05,50,.4);
+ const andr=mk(s,`<div class="c"><span class="pill" style="background:#3DDC84;color:#062b16;font-size:104px;padding:26px 60px 26px 44px">${ANDROID.replace('#fff','#062b16')}Android</span></div>`);andr.def.y=1260;pop(andr,w(1,7)-.05,.5,.3);son(w(1,7)-.05,'pop',900);
+ for(const o of [ic,nom,dispo,andr])A(o,T2-.05,.35,{s:[1,.9]},'in');
+}
+/* =============== 2. VÉRIFIÉE PAR APKPURE =============== */
+const T3=deb(3)-.25;
+{const s=scene(T2,T3+.6,'#eef3f0','rgba(0,0,0,.05)',2);
+ s.cx=540;s.cy=1330;s.def.cr=0;A(s,T2,.55,{cr:[0,2300]},'inOut');son(T2-.05,'whoosh');
+ const tit=mk(s,`<div class="c" style="display:flex;justify-content:center;align-items:center;gap:26px"><span class="S" style="font-size:96px;color:#0b0a0f">Vérifiée par</span><img src="${APK}" style="width:96px"><span class="T" style="font-size:90px;color:#0b0a0f">APK<span style="color:#24cd77">Pure</span></span></div>`);
+ tit.def.y=150;entre(tit,T2+.2,60,.45);son(w(2,2),'pop',820);
+ const page=img(s,'img/apk_haut.png',-105,180,.74,'carte');entre(page,T2+.3,500,.6);
+ A(page,T2+.3,2.0,{s:[.74,.78]},'out');
+ const loupe=mk(s,'','loupe','width:190px;height:190px;border-color:#24cd77');loupe.def.x=445;loupe.def.y=726;pop(loupe,w(2,2)+.15,.35);A(loupe,w(2,4)-.35,.2,{o:[1,0]},'lin');
+ // page s'efface vers le haut, carte sécurité arrive
+ A(page,w(2,4)-.3,.45,{y:[0,-300],s:[.78,.62],o:[1,.35],b:[0,6]},'inOut');
+ const secu=img(s,'img/apk_securite.png',-61,560,.82,'carte');entre(secu,w(2,4)-.3,420,.5);son(w(2,4)-.35,'whoosh2');
+ const l1=mk(s,`<div style="display:flex;align-items:center;gap:30px"><span class="chk">${CHECK}</span><span class="T" style="font-size:104px;color:#0b0a0f">Zéro virus</span></div>`);l1.def.x=80;l1.def.y=1290;entre(l1,w(2,4)-.04,60,.4);son(w(2,4),'coche');
+ const l2=mk(s,`<div style="display:flex;align-items:center;gap:30px"><span class="chk">${CHECK}</span><span class="T" style="font-size:104px;color:#0b0a0f">Zéro <span class="S" style="font-size:112px">logiciel espion</span></span></div>`);l2.def.x=80;l2.def.y=1450;entre(l2,w(2,6)-.04,60,.4);son(w(2,6),'coche');
+ // badge VERIFIED surligné
+ const ver=mk(secu,'','', 'border:7px solid #1e63ee;border-radius:60px;width:286px;height:94px');ver.def.x=40;ver.def.y=628;pop(ver,w(2,8),.35,.6);son(w(2,8),'pop',1000);
+ for(const o of [tit,secu,l1,l2,page])A(o,T3-.2,.3,{o:[1,0],b:[0,12]},'in');
+}
+/* =============== 3. LE PRINCIPE : TU DÉCRIS, L'IA CRÉE =============== */
+const T4=deb(4)-.18;
+{const s=scene(T3,T4+.5,'#5c4cf5','rgba(255,255,255,.08)',3);
+ A(s,T3,.5,{y:[1920,0]},'expo');son(T3-.35,'riser');son(deb(3)-.04,'drop');
+ const p1=mk(s,'<div class="T c" style="font-size:96px;color:rgba(255,255,255,.75)">Le principe est</div>');p1.def.y=700;entre(p1,deb(3)-.02,60,.35);
+ const p2=mk(s,'<div class="S c" style="font-size:300px">simple.</div>');p2.def.y=800;pop(p2,w(3,3)-.06,.45,.6);
+ const tD=w(3,4)-.06;
+ sort(p1,tD-.1,.25,-80);sort(p2,tD-.1,.25,-80);
+ const d1=mk(s,'<div class="T c" style="font-size:150px">Tu décris.</div>');d1.def.y=150;entre(d1,tD,70,.4);son(tD,'whoosh2');
+ const bulle=mk(s,`<div style="width:900px;background:#fff;color:#0b0a0f;border-radius:48px 48px 12px 48px;padding:44px 52px;font:600 64px/1.22 I;box-shadow:0 30px 80px rgba(0,0,0,.3)"><span class="tape"></span><span class="car" style="display:inline-block;width:6px;height:64px;background:var(--violet);vertical-align:-8px;margin-left:4px"></span></div>`);
+ bulle.def.x=90;bulle.def.y=420;entre(bulle,tD+.1,80,.45);
+ const txt='Prise de commande : nom, téléphone, produit, quantité, quartier';
+ tape(bulle,txt,tD+.3,w(3,11)-.05);
+ for(let k=0;k<12;k++)son(tD+.3+k*(w(3,11)-.35-tD)/12,'touche');
+ const tI=w(3,12)-.1;
+ // la bulle part dans le téléphone
+ A(bulle,tI,.45,{y:[0,780],s:[1,.45],o:[1,0]},'in');
+ const d2=mk(s,'<div class="S c" style="font-size:170px;color:var(--jaune)">L’IA crée.</div>');d2.def.y=290;entre(d2,w(3,13)-.05,60,.45);
+ const tel=img(s,'img/chat.png',0,640,1,'fondu');tel.def.o=0;A(tel,tI,.1,{o:[0,1]},'lin');A(tel,tI,.7,{y:[1280,0]},'expo');son(tI,'whoosh');
+ A(tel,tI+.7,4,{s:[1,1.06]},'out');
+ const etc=mk(s,'<div style="font-size:120px">✦</div>','', 'color:var(--jaune)');etc.def.x=880;etc.def.y=250;pop(etc,w(3,16),.5);A(etc,w(3,16),1.5,{r:[-90,30]},'out');son(w(3,16),'etincelle');
+ const chip=mk(s,`<span class="pill" style="background:#0b0a0f;color:#fff;font-size:60px">⏱ prêt en quelques secondes</span>`);chip.def.x=95;chip.def.y=1660;pop(chip,w(3,18)-.05,.45,.5);son(w(3,18),'pop',880);
+ for(const o of [d1,d2,tel,chip,etc])A(o,T4-.22,.32,{x:[0,-500],o:[1,0],b:[0,16]},'in');
+}
+/* =============== 4. PARTAGE + LE CLIENT REMPLIT DANS SON NAVIGATEUR =============== */
+const T5=deb(5)-.2;
+{const s=scene(T4,T5+.5,'#17a34a','rgba(255,255,255,.09)',4);
+ A(s,T4-.05,.42,{x:[1080,0],b:[18,0]},'expo');son(T4-.2,'whoosh');
+ const t1=mk(s,'<div class="T c" style="font-size:170px">Partage</div>');t1.def.y=120;entre(t1,deb(4)+.05,60,.4);
+ const t1b=mk(s,'<div class="S c" style="font-size:120px;color:#d9ffe6">le lien</div>');t1b.def.y=300;entre(t1b,w(4,3)-.05,50,.4);
+ const lien=img(s,'img/lien.png',30,470,1,'fondu2');lien.def.o=0;A(lien,w(4,3)-.1,.15,{o:[0,1]},'lin');A(lien,w(4,3)-.1,.6,{x:[-930,0],r:[-14,0]},'expo');son(w(4,3)-.15,'whoosh2');
+ // chips groupes / statuts
+ const g=mk(s,`<span class="pill" style="background:#fff;color:#0b0a0f;font-size:64px"><img src="${WA}" style="width:70px">Groupes</span>`);g.def.x=70;g.def.y=860;pop(g,w(4,6)-.05,.45,.4);son(w(4,6),'pop',820);
+ const st=mk(s,`<span class="pill" style="background:#0b0a0f;color:#fff;font-size:64px"><span style="display:inline-block;width:62px;height:62px;border-radius:50%;border:7px dashed var(--wa)"></span>Statuts</span>`);st.def.x=560;st.def.y=860;pop(st,w(4,9)-.05,.45,.4);son(w(4,9),'pop',960);
+ // navigateur du client
+ const tN=w(4,10)-.1;
+ for(const o of [t1,t1b,lien,g,st])A(o,tN-.05,.32,{y:[0,-700],o:[1,0]},'in');
+ // y absolu à corriger
+ const t2=mk(s,'<div class="T c" style="font-size:94px">Tes clients remplissent</div>');t2.def.y=110;entre(t2,tN+.1,60,.4);
+ const t2b=mk(s,'<div class="S c" style="font-size:120px;color:#d9ffe6">depuis leur navigateur</div>');t2b.def.y=225;entre(t2b,w(4,15)-.05,50,.4);
+ const champ=(l,v,y,cls)=>`<div style="position:absolute;left:56px;top:${y}px;width:748px"><div style="font:600 34px I;color:#6b7280;margin-bottom:12px">${l}</div><div style="height:96px;border:3px solid #e5e7eb;border-radius:22px;padding:0 28px;font:600 46px/90px I;color:#0b0a0f"><span class="${cls}"></span></div></div>`;
+ const nav=mk(s,`<div style="width:860px;height:1180px;background:#fff;border-radius:56px;box-shadow:0 40px 100px rgba(0,0,0,.35);position:relative;overflow:hidden">
+  <div style="height:150px;background:#f3f4f6;display:flex;align-items:center;padding:0 40px"><div style="flex:1;height:84px;border-radius:42px;background:#fff;display:flex;align-items:center;gap:18px;padding:0 32px;font:600 40px I;color:#374151"><svg width="34" height="34" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0110 0v3" fill="none" stroke="#374151" stroke-width="2.4"/><rect x="4.5" y="10" width="15" height="11" rx="2.5" fill="#374151"/></svg>kamforms.com/f/pagnes-awa</div></div>
+  <div style="height:200px;background:linear-gradient(120deg,#1f7a8c,#2b5d9c);position:relative;overflow:hidden">${[0,1,2,3,4,5].map(i=>`<div style="position:absolute;left:${i*160-30}px;top:${i%2?90:120}px;width:150px;height:150px;border-radius:50%;background:${i%2?'#f472b6':'#facc15'}"></div>`).join('')}</div>
+  <div style="padding:34px 56px 0;font:700 58px I;color:#0b0a0f">Commande de pagnes</div>
+  ${champ('Nom complet','Awa Diallo',440,'v1')}${champ('Quartier de livraison','Bonamoussadi',620,'v2')}${champ('Quantité','2',800,'v3')}
+  <div class="env" style="position:absolute;left:56px;bottom:-140px;width:748px;height:110px;border-radius:26px;background:#0f9d58;color:#fff;font:700 50px/110px I;text-align:center">Envoyer</div></div>`);
+ nav.def.x=110;nav.def.y=470;nav.def.o=0;A(nav,tN,.12,{o:[0,1]},'lin');A(nav,tN,.6,{y:[1450,0],r:[6,0]},'expo');son(tN,'whoosh');
+ const vals=[['Awa Diallo','.v1'],['Bonamoussadi','.v2'],['2','.v3']];
+ const f0=tN+.55,f1=w(4,16)-.1;const dur=(f1-f0)/3;
+ nav.tick=(t)=>{vals.forEach(([v,c],i)=>{const a=f0+i*dur;nav.el.querySelector(c).textContent=v.slice(0,Math.round(clamp((t-a)/(dur*.8))*v.length))});
+   const e=nav.el.querySelector('.env');e.style.bottom=(t<f1?-140:-140+E.back(clamp((t-f1)/.35))*200)+'px'};
+ for(let k=0;k<9;k++)son(f0+k*(f1-f0)/9,'touche');
+ const cu=curseur(s,[[f1+.1,900,1760],[f1+.5,540,1535]],[f1+.6]);
+ // SANS RIEN INSTALLER : mot barré
+ const tS=w(4,16)-.06;
+ const sr=mk(s,`<div class="c" style="position:relative"><span class="S" style="font-size:150px;color:#0b0a0f;background:var(--jaune);padding:0 34px;border-radius:24px">sans rien installer</span></div>`);sr.def.y=1690;pop(sr,tS,.45,.5);son(tS,'impact2');
+ const barre=mk(s,'','', 'width:780px;height:16px;border-radius:8px;background:#e11d48');barre.def.x=150;barre.def.y=1775;barre.def.sx=0;barre.el.style.transformOrigin='0 50%';barre.def.r=-4;A(barre,w(4,18),.3,{sx:[0,1]},'expo');son(w(4,18),'raye');
+ // tout s'efface sur la réponse qui part
+ for(const o of [t2,t2b,nav,sr,barre,cu])A(o,T5-.25,.3,{s:[1,.85],o:[1,0]},'in');
+}
+/* =============== 5. ARRIVE SUR WHATSAPP =============== */
+const T6=deb(6)-.15;
+{const s=scene(T5,T6+.5,'#0e3a29','rgba(255,255,255,.06)',5);
+ s.cx=540;s.cy=1700;s.def.cr=0;A(s,T5,.55,{cr:[0,2300]},'inOut');son(T5-.05,'whoosh2');
+ const t1=mk(s,'<div class="T c" style="font-size:78px;color:rgba(255,255,255,.8)">Chaque réponse arrive sur</div>');t1.def.y=120;entre(t1,deb(5)+.05,50,.4);
+ const t2=mk(s,`<div class="c" style="display:flex;justify-content:center;align-items:center;gap:30px"><img src="${WA}" style="width:150px"><span class="T" style="font-size:166px;color:var(--wa)">WhatsApp</span></div>`);t2.def.y=230;pop(t2,w(5,7)-.06,.5,.4);son(w(5,7)-.06,'impact2');
+ const msg=img(s,'img/whatsapp.png',40,520,1,'fondu2');msg.def.o=0;A(msg,w(5,3)-.1,.15,{o:[0,1]},'lin');A(msg,w(5,3)-.1,.7,{y:[980,0],s:[.7,1],r:[8,0]},'expo');son(w(5,3)-.05,'message');
+ A(msg,w(5,3)+.6,4.2,{s:[1,1.04]},'lin');
+ // surlignage des champs (texte incliné ~ -3°)
+ surl(msg,100,533,560,66,w(5,8)-.05,-3.2);son(w(5,8),'surligne');
+ surl(msg,108,776,430,66,w(5,9)-.05,-3.2);son(w(5,9),'surligne');
+ surl(msg,104,722,240,66,w(5,10)-.05,-3.2);son(w(5,10),'surligne');
+ const ok=mk(s,`<div class="c"><span class="pill" style="background:#fff;color:#0e3a29;font-size:84px"><span class="chk" style="width:76px;height:76px">${CHECK}</span>tout est déjà écrit</span></div>`);ok.def.y=1640;pop(ok,w(5,11)-.05,.5,.5);son(w(5,11),'coche');
+ for(const o of [t1,t2,msg,ok])A(o,T6-.25,.3,{y:[0,0],o:[1,0],b:[0,12]},'in');
+}
+/* =============== 6. ALERTE =============== */
+const T7=deb(7)-.15;
+{const s=scene(T6,T7+.5,'#1e63ee','rgba(255,255,255,.08)',6);
+ A(s,T6-.05,.45,{y:[-1920,0]},'expo');son(T6-.2,'whoosh');
+ const tel=img(s,'img/reponse.png',60,140,1,'fondu2');tel.def.o=0;A(tel,T6+.1,.15,{o:[0,1]},'lin');A(tel,T6+.1,.6,{y:[560,0]},'expo');
+ const tN=w(6,1)-.06;
+ const no=img(s,'img/notif.png',90,760,1,'', 'filter:drop-shadow(0 30px 40px rgba(0,0,0,.35))');no.def.o=0;A(no,tN,.1,{o:[0,1]},'lin');A(no,tN,.55,{y:[-1100,0]},'back');son(tN,'ding');
+ // tremblement du téléphone
+ tel.tick=(t,e,st)=>{const k=t-tN;if(k>0&&k<.5){const a=(1-k/.5)*10*Math.sin(k*70);e.style.transform+=` rotate(${a*.3}deg) translateX(${a}px)`}};
+ const bad=mk(s,'<div style="width:118px;height:118px;border-radius:50%;background:#ef4444;color:#fff;font:700 66px/118px T;text-align:center;box-shadow:0 10px 26px rgba(0,0,0,.3)"><span class="n">1</span></div>');bad.def.x=900;bad.def.y=700;pop(bad,tN+.35,.4);
+ const tk=[tN+.35,w(6,5)-.05,w(6,6)-.05];bad.tick=(t)=>{let n=0;tk.forEach(a=>{if(t>=a)n++});bad.el.querySelector('.n').textContent=Math.max(1,n)};
+ tk.slice(1).forEach(a=>{A(bad,a,.3,{s:[1.4,1]},'back');son(a,'pop',1100)});
+ const ti=mk(s,'<div class="T c" style="font-size:150px">Une alerte</div>');ti.def.y=1230;entre(ti,w(6,1)+.05,60,.4);
+ const ti2=mk(s,'<div class="S c" style="font-size:118px;color:#cfe0ff">à chaque nouvelle réponse</div>');ti2.def.y=1390;entre(ti2,w(6,4)-.05,50,.4);
+ const lock=mk(s,`<div class="c"><span class="pill" style="background:#0b0a0f;color:#fff;font-size:70px"><svg width="64" height="64" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0110 0v3" fill="none" stroke="#FFD43B" stroke-width="2.6"/><rect x="4.5" y="10" width="15" height="11" rx="2.5" fill="#FFD43B"/></svg>même téléphone verrouillé</span></div>`);lock.def.y=1580;pop(lock,w(6,7)-.05,.45,.5);son(w(6,7),'verrou');
+ for(const o of [tel,no,bad,ti,ti2,lock])A(o,T7-.25,.3,{o:[1,0],b:[0,14]},'in');
+}
+/* =============== 7. À TON IMAGE =============== */
+const T8=w(7,11)-.12;
+{const s=scene(T7,T8+.4,'#fef4e8','rgba(0,0,0,.05)',7);
+ s.el.style.clipPath='inset(0 0 0 0)';s.tick=((old)=>(t,e)=>{old(t,e);const k=E.expo(clamp((t-T7+.05)/.5));e.style.clipPath=`polygon(${(1-k)*140}% 0,${(1-k)*140+200}% 0,${(1-k)*140+160}% 100%,${(1-k)*140-40}% 100%)`})(s.tick);son(T7-.2,'whoosh2');
+ const mots=[['Bannière,',deb(7),'#0b0a0f'],['couleurs,',w(7,1),'#ea5a0c'],['message de fin.',w(7,2),'#0b0a0f']];
+ const ts=mots.map(([m,t0,c],i)=>{const o=mk(s,`<div class="T" style="font-size:120px;color:${c}">${m}</div>`);o.def.x=80;o.def.y=110+i*120;entre(o,t0-.04,50,.38);son(t0,'pop',700+i*120);return o});
+ const tel=img(s,'img/perso.png',20,560,1,'fondu');tel.def.o=0;A(tel,T7+.15,.12,{o:[0,1]},'lin');A(tel,T7+.15,.65,{y:[1360,0]},'expo');
+ // bannière qui change de couleur à chaque clic (copie de la zone de la bannière, teinte décalée)
+ const ban=mk(tel,`<div style="width:600px;height:200px;overflow:hidden;border-radius:30px 30px 0 0"><img src="img/perso.png" style="margin:-238px 0 0 -196px"></div>`,'', '');ban.def.x=196;ban.def.y=238;
+ const clics=[w(7,1)+.15,w(7,1)+.55,w(7,4)-.1];const teintes=[0,95,200,290];
+ ban.tick=(t,e)=>{let k=0;clics.forEach(c=>{if(t>=c)k++});e.firstChild.style.filter=`hue-rotate(${teintes[k]}deg) saturate(${k?1.15:1})`};
+ const dots=[[182,1708],[352,1708],[434,1708]];
+ curseur(s,[[w(7,1)-.15,700,1880],[clics[0]-.05,dots[0][0],dots[0][1]],[clics[1]-.05,dots[1][0],dots[1][1]],[clics[2]-.05,dots[2][0],dots[2][1]],[T8,620,1900]],clics);
+ const tI=w(7,5)-.08;
+ ts.forEach(o=>sort(o,tI-.05,.22,-40));
+ const im1=mk(s,'<div class="T" style="font-size:118px;color:#0b0a0f">ton formulaire,</div>');im1.def.x=80;im1.def.y=130;entre(im1,tI,50,.38);
+ const im2=mk(s,'<div class="S" style="font-size:210px;color:#ea5a0c">à ton image.</div>');im2.def.x=70;im2.def.y=270;entre(im2,w(7,7)-.05,60,.42);son(w(7,9),'etincelle');
+}
+/* =============== 8. PRO : D'OÙ VIENNENT TES CLIENTS =============== */
+const T9=w(8,2)-.07;
+{const s=scene(T8,T9+.1,'#0b0a0f','rgba(255,255,255,.05)',8);
+ const fl=mk(s,'','', 'width:1080px;height:1920px;background:#fff');fl.def.o=0;A(fl,T8,.25,{o:[.85,0]},'out');son(T8,'impact2');
+ const pro=mk(s,'<div class="c"><span class="pill" style="background:#3a2a05;color:#FFD43B;font-size:80px;padding:18px 56px">◆ PRO</span></div>');pro.def.y=110;pop(pro,w(7,14)-.06,.5,.3);son(w(7,14),'pop',1200);
+ const ti=mk(s,'<div class="T c" style="font-size:132px">D’où viennent</div>');ti.def.y=290;entre(ti,w(7,15)-.04,50,.38);
+ const ti2=mk(s,'<div class="S c" style="font-size:160px;color:#FFD43B">tes clients ?</div>');ti2.def.y=410;entre(ti2,w(7,20)-.05,50,.4);
+ const tel=img(s,'img/stats.png',75,600,1,'fondu');tel.def.o=0;A(tel,T8+.05,.12,{o:[0,1]},'lin');A(tel,T8+.05,.6,{y:[1320,0]},'expo');son(T8+.05,'whoosh');
+ A(tel,w(7,17),1.4,{s:[1,1.22],y:[0,-40],x:[0,60]},'inOut');
+ surl(tel,100,625,600,66,w(7,19),0);
+ for(const o of [pro,ti,ti2,tel])A(o,T9-.22,.25,{o:[1,0]},'in');
+}
+/* =============== 9. GRATUIT =============== */
+const T10=w(8,11)-.2;
+{const s=scene(T9,T10+.5,'#17a34a','rgba(255,255,255,.09)',9);
+ const gr=mk(s,'<div class="T c" style="font-size:250px">GRATUIT</div>');gr.def.y=330;gr.def.o=0;A(gr,w(8,2)-.05,.08,{o:[0,1]},'lin');A(gr,w(8,2)-.05,.4,{s:[2,1],b:[30,0]},'expo');son(w(8,2)-.05,'boom');
+ s.tick=((old)=>(t,e)=>{old(t,e);const k=t-(w(8,2)-.05);e.style.transform+=k>0&&k<.35?` translate(${(Math.sin(k*90)*14*(1-k/.35)).toFixed(1)}px,${(Math.cos(k*80)*10*(1-k/.35)).toFixed(1)}px)`:''})(s.tick);
+ const carte=(html)=>`<div style="width:440px;height:760px;border-radius:56px;background:#fff;color:#0b0a0f;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 30px 80px rgba(0,0,0,.25)">${html}</div>`;
+ const c1=mk(s,carte('<div class="T" style="font-size:330px;color:#17a34a"><span class="n">0</span></div><div class="T" style="font-size:62px;margin-top:10px">formulaires</div><div class="S" style="font-size:58px;color:#6b7280">en ligne</div>'));c1.def.x=80;c1.def.y=720;entre(c1,w(8,5)-.15,120,.45);
+ compte(c1,'.n',0,10,w(8,5)-.1,.6);son(w(8,5)-.05,'compte');
+ const c2=mk(s,carte('<div class="T" style="font-size:380px;color:#17a34a;line-height:.8">∞</div><div class="T" style="font-size:62px;margin-top:30px">réponses</div><div class="S" style="font-size:58px;color:#6b7280">illimitées</div>'));c2.def.x=560;c2.def.y=720;entre(c2,w(8,9)-.1,120,.45);son(w(8,9)-.05,'pop',760);
+ for(const o of [gr,c1,c2])A(o,T10-.2,.3,{o:[1,0],y:[0,-200]},'in');
+}
+/* =============== 10. TÉLÉCHARGE SUR APKPURE =============== */
+const T11=deb(9)-.12;
+{const s=scene(T10,T11+.5,'#eef3f0','rgba(0,0,0,.05)',10);
+ A(s,T10-.05,.45,{y:[1920,0]},'expo');son(T10-.2,'whoosh');
+ const ti=mk(s,'<div class="T c" style="font-size:160px;color:#0b0a0f">Télécharge</div>');ti.def.y=130;entre(ti,w(8,11)-.04,60,.4);
+ const ti2=mk(s,`<div class="c" style="display:flex;justify-content:center;align-items:center;gap:22px"><span class="S" style="font-size:110px;color:#0b0a0f">sur</span><img src="${APK}" style="width:110px"><span class="T" style="font-size:110px;color:#0b0a0f">APK<span style="color:#24cd77">Pure</span></span></div>`);ti2.def.y=300;entre(ti2,w(8,13)-.05,50,.4);
+ const page=img(s,'img/apk_haut.png',-105,520,.78,'carte');page.def.o=0;A(page,T10+.15,.12,{o:[0,1]},'lin');A(page,T10+.15,.6,{y:[980,0]},'expo');
+ // barre de téléchargement sous le bouton (bouton Download APK : y 804–960 dans la capture)
+ const tC=w(8,12)+.2;
+ const bar=mk(page,'<div style="width:1194px;height:28px;border-radius:14px;background:#d1fae5;overflow:hidden"><div class="b" style="height:100%;width:0;background:#16a34a"></div></div><div class="pc" style="font:700 44px I;color:#16a34a;margin-top:18px;text-align:right"></div>');bar.def.x=48;bar.def.y=990;bar.def.o=0;A(bar,tC+.1,.15,{o:[0,1]},'lin');
+ bar.tick=(t,e)=>{const k=E.inOut(clamp((t-tC-.15)/1.5));e.querySelector('.b').style.width=(k*100)+'%';e.querySelector('.pc').textContent=k>=1?'✓ Téléchargé':Math.round(k*100)+' %'};
+ son(tC+.15,'telecharge');son(tC+1.7,'coche');
+ const btn=mk(page,'','', 'width:1194px;height:156px;border-radius:16px;background:#000');btn.def.x=48;btn.def.y=804;btn.def.o=0;A(btn,tC,.1,{o:[0,.18]},'lin');A(btn,tC+.12,.3,{o:[.18,0]},'lin');
+ curseur(s,[[tC-.7,900,1700],[tC-.05,560,1325],[tC+.8,720,1460]],[tC]);
+ for(const o of [ti,ti2,page])A(o,T11-.2,.3,{o:[1,0],b:[0,14]},'in');
+}
+/* =============== 11. CTA : ABONNE-TOI + COMMENTE KAMFORMS =============== */
+const TFIN=fin(9)+.25;
+{const s=scene(T11,99,'radial-gradient(110% 70% at 50% 35%,#123d27 0%,#0b0a0f 65%)','rgba(255,255,255,.045)',11);
+ s.cx=540;s.cy=960;s.def.cr=0;A(s,T11,.5,{cr:[0,2300]},'inOut');son(T11-.05,'whoosh2');
+ const ab=mk(s,`<div class="c"><span class="pill ab" style="background:#0095f6;color:#fff;font-size:92px;padding:30px 80px">S’abonner</span></div>`);ab.def.y=260;pop(ab,deb(9)-.05,.45,.5);
+ const tA=w(9,1)+.05;
+ ab.tick=(t,e)=>{const p=e.querySelector('.ab');if(t>=tA){p.style.background='#2f2f35';p.textContent='Abonné ✓'}};
+ const cu=curseur(s,[[deb(9)+.05,880,620],[tA-.05,640,330],[w(9,3)+.15,960,520]],[tA]);A(cu,w(9,3)+.05,.25,{o:[1,0]},'lin');
+ const tit=mk(s,'<div class="S c" style="font-size:120px">et commente</div>');tit.def.y=560;entre(tit,w(9,3)-.04,50,.4);
+ const champ=mk(s,`<div style="width:940px;height:150px;border-radius:75px;background:#fff;display:flex;align-items:center;gap:28px;padding:0 24px 0 24px;box-shadow:0 30px 80px rgba(0,0,0,.45)">
+   <img src="${KF}" style="width:104px;border-radius:30px"><span style="font:700 76px T;letter-spacing:-.02em;color:#0b0a0f;flex:1"><span class="tape"></span><span class="car" style="display:inline-block;width:6px;height:70px;background:#0095f6;vertical-align:-10px;margin-left:6px"></span></span>
+   <span style="width:104px;height:104px;border-radius:50%;background:#0095f6;display:grid;place-items:center"><svg width="56" height="56" viewBox="0 0 24 24"><path d="M3 11.5L21 3l-6.5 18-3-7.5z" fill="#fff"/></svg></span></div>`);
+ champ.def.x=70;champ.def.y=740;entre(champ,w(9,3)+.1,80,.45);
+ tape(champ,'KamForms',w(9,4)-.05,w(9,4)+.45);for(let k=0;k<8;k++)son(w(9,4)+.12+k*.05,'touche');
+ const mot=mk(s,'<div class="T c" style="font-size:150px;color:var(--jaune)">« KAMFORMS »</div>');mot.def.y=950;pop(mot,w(9,4)+.5,.5,.4);son(w(9,4)+.5,'impact2');
+ // DM avec le lien
+ const tD=w(9,5)-.05;
+ const dm=mk(s,`<div style="width:900px;background:#3797f0;color:#fff;border-radius:52px 52px 14px 52px;padding:38px 48px;box-shadow:0 30px 80px rgba(0,0,0,.4)"><div style="font:600 46px I;opacity:.9;margin-bottom:10px">Message privé</div><div style="font:700 50px/1.25 I;word-break:break-all">apkpure.com/p/<br>com.kamtech.kamforms</div></div>`);
+ dm.def.x=110;dm.def.y=1240;dm.def.o=0;A(dm,tD,.12,{o:[0,1]},'lin');A(dm,tD,.55,{y:[360,0],s:[.6,1]},'back');son(tD,'message');
+ const env=mk(s,'<div class="S c" style="font-size:96px;color:rgba(255,255,255,.85)">je t’envoie le lien en privé</div>');env.def.y=1620;entre(env,w(9,7)-.05,50,.4);
+ // carte finale
+ const tF=TFIN;
+ for(const o of [ab,tit,champ,mot,dm,env,cu])A(o,tF-.05,.35,{o:[1,0],b:[0,16]},'in');
+ const ic=img(s,KF,412,560,1,'', 'filter:drop-shadow(0 30px 60px rgba(37,211,102,.45))');ic.el.firstChild.style.cssText='width:256px;border-radius:56px';pop(ic,tF+.1,.55);son(tF+.1,'fin');
+ const nom=mk(s,'<div class="T c" style="font-size:150px">Kam<span style="color:var(--wa)">Forms</span></div>');nom.def.y=880;entre(nom,tF+.2,70,.45);
+ const sous=mk(s,`<div class="c"><span class="pill" style="background:#fff;color:#0b0a0f;font-size:58px"><img src="${APK}" style="width:70px">Disponible sur APKPure</span></div>`);sous.def.y=1100;entre(sous,tF+.35,60,.45);
+ const url=mk(s,'<div class="c" style="font:600 46px I;color:rgba(255,255,255,.7)">apkpure.com/p/com.kamtech.kamforms</div>');url.def.y=1260;entre(url,tF+.5,40,.45);
+}
+window.SONS=SONS;
+window.DUREE=TL.duree;
+window.PRET=false;
+document.fonts.ready.then(()=>{render(0);window.PRET=true});
+</script></body></html>
