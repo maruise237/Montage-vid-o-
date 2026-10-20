@@ -1,0 +1,80 @@
+---
+name: video-avatar
+description: Fabrique une vidéo short-form (Reel, TikTok, Short) où l'avatar 3D de Mariuse (style Pixar, t-shirt noir KAMTECH) remplace sa facecam, dans le style « 2D sticker » de Le Dev ULTIME (fond crème quadrillé, sous-titres en haut, cartes néo-brutalistes, une pose par phrase). Déclencher sur : vidéo avatar, vidéo faceless, sans visage, avec mon avatar, mon personnage 3D, style Le Dev ULTIME, banque de poses, nouvelle pose d'avatar.
+---
+
+# Vidéo avatar — mode d'emploi
+
+Toujours lire d'abord `.claude/skills/montage-pro/SKILL.md` (règles anti-slop) et la fiche
+« Créateur F » de `montage-pro/references/inspirations.md`. Mariuse veut **dépenser le moins possible**.
+
+## 1. Avant de commencer : obtenir la matière (poser les questions, ne rien inventer)
+
+1. **Voix off OU script.** Demander lequel Mariuse fournit :
+   - un fichier audio (sa voix) → transcrire avec horodatage par mot : **Whisper de Cloudflare**
+     (`@cf/openai/whisper-large-v3-turbo`, ~47 neurons/min, gratuit, mots dans `segments[].words`),
+     sinon `faster-whisper` en local. ElevenLabs n'a plus de crédit : ne pas compter dessus.
+     Mariuse fait des erreurs en enregistrant : nettoyer la voix (`arnndn` + `afftdn` + compresseur, cf.
+     `avatar1/coupe.py`), couper hésitations/reprises/blancs, **caler chaque coupe sur l'énergie** (RMS 10 ms),
+     retranscrire la voix montée pour vérifier qu'aucun mot n'est mangé. Les débuts de mots de whisper sont
+     souvent 0,2–0,4 s trop tôt : caler les changements de scène sur les débuts de phrase mesurés (plan.json) ;
+   - un script texte → générer la voix off avec ElevenLabs (`podcast/tts.py` : variable `ELEVENLABS`,
+     endpoint `with-timestamps`, donne directement les temps par mot) ;
+   - ni l'un ni l'autre → proposer un script (structure Hook → Build-up → Valeur → CTA « commente MOT »,
+     montage-pro §3) et le faire **valider avant** de générer la voix.
+2. **Style de montage.** Si la demande est vague, demander (une seule question, avec choix) :
+   - *2D sticker* (défaut, celui qui marche le mieux : 2 477 likes vs 204 pour la 3D) ;
+   - *variante sombre / couleur de marque* ;
+   - *mix* avatar + captures d'écran (tuto outil).
+   Rappeler aussi : format (9:16 par défaut), durée visée, mot du CTA.
+
+## 2. La DA « 2D sticker » (avec l'avatar 3D de Mariuse)
+
+- Fond papier crème **#F1EBE0** + quadrillage très léger ; accent rouge brique **#D9442B** ; texte noir.
+- **Sous-titres en haut** (~25 % de la hauteur), 1–3 mots, Inter Bold, **1 mot en couleur**. Sur un décor photo :
+  texte blanc + ombre portée douce (mot en couleur en jaune), jamais de contour.
+- Mot géant en capitales (Montserrat Black ou Inter Tight ExtraBold) sur les mots forts.
+- Avatar détouré, **SANS bordure blanche** (Mariuse les refuse : ni sur le personnage, ni sur les mots, ni sur les
+  sous-titres), juste une ombre douce ; **une pose par phrase**,
+  taille/position qui changent (plein pied, buste, tête seule, gauche/droite). Jamais la même pose 2 fois de suite.
+- Cartes **néo-brutalistes** : cadre noir 3 px + ombre décalée dure, étiquette rouge au-dessus.
+  Outil cité = vrai logo (`outils/logo.py`). Fenêtres code/navigateur, champ commentaire, chiffres.
+- Rythme : **1 changement / 1,5 s**. Fin : écran rouge plein « ABONNE-TOI » + CTA « commente MOT ».
+- Son : -14 LUFS, musique 12–25 dB sous la voix, pop à chaque apparition de pose/carte (`podcast/son.py`).
+
+## 3. Banque d'images : PIOCHER AVANT DE GÉNÉRER
+
+- **Toujours lire d'abord `assets/banque/CATALOGUE.md`** (et regarder `assets/banque/apercu.jpg`) : poses de
+  l'avatar classées par humeur, décors, mascotte Claude, cartes et tampons déjà faits. On réutilise.
+- On ne génère que ce qui manque. Chaque nouvelle image va dans `assets/banque/<dossier>/humeur_action.png`
+  (ou `lieu_detail.png`), on ajoute 1 ligne au catalogue, on refait `apercu.jpg`, et on commite.
+- Avatar maître (référence) : `assets/avatar/maitre.png`. Liste des prompts de poses :
+  `python3 outils/avatar_cloudflare.py poses`.
+- **Générateur par défaut : Cloudflare Workers AI** (`outils/avatar_cloudflare.py`, FLUX.2 klein 9B,
+  variables `CLOUDFLARE_ACCOUNT_ID` + `CLOUDFLARE_API_TOKEN`). **Gratuit** : 10 000 neurons/jour
+  (remise à zéro 00:00 UTC), au-delà la requête est refusée, jamais facturée.
+  klein-9b ≈ 1 400 neurons/image (1 réf.) à ~1 500 (3–4 réf.) → **6 à 7 images/jour** : avatar maître,
+  mascotte, tout ce qui part de zéro. **klein-4b ≈ 105 neurons → ~90 images/jour : POSES (depuis le maître) et
+  DÉCORS**, testé : même visage, même tenue. Lancer les appels **un par un** (en parallèle, plusieurs échouent
+  sans message). Toujours regarder chaque image en grand (bras doublé sur `victoire` la 1re fois).
+- Détourage d'une pose : `python3 outils/detourage_pose.py src.png dst.png` (rembg isnet, couleurs d'origine,
+  blanc des yeux rebouché : sinon les yeux deviennent transparents).
+- Logo KAMTECH propre (blanc et bleu, fond transparent) : `assets/logos/kamtech.png`. Consommation réelle lue dans
+  l'en-tête `cf-ai-neurons` et notée dans `assets/avatar/depenses.csv`.
+- Une pose manque → la générer depuis le maître :
+  `python3 outils/avatar_cloudflare.py pose NOM sortie.png klein-4b`, la regarder en grand (mains, bras, logo,
+  visage identique au maître), la détourer et la ranger dans `assets/banque/avatar_poses/`. Banque complète (14 poses)
+  = 2 à 3 jours de quota gratuit : étaler, ne pas payer.
+- Secours payant uniquement si Mariuse l'accepte : `outils/avatar_gemini.py` (Google, aucun quota
+  gratuit, ≈ 0,034 $/image, facturation à activer dans AI Studio).
+- Images de référence : redimensionnées sous 512x512 et envoyées en multipart (`input_image_0..3`).
+- Photos de Mariuse : envoyées directement dans la requête (Cloudflare ou Google), **jamais** sur un hébergeur public, jamais commitées.
+
+## 4. Fabrication (pipeline maison HTML → Playwright → ffmpeg, cf. `podcast/`)
+
+1. Découper la voix en phrases (temps par mot) → une ligne de timeline par phrase : pose, position,
+   mot géant / carte / logo, mot en couleur du sous-titre.
+2. Prévisualiser toutes les compositions en planche contact AVANT le rendu.
+3. Rendu render(t) déterministe, mix son, loudnorm -14 LUFS.
+4. Checklist anti-slop de montage-pro §4, puis entrée dans `montage-pro/references/journal.md`,
+   commit + push.

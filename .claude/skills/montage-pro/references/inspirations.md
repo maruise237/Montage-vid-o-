@@ -144,6 +144,36 @@ je fais ? ») → méthode → morale en une phrase.
 
 ---
 
+## Créateur F — Le Dev ULTIME (@ledevultime), vidéos « avatar » sans visage
+Mariuse adore ce style pour une série où **son avatar remplace sa facecam** (avatar à LUI, pas celui-ci).
+Les deux vidéos sont faites avec Claude Code + ffmpeg (il le dit) : notre pipeline peut le refaire.
+
+**Vidéo 15 — « Créer des vidéos faceless avec Claude Code » (2 min 39, 2 477 likes, 90 comm.)** : style **2D sticker**
+- Fond **papier crème #F1EBE0** avec quadrillage très léger ; accent **rouge brique #D9442B** ; texte noir.
+- Avatar **2D type Bitmoji** : contour blanc épais + fine ombre portée sombre (sticker découpé).
+  **Une pose différente par phrase** (caméra, livre + baguette, billets qui brûlent, clap, sac de $,
+  haussement d'épaules, pouce levé, lunettes noires…), taille et position qui changent (plein pied,
+  buste, tête seule, gauche/droite). L'émotion est portée par la pose.
+- Sous-titre **en haut** (≈ 25 % de la hauteur), 1–3 mots, sans gras (Inter Bold), **1 mot en rouge**.
+- Mot géant (Montserrat Black, capitales) : « VIDÉO », « LE RÉSULTAT ? », « TRÈS TRÈS CHER ».
+- Cartes **néo-brutalistes** : cadre noir 3 px + ombre décalée dure, étiquette rouge au-dessus
+  (« TEXTE », « 8 ERREURS COUPÉES », « COMMENTAIRES »). Logos officiels dans ces cartes (Midjourney,
+  Gemini, TikTok, Claude « OPUS 5.5 », FFmpeg « DEPUIS 2000 »). Fenêtre de code, fenêtre navigateur,
+  timeline voix/animations, transcription, champ commentaire avec curseur.
+- Changement de fond sur un mot (« ce fond se transforme » → motif losanges rouges).
+- Fin : écran **rouge plein « ABONNE-TOI »**. Rythme : **1 changement / 1,5 s**. -14,1 LUFS.
+
+**Vidéo 16 — « Combien coûte un site web en 2026 ? » (3 min, 204 likes)** : style **3D jouet**
+- Avatar **3D type Pixar/Memoji** dans un monde 3D low-poly blanc + orange (studio podcast avec micro,
+  rue, maisons, chantier, immeubles, vitrine). Métaphore filée : site web = maison.
+- Mêmes étiquettes néo-brutalistes (« Numéro 1 SITE VITRINE », « +10 ANS », prix en cartes),
+  signature « LE DEV ULTIME » en bas dans le studio. Rythme ~1 / 3,6 s (mouvements de caméra 3D).
+- Bien plus lourd à produire (scènes 3D), **4× moins de likes** que la version 2D au même compte.
+
+**Leçon** : pour nous, partir sur le **style 2D sticker** (vidéo 15) : plus rapide à produire et c'est celui
+qui a le mieux marché. Il faut une **banque de poses** de l'avatar (même visage, mêmes habits,
+fond uni à détourer) générée une fois, puis réutilisée et complétée vidéo après vidéo.
+
 ## Mesures globales (14 vidéos)
 - Changement de plan visible : **1,7–4,8 s** (Faro 1,7–2,4 s ; Med/Loucash ~3,8 s ; Wu 3,0 s).
 - Débit : 3,4–5,0 mots/s (médiane ~4).
